@@ -6,18 +6,18 @@ function showSlide(index) {
     const totalSlides = document.querySelectorAll('.slide').length;
     const dots = document.querySelectorAll('.dot');
 
-    // Kiểm tra nếu vượt quá slide cuối
+
     if (index >= totalSlides) {
-        currentSlide = 0; // Quay lại slide đầu tiên
+        currentSlide = 0; 
     } else if (index < 0) {
-        currentSlide = totalSlides - 1; // Quay lại slide cuối cùng
+        currentSlide = totalSlides - 1; 
     } else {
-        currentSlide = index; // Cập nhật slide hiện tại
+        currentSlide = index; 
     }
 
     slides.style.transform = `translateX(-${currentSlide * 100}%)`;
 
-    // Cập nhật trạng thái của các chấm
+
     dots.forEach((dot, i) => {
         dot.classList.toggle('active', i === currentSlide);
     });
@@ -25,17 +25,17 @@ function showSlide(index) {
 
 function startSlideShow() {
     slideInterval = setInterval(() => {
-        showSlide(currentSlide + 1); // Chuyển sang slide tiếp theo
-    }, 5000); // Chuyển slide sau mỗi 5 giây
+        showSlide(currentSlide + 1); 
+    }, 5000); 
 }
 
 function stopSlideShow() {
     clearInterval(slideInterval);
 }
 
-// Thêm sự kiện cho nút bấm
+
 document.querySelector('.prev').addEventListener('click', () => {
-    showSlide(currentSlide - 1); // Chuyển sang slide trước
+    showSlide(currentSlide - 1); 
 });
 
 document.querySelector('.next').addEventListener('click', () => {

@@ -14,8 +14,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (cart.length === 0) {
             cartItemsContainer.innerHTML = "<p>Giỏ hàng trống</p>";
-            cartCountElement.textContent = "0"; // Đặt icon giỏ hàng về 0
-            checkoutBtn.disabled = true; // Vô hiệu hóa nút "Thanh toán"
+            cartCountElement.textContent = "0"; 
+            checkoutBtn.disabled = true; 
         } else {
             cart.forEach((item, index) => {
                 totalPayment += item.price * item.quantity;
