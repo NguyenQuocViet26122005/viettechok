@@ -1,8 +1,7 @@
-/* Định dạng chung cho form đăng ký */
+
 .register-section {
     display: flex;
     justify-content: center;
-    align-items: center;
     margin: 40px;
 }
 
@@ -46,10 +45,10 @@
 }
 
 .register-form input {
-    width: 380px; /* Đặt chiều rộng cố định cho ô nhập */
+    width: 380px; 
     padding: 12px;
-    margin: 0 auto 15px auto; /* Căn giữa ô nhập */
-    display: block; /* Đảm bảo ô nhập nằm trên một dòng riêng */
+    margin: 0 auto 15px auto;
+    display: block; 
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 14px;
