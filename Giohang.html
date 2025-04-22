@@ -163,23 +163,26 @@
                 </div>
             </form>
         </div>
-         <div class="cart-summary">
+        <div class="cart-summary">
             <h3>Giỏ hàng của bạn</h3>
             <div class="cart-items" id="cartItemsContainer">
-                <!-- Cart items will be dynamically inserted here -->
+                <!-- Các sản phẩm trong giỏ hàng sẽ được thêm vào đây -->
             </div>
+        
+            <div class="payment-method">
+                <h3>Phương thức thanh toán</h3>
+                <form>
+                    <label><input type="radio" name="payment" value="COD" checked> Thanh toán tiền mặt khi nhận hàng (COD)</label>
+                    <label><input type="radio" name="payment" value="Bank"> Thanh toán qua số tài khoản ngân hàng (Miễn phí vận chuyển)</label>
+                </form>
+            </div>
+        
             <div class="cart-total">
                 <p>Thanh toán: <span id="cart-payment">0₫</span></p>
             </div>
             <button id="checkoutBtn" class="checkout-btn">Thanh toán</button>
         </div>
-         <div class="payment-method">
-            <h3>Phương thức thanh toán</h3>
-            <form>
-                <label><input type="radio" name="payment" value="COD" checked> Thanh toán tiền mặt khi nhận hàng (COD)</label>
-                <label><input type="radio" name="payment" value="Bank"> Thanh toán qua số tài khoản ngân hàng (Miễn phí vận chuyển)</label>
-            </form>
-        </div>
+        
          
     </div>
     <script src="Giohang.js"></script>
