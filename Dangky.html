@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang web bán laptop</title>
+    <link rel="stylesheet" href="Dangky.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <header class="top-header">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="anh/logo.jpg" alt="logo">
+                </a>
+                <div class="contact-info">
+                    <p><b>VietTechStore</b></p>
+                    <p><b>079.949.6002</b></p>
+                </div>
+            </div>
+            <nav class="menu">
+                <a href="#">Giới thiệu</a>
+                <div class="dropdown">
+                    <a href="#">Laptop</a>
+                    <div class="dropdown-content">
+                        <div class="cot">
+                            <p>HP</p>
+                            <ul>
+                                <li><a href="#">HP Probook</a></li>
+                                <li><a href="#">HP Folio</a></li>
+                                <li><a href="#">HP Elitebook</a></li>
+                                <li><a href="#">HP Spectre</a></li>
+                                <li><a href="#">HP Pavilion</a></li>
+                                <li><a href="#">HP Envy</a></li>
+                            </ul>
+                        </div>
+                        <div class="cot">
+                            <p>ASUS</p>
+                            <ul>
+                                <li><a href="#">Asus S Series</a></li>
+                                <li><a href="#">Asus Vivobook Series</a></li>
+                                <li><a href="#">Asus Zenbook Series</a></li>
+                                <li><a href="#">Asus TUF</a></li>
+                            </ul>
+                        </div>
+                        <div class="cot">
+                            <p>DELL</p>
+                            <ul>
+                                <li><a href="#">Dell XPS</a></li>
+                                <li><a href="#">Dell Precision</a></li>
+                                <li><a href="#">Dell Latitude</a></li>
+                                <li><a href="#">Dell Inspiron</a></li>
+                                <li><a href="#">Dell Alienware</a></li>
+                            </ul>
+                        </div>
+                        <div class="cot">
+                            <p>LENOVO</p>
+                            <ul>
+                                <li><a href="#">Lenovo Yoga Series</a></li>
+                                <li><a href="#">Lenovo Gaming</a></li>
+                                <li><a href="#">Lenovo Legion</a></li>
+                                <li><a href="#">IdeaPad</a></li>
+                                <li><a href="#">IdeaPad Gaming</a></li>
+                                <li><a href="#">Thinkbook</a></li>
+                            </ul>
+                        </div>
+                        <div class="cot">
+                            <p>THINKPAD</p>
+                            <ul>
+                                <li><a href="#">ThinkPad X1 Carbon</a></li>
+                                <li><a href="#">ThinkPad X Series</a></li>
+                                <li><a href="#">ThinkPad E Series</a></li>
+                                <li><a href="#">ThinkPad T Series</a></li>
+                                <li><a href="#">ThinkPad Workstations</a></li>
+                            </ul>
+                        </div>
+                        <div class="cot">
+                            <p>Theo nhu cầu</p>
+                            <ul>
+                                <li><a href="#">Mỏng Nhẹ</a></li>
+                                <li><a href="#">Workstations</a></li>
+                                <li><a href="#">Siêu phẩm</a></li>
+                                <li><a href="#">Đồ Họa, Kỹ thuật</a></li>
+                                <li><a href="#">Học tập, Văn phòng</a></li>
+                                <li><a href="#">Lập trình</a></li>
+                                <li><a href="#">Game</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <a href="#">Phụ kiện</a>
+                    <div class="dropdown-content">
+                        <div class="cot">
+                            <p>Phụ kiện</p>
+                            <ul>
+                                <li><a href="#">Tai nghe</a></li>
+                                <li><a href="#">Chuột</a></li>
+                                <li><a href="#">Bàn phím</a></li>
+                                <li><a href="#">Cáp sạc</a></li>
+                            </ul>
+                        </div>
+                        <div class="cot">
+                            <p>Khác</p>
+                            <ul>
+                                <li><a href="#">Ổ cứng</a></li>
+                                <li><a href="#">RAM</a></li>
+                                <li><a href="#">Pin</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <a href="#">Khuyến mãi</a>
+            </nav>
+            <div class="search-bar">
+                <input type="text" placeholder="Tìm kiếm laptop và phụ kiện">
+                <button><i class="fa fa-search"></i></button>
+            </div>
+            <div class="icons">
+                <a href="#"><i class="fa fa-shopping-cart"></i><span>0</span></a>
+                <a href="#"><i class="fa fa-user"></i></a>
+            </div>
+        </div>
+    </header>
+    
+    <section class="register-section">
+        <div class="register-container">
+            <h2>Đăng ký tài khoản</h2>
+            <p>Nếu bạn đã có tài khoản tại viettech.vn</p>
+            <p>Bạn có thể đăng nhập <a href="Dangnhap.html">TẠI ĐÂY!</a></p>
+            <form action="index.html" method="POST" class="register-form">
+                <label for="fullname">Họ và Tên</label>
+                <input type="text" id="fullname" name="fullname" placeholder="Họ và tên*" required>
+                
+                <label for="phone">Số điện thoại</label>
+                <input type="tel" id="phone" name="phone" placeholder="Số điện thoại*" required>
+                
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Nhập địa chỉ email*" required>
+                
+                <label for="password">Mật khẩu</label>
+                <input type="password" id="password" name="password" placeholder="Mật khẩu*" required>
+                
+                <button type="submit" class="register-button">Tạo tài khoản</button>
+            </form>
+        </div>
+    </section>
+    <script src="Dangky.js"></script>
+</body>
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-column">
+            <h4>VỀ VIETTECH</h4>
+            <ul>
+                <li><a href="#">Giới thiệu</a></li>
+                <li><a href="#">Tuyển dụng</a></li>
+                <li><a href="#">Liên hệ</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h4>CHÍNH SÁCH</h4>
+            <ul>
+                <li><a href="#">Chính sách bảo hành</a></li>
+                <li><a href="#">Chính sách giao hàng</a></li>
+                <li><a href="#">Chính sách bảo mật</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h4>THÔNG TIN</h4>
+            <ul>
+                <li><a href="#">Hệ thống cửa hàng</a></li>
+                <li><a href="#">Hướng dẫn mua hàng</a></li>
+                <li><a href="#">Hướng dẫn thanh toán</a></li>
+                <li><a href="#">Hướng dẫn trả góp</a></li>
+                <li><a href="#">Tra cứu địa chỉ bảo hành</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h4>TỔNG ĐÀI HỖ TRỢ (8:00 - 21:00)</h4>
+            <ul>
+                <li>Mua hàng: <a href="tel:19005301">1900.5301</a></li>
+                <li>Bảo hành: <a href="tel:19005325">1900.5325</a></li>
+                <li>Kiếu nại: <a href="tel:18006173">1800.6173</a></li>
+                <li>Email: <a href="mailto:cskh@viettech.com">cskh@VietTechStore .com</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h4>BẢN ĐỒ</h4>
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14931.339738709165!2d106.05463020248972!3d20.676293444177908!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135c0cd38f568f3%3A0x50681a4fcf414c4b!2zQW4gVOG6o28sIFRwLiBIxrBuZyBZw6puLCBIxrBuZyBZw6puLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1743648692178!5m2!1svi!2s" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </div>
+</footer>
+</html>

@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang web bán laptop</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <header class="top-header">
+        <div class="container">
+            <div class="logo">
+                <img src="anh/logo.jpg" alt="logo">
+                <div class="contact-info">
+                    <p><b>VietTechStore</b></p>
+                    <p><b>079.949.6002</b></p>
+                </div>
+            </div>
+            <nav class="menu">
+                <a href="#">Giới thiệu</a>
+                <div class="dropdown">
+                    <a href="#">Laptop</a>
+                    <div class="dropdown-content">
+                        <div class="cot">
+                            <p>HP</p>
+                            <ul>
+                                <li><a href="#">HP Probook</a></li>
+                                <li><a href="#">HP Folio</a></li>
+                                <li><a href="#">HP Elitebook</a></li>
+                                <li><a href="#">HP Spectre</a></li>
+                                <li><a href="#">HP Pavilion</a></li>
+                                <li><a href="#">HP Envy</a></li>
+                            </ul>
+                        </div>
+                        <div class="cot">
+                            <p>ASUS</p>
+                            <ul>
+                                <li><a href="#">Asus S Series</a></li>
+                                <li><a href="#">Asus Vivobook Series</a></li>
+                                <li><a href="#">Asus Zenbook Series</a></li>
+                                <li><a href="#">Asus TUF</a></li>
+                            </ul>
+                        </div>
+                        <div class="cot">
+                            <p>DELL</p>
+                            <ul>
+                                <li><a href="#">Dell XPS</a></li>
+                                <li><a href="#">Dell Precision</a></li>
+                                <li><a href="#">Dell Latitude</a></li>
+                                <li><a href="#">Dell Inspiron</a></li>
+                                <li><a href="#">Dell Alienware</a></li>
+                            </ul>
+                        </div>
+                        <div class="cot">
+                            <p>LENOVO</p>
+                            <ul>
+                                <li><a href="#">Lenovo Yoga Series</a></li>
+                                <li><a href="muclenovo.html">Lenovo Gaming</a></li>
+                                <li><a href="#">Lenovo Legion</a></li>
+                                <li><a href="#">IdeaPad</a></li>
+                                <li><a href="#">IdeaPad Gaming</a></li>
+                                <li><a href="#">Thinkbook</a></li>
+                            </ul>
+                        </div>
+                        <div class="cot">
+                            <p>THINKPAD</p>
+                            <ul>
+                                <li><a href="#">ThinkPad X1 Carbon</a></li>
+                                <li><a href="#">ThinkPad X Series</a></li>
+                                <li><a href="#">ThinkPad E Series</a></li>
+                                <li><a href="#">ThinkPad T Series</a></li>
+                                <li><a href="#">ThinkPad Workstations</a></li>
+                            </ul>
+                        </div>
+                        <div class="cot">
+                            <p>Theo nhu cầu</p>
+                            <ul>
+                                <li><a href="#">Mỏng Nhẹ</a></li>
+                                <li><a href="#">Workstations</a></li>
+                                <li><a href="#">Siêu phẩm</a></li>
+                                <li><a href="#">Đồ Họa, Kỹ thuật</a></li>
+                                <li><a href="#">Học tập, Văn phòng</a></li>
+                                <li><a href="#">Lập trình</a></li>
+                                <li><a href="#">Game</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <a href="#">Phụ kiện</a>
+                    <div class="dropdown-content">
+                        <div class="cot">
+                            <p>Phụ kiện</p>
+                            <ul>
+                                <li><a href="#">Tai nghe</a></li>
+                                <li><a href="#">Chuột</a></li>
+                                <li><a href="#">Bàn phím</a></li>
+                                <li><a href="#">Cáp sạc</a></li>
+                            </ul>
+                        </div>
+                        <div class="cot">
+                            <p>Khác</p>
+                            <ul>
+                                <li><a href="#">Ổ cứng</a></li>
+                                <li><a href="#">RAM</a></li>
+                                <li><a href="#">Pin</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <a href="#">Khuyến mãi</a>
+            </nav>
+            <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <i class="fa fa-bars"></i>
+              </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Tìm kiếm laptop và phụ kiện">
+                <button><i class="fa fa-search"></i></button>
+            </div>
+            <div class="icons">
+                <a href="Giohang.html">
+                    <i class="fa fa-shopping-cart"></i>
+                    <span id="cartCount">0</span>
+                </a>
+                <a href="Dangnhap.html"><i class="fa fa-user"></i></a>
+            </div>
+        </div>
+        <nav class="mobile-menu" id="mobileMenu">
+            <a href="#">Giới thiệu</a>
+            <a href="#">Laptop</a>
+            <a href="#">Phụ kiện</a>
+            <a href="#">Khuyến mãi</a>
+        </nav>
+    </header>
+    <div class="banner-container">
+        <div class="ad ad-left">
+            <img src="anh/adtrai.png" alt="Quảng cáo bên trái">
+        </div>
+        <div class="banner">
+            <div class="slides">
+                <div class="slide">
+                    <img src="anh/anh1.png" alt="Banner 1">
+                </div>
+                <div class="slide">
+                    <img src="anh/anh2.png" alt="Banner 2">
+                </div>
+                <div class="slide">
+                    <img src="anh/anh3.png" alt="Banner 3">
+                </div>
+                <div class="slide">
+                    <img src="anh/anh4.png" alt="Banner 4">
+                </div>
+            </div>
+            <div class="controls">
+                <span class="prev">&#10094;</span>
+                <span class="next">&#10095;</span>
+            </div>
+            <div class="dots">
+                <span class="dot" onclick="goToSlide(0)"></span>
+                <span class="dot" onclick="goToSlide(1)"></span>
+                <span class="dot" onclick="goToSlide(2)"></span>
+                <span class="dot" onclick="goToSlide(3)"></span>
+            </div>
+        </div>
+        <div class="ad ad-right">
+            <img src="anh/adphai.png" alt="Quảng cáo bên phải">
+        </div>
+    </div>
+    <section class="hot-sale">
+        <div class="hot-sale-header">
+            <h2>GIỜ VÀNG GIÁ SỐC !!!!!!!!!</h2>
+            <div class="countdown">
+                <span id="days">00</span>:
+                <span id="hours">00</span>:
+                <span id="minutes">00</span>:
+                <span id="seconds">00</span>
+            </div>
+        </div>
+        <div class="hot-sale-products">
+            <div class="product">
+                     <!-- link Sản phẩm sale -->
+                <a href="Sanpham1.html" class="product-link">
+                    <div class="badge">sản phẩm HOT !!!</div>
+                    <div class="discount">-28%</div>
+                    <img src="anh/laptopsale1.png" alt="Laptop 1">
+                    <h3>Lenovo IdeaPad 5 Pro 2024 AMD Ryzen 7 8745H RAM 24GB SSD 1TB 2.8K OLED 120Hz </h3>
+                    <p class="price">16.990.000 <span class="old-price">23.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail2.html" class="product-link">
+                    <div class="badge">sản phẩm HOT !!!</div>
+                    <div class="discount">-24%</div>
+                    <img src="anh/laptopsale2.png" alt="Laptop 2">
+                    <h3>Lenovo Legion R7000 2024 Ryzen 7 8745H RAM 16GB SSD 512GB RTX 4050 15.6" FHD 144Hz</h3>
+                    <p class="price">21.590.000 <span class="old-price">28.400.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail3.html" class="product-link">
+                    <div class="badge">sản phẩm HOT !!!</div>
+                    <div class="discount">-15%</div>
+                    <img src="anh/laptopsale3.png" alt="Laptop 3">
+                    <h3>HP ZBook Power G11 AMD Ryzen 7 8845HS RAM 32GB SSD 1TB 16" 2.5K 120Hz</h3>
+                    <p class="price">19.990.000 <span class="old-price">23.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail4.html" class="product-link">
+                    <div class="badge">sản phẩm HOT !!!</div>
+                    <div class="discount">-12%</div>
+                    <img src="anh/laptopsale4.png" alt="Laptop 4">
+                    <h3>Asus Zenbook 14 Oled Ultra 9 185H RAM 32GB SSD 1TB 14" 3K OLED 120Hz</h3>
+                    <p class="price">23.700.000 <span class="old-price">27.000.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail5.html" class="product-link">
+                    <div class="badge">sản phẩm HOT !!!</div>
+                    <div class="discount">-4%</div>
+                    <img src="anh/laptopsale5.png" alt="Laptop 5">
+                    <h3>HP ZBook Power G11 AMD Ryzen 7 8845HS RAM 32GB SSD RTX 4050 1TB 16" 2.5K 120Hz</h3>
+                    <p class="price">27.500.000 <span class="old-price">28.500.000</span></p>
+                </a>
+            </div>
+        </div>
+    </section>
+    <section class="laptops">
+        <div class="laptops-header">
+            <h2>MÁY TÍNH XÁCH TAY</h2>
+        </div>
+        <div class="laptop-products">
+            <div class="product">
+                <a href="product-detail1.html" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-4%</div>
+                    <img src="anh/laptop1.png" alt="Laptop 1">
+                    <h3>Asus ProArt P16 H7606WV Ryzen AI 9 HX 370 RAM 32GB SSD 1TB RTX 4060 16" 4K OLED</h3>
+                    <p class="price">45.000.000 <span class="old-price">46.990.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail2.html" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-8%</div>
+                    <img src="anh/laptop2.png" alt="Laptop 2">
+                    <h3>ThinkPad X9-14 2025 Ultra7-258V RAM 32GB SSD 1TB 2.8K OLED Touch 120Hz</h3>
+                    <p class="price">43.000.000 <span class="old-price">44.990.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail3.html" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-12%</div>
+                    <img src="anh/laptop3.png" alt="Laptop 3">
+                    <h3>Lenovo IdeaPad Slim 5 2025 Intel Core5 220H RAM 24GB SSD 1TB 2.8K OLED 120Hz</h3>
+                    <p class="price">21.490.000 <span class="old-price">24.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail4.html" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-18%</div>
+                    <img src="anh/laptop4.png" alt="Laptop 4">
+                    <h3>HP Elitebook 845 G11 AMD Ryzen 7 8840HS RAM 32GB SSD 1TB 14" 2.5K 120Hz</h3>
+                    <p class="price">28.990.000 <span class="old-price">37.000.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail5.html" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-22%</div>
+                    <img src="anh/laptop5.png" alt="Laptop 5">
+                    <h3>Dell G15 5530 2023 i5-13450HX RAM 16GB SSD 512GB RTX 3050 6 GB 15.6" FHD</h3>
+                    <p class="price">26.390.000 <span class="old-price">28.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail6.html" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-7%</div>
+                    <img src="anh/laptop6.png" alt="Laptop 6">
+                    <h3>HP Elitebook 845 G11 AMD Ryzen 7 8840HS RAM 32GB SSD 1TB 14" 2.5K 120Hz</h3>
+                    <p class="price">19.990.000 <span class="old-price">20.490.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail7.html" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-3%</div>
+                    <img src="anh/laptop7.png" alt="Laptop 7">
+                    <h3>Thinkbook X AI 2025 Ultra 9 285H RAM 32GB SSD 1TB 13.5" 2.8K 120Hz (Limited Edition)</h3>
+                    <p class="price">36.990.000 <span class="old-price">38.000.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail8.html" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-19%</div>
+                    <img src="anh/laptop8.png" alt="Laptop 8">
+                    <h3>ThinkBook 14 G6+ 2024 Ryzen 7 8845H RTX 5050 RAM 32GB SSD 1TB 14inch 3K 120Hz</h3>
+                    <p class="price">12.500.000 <span class="old-price">15.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail9.html" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-28%</div>
+                    <img src="anh/laptop9.png" alt="Laptop 9">
+                    <h3>Lenovo Legion 5 Y7000P 2024 i7 14650HX RAM 16GB SSD 1TB RTX 4060 16" 2.5K 165Hz</h3>
+                    <p class="price">17.990.000 <span class="old-price">19.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail10.html" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-18%</div>
+                    <img src="anh/laptop10.png" alt="Laptop 10">
+                    <h3>Thinkbook 14 G7+ 2025 AMD Ryzen AI 9-365 RAM 32GB SSD 1TB 14.5" 3K 120Hz</h3>
+                    <p class="price">21.490.000 <span class="old-price">24.500.000</span></p>
+                </a>
+            </div>
+        </div>
+    </section>
+    <section class="laptops">
+        <div class="laptops-header">
+            <h2>APPLE</h2>
+        </div>
+        <div class="laptop-products">
+            <!-- Sản phẩm 1 -->
+            <div class="product">
+                <a href="apple-detail1.html" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-8%</div>
+                    <img src="anh/apple1.png" alt="Macbook Pro 14 M2 Pro">
+                    <h3>Macbook Pro 14 M2 Pro 10 Core RAM 16GB SSD 512GB 16 GPU Liquid Retina</h3>
+                    <p class="price">34.700.000 <span class="old-price">37.800.000</span></p>
+                </a>
+            </div>
+            <!-- Sản phẩm 2 -->
+            <div class="product">
+                <a href="apple-detail2.html" class="product-link">
+                    <div class="badge">Hot!!!</div>
+                    <div class="discount">-18%</div>
+                    <img src="anh/apple2.png" alt="Macbook Pro 13 2019">
+                    <h3>Macbook Pro 13 2019 i7-8569U 16GB SSD 256GB Super Retina Touchbar(Limited)</h3>
+                    <p class="price">13.900.000 <span class="old-price">17.000.000</span></p>
+                </a>
+            </div>
+            <!-- Sản phẩm 3 -->
+            <div class="product">
+                <a href="apple-detail3.html" class="product-link">
+                    <div class="badge">Đang Có Flash Sale!!!</div>
+                    <div class="discount">-28%</div>
+                    <img src="anh/apple3.png" alt="Macbook Pro 16 2019">
+                    <h3>Macbook Pro 16 2019 i9 9980HK RAM 32GB SSD 512GB AMD Radeon Pro 5500M 4GB VRAM Retina</h3>
+                    <p class="price">19.200.000 <span class="old-price">26.500.000</span></p>
+                </a>
+            </div>
+            <!-- Sản phẩm 4 -->
+            <div class="product">
+                <a href="apple-detail4.html" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-23%</div>
+                    <img src="anh/apple4.png" alt="Macbook Pro 14 M1 Pro">
+                    <h3>Macbook Pro 14 M1 Pro 8-Core CPU 14-Core GPU RAM 16GB SSD 512GB Retina 2021</h3>
+                    <p class="price">27.500.000 <span class="old-price">35.500.000</span></p>
+                </a>
+            </div>
+            <!-- Sản phẩm 5 -->
+            <div class="product">
+                <a href="apple-detail5.html" class="product-link">
+                    <div class="badge">Hàng Mới Về Thêm</div>
+                    <div class="discount">-15%</div>
+                    <img src="anh/apple5.png" alt="Macbook Pro 14 M1 Pro">
+                    <h3>Macbook Pro 14 M1 Pro 10-core CPU 16-core GPU RAM 16GB SSD 512GB Retina 2021 </h3>
+                    <p class="price">30.200.000 <span class="old-price">35.500.000</span></p>
+                </a>
+            </div>
+            <!-- Sản phẩm 6 -->
+            <div class="product">
+                <a href="apple-detail6.html" class="product-link">
+                    <div class="badge">Đang Có Flash Sale!!!</div>
+                    <div class="discount">-16%</div>
+                    <img src="anh/apple6.png" alt="Macbook Pro 16 M1 Pro">
+                    <h3>Macbook Pro 16 M1 Pro RAM 16GB SSD 512GB Liquid Super Retina 2021(Limited) </h3>
+                    <p class="price">31.500.000 <span class="old-price">37.500.000</span></p>
+                </a>
+            </div>
+            <!-- Sản phẩm 7 -->
+            <div class="product">
+                <a href="apple-detail7.html" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-5%</div>
+                    <img src="anh/apple7.png" alt="Macbook Air 15 M2">
+                    <h3>Macbook Air 15 M2 RAM 8GB SSD 256GB 15.3" Liquid Retina 2023 Silver/Midnight</h3>
+                    <p class="price">29.900.000 <span class="old-price">31.900.000</span></p>
+                </a>
+            </div>
+            <!-- Sản phẩm 8 -->
+            <div class="product">
+                <a href="apple-detail8.html" class="product-link">
+                    <div class="badge">Hàng Mới Về</div>
+                    <div class="discount">-17%</div>
+                    <img src="anh/apple8.png" alt="Macbook Pro 16 M1 Max">
+                    <h3>Macbook Pro 14 M1 Max 10-Core CPU 24-Core GPU RAM 32GB SSD 1TB Liquid Retina 2021</h3>
+                    <p class="price">42.900.000 <span class="old-price">51.500.000</span></p>
+                </a>
+            </div>
+            <!-- Sản phẩm 9 -->
+            <div class="product">
+                <a href="apple-detail9.html" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-5%</div>
+                    <img src="anh/apple9.png" alt="Macbook Pro 14 M3">
+                    <h3>Macbook Pro 16 M1 Max 10-Core CPU 32-Core GPU RAM 32GB SSD 512GB Liquid Retina 2021</h3>
+                    <p class="price">29.900.000 <span class="old-price">31.500.000</span></p>
+                </a>
+            </div>
+            <!-- Sản phẩm 10 -->
+            <div class="product">
+                <a href="apple-detail10.html" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-18%</div>
+                    <img src="anh/apple10.png" alt="Macbook Pro 14 M1 Max">
+                    <h3>Macbook Pro 14 M3 2023 8 Core 8GB SSD 512GB 10 GPU Liquid Super Limited Retina</h3>
+                    <p class="price">29.990.000 <span class="old-price">31.500.000</span></p>
+                </a>
+            </div>
+        </div>
+    </section>
+    <section class="laptops">
+        <div class="laptops-header">
+            <h2>LENOVO IDEAPAD</h2>
+        </div>
+        <div class="laptop-products">
+            <!-- Sản phẩm 1 -->
+            <div class="product">
+                <a href="idea-detail1.html" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-8%</div>
+                    <img src="anh/idea1.png" alt="Lenovo IdeaPad Slim 3">
+                    <h3>Lenovo IdeaPad Slim 3 2025 Ryzen 7 8745HS RAM 16GB SSD 512GB FHD+ (Lenovo XiaoXin 14c)</h3>
+                    <p class="price">13.790.000 <span class="old-price">14.500.000</span></p>
+                </a>
+            </div>
+            <!-- Sản phẩm 2 -->
+            <div class="product">
+                <a href="idea-detail2.html" class="product-link">
+                    <div class="badge">Đang Có Flash Sale!!!</div>
+                    <div class="discount">-18%</div>
+                    <img src="anh/idea2.png" alt="Lenovo IdeaPad Slim 5 ">
+                    <h3>Lenovo IdeaPad Slim 5 2025 Intel Core5 220H RAM 24GB SSD 1TB 2.8K OLED 120Hz</h3>
+                    <p class="price">17.900.000 <span class="old-price">19.500.000</span></p>
+                </a>
+            </div>
+            <!-- Sản phẩm 3 -->
+            <div class="product">
+                <a href="idea-detail3.html" class="product-link">
+                    <div class="badge">Đang Có Flash Sale!!!</div>
+                    <div class="discount">-28%</div>
+                    <img src="anh/idea3.png" alt="Lenovo IdeaPad 5 Pro">
+                    <h3>Lenovo IdeaPad 5 Pro 2024 AMD Ryzen 7 8745H RAM 24GB SSD 1TB 2.8K OLED 120Hz</h3>
+                    <p class="price">16.900.000 <span class="old-price">23.500.000</span></p>
+                </a>
+            </div>
+            <!-- Sản phẩm 4 -->
+            <div class="product">
+                <a href="idea-detail4.html" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-23%</div>
+                    <img src="anh/idea4.png" alt="Lenovo IdeaPad Slim 5">
+                    <h3>Lenovo IdeaPad Slim 5 2024 Ryzen 7 8745H RAM 16GB SSD 512GB FHD+ 100% sRGB </h3>
+                    <p class="price">13.500.000 <span class="old-price">17.500.000</span></p>
+                </a>
+            </div>
+            <!-- Sản phẩm 5 -->
+            <div class="product">
+                <a href="idea-detail5.html" class="product-link">
+                    <div class="badge">Hàng Mới Về Thêm</div>
+                    <div class="discount">-15%</div>
+                    <img src="anh/idea5.png" alt="Lenovo IdeaPad 5">
+                    <h3>Lenovo IdeaPad 5 Pro 14 GT 2025 Ultra 5 225H RAM 32GB SSD 1TB 14" 2.8K OLED 120Hz  </h3>
+                    <p class="price">20.200.000 <span class="old-price">24.500.000</span></p>
+                </a>
+            </div>
+            <!-- Sản phẩm 6 -->
+            <div class="product">
+                <a href="idea-detail6.html" class="product-link">
+                    <div class="badge">Đang Có Flash Sale!!!</div>
+                    <div class="discount">-16%</div>
+                    <img src="anh/idea6.png" alt="Lenovo IdeaPad 5">
+                    <h3>Lenovo IdeaPad 5 Pro 16 GT 2025 Ultra 5 225H RAM 32GB SSD 1TB 16" 2.8K OLED 120Hz</h3>
+                    <p class="price">20.500.000 <span class="old-price">24.500.000</span></p>
+                </a>
+            </div>
+            <!-- Sản phẩm 7 -->
+            <div class="product">
+                <a href="idea-detail7.html" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-5%</div>
+                    <img src="anh/idea7.png" alt="Lenovo IdeaPad">
+                    <h3>Lenovo IdeaPad 5 Pro 14 GT 2025 Ultra 9 285H RAM 32GB SSD 1TB 14" 2.8K OLED 120Hz </h3>
+                    <p class="price">26.900.000 <span class="old-price">31.900.000</span></p>
+                </a>
+            </div>
+            <!-- Sản phẩm 8 -->
+            <div class="product">
+                <a href="idea-detail8.html" class="product-link">
+                    <div class="badge">Hàng Mới Về</div>
+                    <div class="discount">-17%</div>
+                    <img src="anh/idea8.png" alt="Lenovo IdeaPad 5 Pro">
+                    <h3>Lenovo IdeaPad 5 Pro 14 GT 2025 Ryzen AI 9 365 RAM 32GB SSD 1TB 14" 2.8K OLED 120Hz</h3>
+                    <p class="price">32.900.000 <span class="old-price">40.500.000</span></p>
+                </a>
+            </div>
+            <!-- Sản phẩm 9 -->
+            <div class="product">
+                <a href="idea-detail9.html" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-5%</div>
+                    <img src="anh/idea9.png" alt="Lenovo IdeaPad 5">
+                    <h3>Lenovo IdeaPad 5 Pro 14 GT 2025 Ryzen AI 7 350 RAM 32GB SSD 1TB 14" 2.8K OLED 120Hz </h3>
+                    <p class="price">22.900.000 <span class="old-price">31.500.000</span></p>
+                </a>
+            </div>
+            <!-- Sản phẩm 10 -->
+            <div class="product">
+                <a href="idea-detail10.html" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-18%</div>
+                    <img src="anh/idea10.png" alt="Lenovo IdeaPad 5">
+                    <h3>Lenovo IdeaPad 5 Pro 16 GT 2025 Ryzen AI 7 350 RAM 32GB SSD 1TB 16" 2.8K OLED 120Hz</h3>
+                    <p class="price">29.990.000 <span class="old-price">31.500.000</span></p>
+                </a>
+            </div>
+        </div>
+    </section>
+    <script src="script.js"></script>
+    <script src="Dongbogiohang.js"></script>
+</body>
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-column">
+            <h4>VỀ VIETTECH</h4>
+            <ul>
+                <li><a href="#">Giới thiệu</a></li>
+                <li><a href="#">Tuyển dụng</a></li>
+                <li><a href="#">Liên hệ</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h4>CHÍNH SÁCH</h4>
+            <ul>
+                <li><a href="#">Chính sách bảo hành</a></li>
+                <li><a href="#">Chính sách giao hàng</a></li>
+                <li><a href="#">Chính sách bảo mật</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h4>THÔNG TIN</h4>
+            <ul>
+                <li><a href="#">Hệ thống cửa hàng</a></li>
+                <li><a href="#">Hướng dẫn mua hàng</a></li>
+                <li><a href="#">Hướng dẫn thanh toán</a></li>
+                <li><a href="#">Hướng dẫn trả góp</a></li>
+                <li><a href="#">Tra cứu địa chỉ bảo hành</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h4>TỔNG ĐÀI HỖ TRỢ (8:00 - 21:00)</h4>
+            <ul>
+                <li>Mua hàng: <a href="tel:19005301">1900.5301</a></li>
+                <li>Bảo hành: <a href="tel:19005325">1900.5325</a></li>
+                <li>Kiếu nại: <a href="tel:18006173">1800.6173</a></li>
+                <li>Email: <a href="mailto:cskh@viettech.com">cskh@VietTechStore .com</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h4>BẢN ĐỒ</h4>
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14931.339738709165!2d106.05463020248972!3d20.676293444177908!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135c0cd38f568f3%3A0x50681a4fcf414c4b!2zQW4gVOG6o28sIFRwLiBIxrBuZyBZw6puLCBIxrBuZyBZw6puLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1743648692178!5m2!1svi!2s" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </div>
+</footer>
+</html>
