@@ -310,3 +310,22 @@ body {
     margin-top: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
+/* Responsive cho mobile và tablet */
+@media (max-width: 1024px) {
+    /* Hình ảnh chính */
+    .product-images .main-image img {
+        width: 100%; /* Chiều rộng đầy đủ của container */
+        height: auto; /* Tự động điều chỉnh chiều cao để giữ tỷ lệ */
+    }
+
+    /* Hình ảnh thumbnail */
+    .thumbnail-images img {
+        width: 60px; /* Giảm kích thước thumbnail */
+        height: 60px;
+    }
+
+    /* Đảm bảo khoảng cách giữa các thumbnail */
+    .thumbnail-images {
+        gap: 5px;
+    }
+}
