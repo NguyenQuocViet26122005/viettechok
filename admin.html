@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản trị viên</title>
+    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <header class="admin-header">
+        <h1>Trang Quản Trị</h1>
+        <nav>
+            <a href="#products">Quản lý sản phẩm</a>
+            <a href="#orders">Quản lý đơn hàng</a>
+            <a href="#users">Quản lý người dùng</a>
+            <a href="index.html">Trang chính</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="products">
+            <h2>Quản lý sản phẩm</h2>
+            <button onclick="addProduct()">Thêm sản phẩm</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Giá</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody id="productTable">
+                    <!-- Dữ liệu sản phẩm sẽ được thêm ở đây -->
+                </tbody>
+            </table>
+        </section>
+
+        <section id="orders">
+            <h2>Quản lý đơn hàng</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Khách hàng</th>
+                        <th>Tổng tiền</th>
+                        <th>Trạng thái</th>
+                    </tr>
+                </thead>
+                <tbody id="orderTable">
+                    <!-- Dữ liệu đơn hàng sẽ được thêm ở đây -->
+                </tbody>
+            </table>
+        </section>
+
+        <section id="users">
+            <h2>Quản lý người dùng</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tên người dùng</th>
+                        <th>Email</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody id="userTable">
+                    <!-- Dữ liệu người dùng sẽ được thêm ở đây -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script src="admin.js"></script>
+</body>
+</html>

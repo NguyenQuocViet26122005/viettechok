@@ -8,12 +8,10 @@
     width: 100%;
     top: 0;
     left: 0;
-    position: fixed;
+    
 }
 
-body {
-    margin-top: 80px; 
-}
+
 .container {
     display: flex;
     justify-content: space-between;
@@ -416,8 +414,7 @@ body {
     border-radius: 5px;
     
 }
-.product:hover .badge {  
-  }
+
   
 .product .discount {
     position: absolute; /* Định vị tuyệt đối so với .product */
