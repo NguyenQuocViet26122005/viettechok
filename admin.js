@@ -1,76 +1,102 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Dữ liệu mẫu
+    // Dữ liệu mẫu cho sản phẩm (bao gồm danh sách hình ảnh)
     const products = [
-        { id: 1, name: "Laptop Dell XPS 13", price: "30,000,000" },
-        { id: 2, name: "MacBook Pro 14", price: "50,000,000" },
-    ];
-
-    const orders = [
-        { id: 1, customer: "Nguyễn Văn A", total: "30,000,000", status: "Đang xử lý" },
-        { id: 2, customer: "Trần Thị B", total: "50,000,000", status: "Hoàn thành" },
-    ];
-
-    const users = [
-        { id: 1, name: "Nguyễn Văn A", email: "nguyenvana@gmail.com" },
-        { id: 2, name: "Trần Thị B", email: "tranthib@gmail.com" },
+        {
+            id: 1,
+            name: "Laptop Dell XPS 13",
+            price: "30,000,000",
+            images: [
+                "anh/dell1.jpg",
+                "anh/dell2.jpg",
+                "anh/dell3.jpg",
+                "anh/dell4.jpg",
+            ],
+        },
+        {
+            id: 2,
+            name: "MacBook Pro 14",
+            price: "50,000,000",
+            images: [
+                "anh/macbook1.jpg",
+                "anh/macbook2.jpg",
+                "anh/macbook3.jpg",
+                "anh/macbook4.jpg",
+            ],
+        },
+        {
+            id: 3,
+            name: "Asus ROG Zephyrus G14",
+            price: "40,000,000",
+            images: [
+                "anh/asus1.jpg",
+                "anh/asus2.jpg",
+                "anh/asus3.jpg",
+                "anh/asus4.jpg",
+            ],
+        },
     ];
 
     // Hiển thị sản phẩm
     const productTable = document.getElementById("productTable");
     products.forEach(product => {
         const row = document.createElement("tr");
+
+        // Hiển thị hình ảnh (chỉ hiển thị ảnh đầu tiên và nút xem thêm)
+        const imageHtml = `
+            <div class="product-images">
+                <img src="${product.images[0]}" alt="Ảnh sản phẩm" class="thumbnail">
+                <button onclick="viewImages(${product.id})">Xem thêm</button>
+            </div>
+        `;
+
         row.innerHTML = `
             <td>${product.id}</td>
             <td>${product.name}</td>
             <td>${product.price}</td>
-            <td><button onclick="editProduct(${product.id})">Sửa</button> <button onclick="deleteProduct(${product.id})">Xóa</button></td>
+            <td>${imageHtml}</td>
+            <td>
+                <button onclick="editProduct(${product.id})">Sửa</button>
+                <button onclick="deleteProduct(${product.id})">Xóa</button>
+            </td>
         `;
         productTable.appendChild(row);
     });
 
-    // Hiển thị đơn hàng
-    const orderTable = document.getElementById("orderTable");
-    orders.forEach(order => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-            <td>${order.id}</td>
-            <td>${order.customer}</td>
-            <td>${order.total}</td>
-            <td>${order.status}</td>
-        `;
-        orderTable.appendChild(row);
-    });
+    // Hàm xử lý xem thêm hình ảnh
+    window.viewImages = (id) => {
+        const product = products.find(p => p.id === id);
+        if (product) {
+            const imagesHtml = product.images
+                .map(img => `<img src="${img}" alt="Ảnh sản phẩm" class="full-image">`)
+                .join("");
+            const modalContent = `
+                <div class="modal">
+                    <div class="modal-content">
+                        <span class="close-btn" onclick="closeModal()">&times;</span>
+                        ${imagesHtml}
+                    </div>
+                </div>
+            `;
+            document.body.insertAdjacentHTML("beforeend", modalContent);
+        }
+    };
 
-    // Hiển thị người dùng
-    const userTable = document.getElementById("userTable");
-    users.forEach(user => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-            <td>${user.id}</td>
-            <td>${user.name}</td>
-            <td>${user.email}</td>
-            <td><button onclick="deleteUser(${user.id})">Xóa</button></td>
-        `;
-        userTable.appendChild(row);
-    });
+    // Hàm đóng modal
+    window.closeModal = () => {
+        const modal = document.querySelector(".modal");
+        if (modal) modal.remove();
+    };
 });
 
-// Thêm sản phẩm
+// Các hàm xử lý khác
 function addProduct() {
-    alert("Chức năng thêm sản phẩm!");
+    alert("Thêm sản phẩm mới!");
 }
 
-// Sửa sản phẩm
 function editProduct(id) {
     alert(`Chỉnh sửa sản phẩm có ID: ${id}`);
 }
 
-// Xóa sản phẩm
 function deleteProduct(id) {
     alert(`Xóa sản phẩm có ID: ${id}`);
-}
-
-// Xóa người dùng
-function deleteUser(id) {
-    alert(`Xóa người dùng có ID: ${id}`);
 }
