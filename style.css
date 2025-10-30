@@ -4,14 +4,23 @@
     padding: 10px 20px;
     box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3); 
     font-family: Arial, sans-serif;
+    z-index: 1100;
+    width: 100%;
+    top: 0;
+    left: 0;
+    position: fixed;
 }
 
+body {
+    margin-top: 80px; 
+}
 .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
     max-width: 1200px;
     margin: 0 auto;
+    
 }
 
 .logo {
@@ -363,7 +372,7 @@
 
 .product:hover {
     transform: scale(1.1); /* Phóng to sản phẩm khi di chuột vào */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Tăng độ đổ bóng khi hover */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Tăng độ đổ bóng khi hover */;
 }
 
 .product img {
@@ -407,7 +416,9 @@
     border-radius: 5px;
     
 }
-
+.product:hover .badge {  
+  }
+  
 .product .discount {
     position: absolute; /* Định vị tuyệt đối so với .product */
     top: 10px; /* Cách mép trên 10px */
@@ -425,7 +436,7 @@
     color: inherit; /* Giữ nguyên màu chữ của nội dung bên trong */
 }
 
-.product-link:hover {
+.product-link:hover p {
     text-decoration: none; /* Không thay đổi gạch chân khi hover */
 }
 
