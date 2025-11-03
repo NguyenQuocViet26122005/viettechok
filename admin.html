@@ -1,1421 +1,272 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="vi">
- <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin - Quản lý Laptop</title>
-  <script src="/_sdk/data_sdk.js"></script>
-  <script src="/_sdk/element_sdk.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    }
-    
-    * {
-      box-sizing: border-box;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản lý Laptop - Admin</title>
+    <link rel="stylesheet" href="admin.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar__header">
+        <h1 class="app-title">Quản lý Laptop</h1>
+        <p class="app-sub">Chào mừng đến với trang quản trị</p>
+      </div>
+      <nav class="menu">
+        <button class="menu__item active" data-target="dashboard">📊 <span>Dashboard</span></button>
+        <button class="menu__item" data-target="products">💻 <span>Sản phẩm</span></button>
+        <button class="menu__item" data-target="orders">📦 <span>Đơn hàng</span></button>
+        <button class="menu__item" data-target="customers">👥 <span>Khách hàng</span></button>
+        <button class="menu__item" data-target="inventory">📋 <span>Kho hàng</span></button>
+        <button class="menu__item" data-target="reports">📈 <span>Báo cáo</span></button>
+      </nav>
+    </aside>
 
-    .sidebar {
-      position: fixed;
-      left: 0;
-      top: 0;
-      height: 100%;
-      width: 260px;
-      overflow-y: auto;
-      transition: transform 0.3s ease;
-    }
-
-    .main-content {
-      margin-left: 260px;
-      min-height: 100%;
-      transition: margin-left 0.3s ease;
-    }
-
-    .menu-item {
-      transition: all 0.2s ease;
-    }
-
-    .menu-item:hover {
-      transform: translateX(4px);
-    }
-
-    .stat-card {
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .stat-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
-    }
-
-    .table-row {
-      transition: background-color 0.2s ease;
-    }
-
-    .table-row:hover {
-      background-color: rgba(59, 130, 246, 0.05);
-    }
-
-    .btn {
-      transition: all 0.2s ease;
-    }
-
-    .btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
-
-    .badge {
-      display: inline-block;
-      padding: 4px 12px;
-      border-radius: 12px;
-      font-size: 12px;
-      font-weight: 600;
-    }
-
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.5);
-      z-index: 1000;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .modal.active {
-      display: flex;
-    }
-
-    .modal-content {
-      background: white;
-      border-radius: 12px;
-      max-width: 600px;
-      width: 90%;
-      max-height: 90%;
-      overflow-y: auto;
-      animation: slideIn 0.3s ease;
-    }
-
-    @keyframes slideIn {
-      from {
-        opacity: 0;
-        transform: translateY(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .loading {
-      opacity: 0.6;
-      pointer-events: none;
-    }
-
-    .toast {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      background: white;
-      padding: 16px 24px;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      display: none;
-      z-index: 2000;
-      animation: slideUp 0.3s ease;
-    }
-
-    .toast.active {
-      display: block;
-    }
-
-    @keyframes slideUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @media (max-width: 768px) {
-      .sidebar {
-        transform: translateX(-100%);
-      }
-
-      .sidebar.mobile-open {
-        transform: translateX(0);
-      }
-
-      .main-content {
-        margin-left: 0;
-      }
-    }
-  </style>
-  <style>@view-transition { navigation: auto; }</style>
- </head>
- <body><!-- Sidebar -->
-  <div id="sidebar" class="sidebar" style="background: linear-gradient(180deg, #1e40af 0%, #1e3a8a 100%);">
-   <div style="padding: 24px;">
-    <h1 id="adminTitle" style="color: white; font-size: 24px; font-weight: 700; margin: 0 0 8px 0;">Quản lý Laptop</h1>
-    <p id="welcomeMessage" style="color: rgba(255,255,255,0.8); font-size: 14px; margin: 0;">Chào mừng đến với trang quản trị</p>
-   </div>
-   <nav style="padding: 0 12px;">
-    <div class="menu-item" onclick="showSection('dashboard')" style="padding: 12px 16px; margin: 4px 0; border-radius: 8px; cursor: pointer; color: white; display: flex; align-items: center; gap: 12px;"><span style="font-size: 20px;">📊</span> <span style="font-weight: 500;">Dashboard</span>
-    </div>
-    <div class="menu-item" onclick="showSection('products')" style="padding: 12px 16px; margin: 4px 0; border-radius: 8px; cursor: pointer; color: white; display: flex; align-items: center; gap: 12px;"><span style="font-size: 20px;">💻</span> <span style="font-weight: 500;">Sản phẩm</span>
-    </div>
-    <div class="menu-item" onclick="showSection('orders')" style="padding: 12px 16px; margin: 4px 0; border-radius: 8px; cursor: pointer; color: white; display: flex; align-items: center; gap: 12px;"><span style="font-size: 20px;">📦</span> <span style="font-weight: 500;">Đơn hàng</span>
-    </div>
-    <div class="menu-item" onclick="showSection('customers')" style="padding: 12px 16px; margin: 4px 0; border-radius: 8px; cursor: pointer; color: white; display: flex; align-items: center; gap: 12px;"><span style="font-size: 20px;">👥</span> <span style="font-weight: 500;">Khách hàng</span>
-    </div>
-    <div class="menu-item" onclick="showSection('inventory')" style="padding: 12px 16px; margin: 4px 0; border-radius: 8px; cursor: pointer; color: white; display: flex; align-items: center; gap: 12px;"><span style="font-size: 20px;">📋</span> <span style="font-weight: 500;">Kho hàng</span>
-    </div>
-    <div class="menu-item" onclick="showSection('reports')" style="padding: 12px 16px; margin: 4px 0; border-radius: 8px; cursor: pointer; color: white; display: flex; align-items: center; gap: 12px;"><span style="font-size: 20px;">📈</span> <span style="font-weight: 500;">Báo cáo</span>
-    </div>
-   </nav>
-  </div><!-- Main Content -->
-  <div class="main-content" style="background: #f8fafc;"><!-- Header -->
-   <div style="background: white; padding: 16px 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center;"><button onclick="toggleMobileSidebar()" style="display: none; background: #3b82f6; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 500;" class="mobile-menu-btn">☰ Menu</button>
-    <div style="display: flex; align-items: center; gap: 16px;">
-     <div style="position: relative;"><span style="font-size: 24px; cursor: pointer;">🔔</span> <span style="position: absolute; top: -4px; right: -4px; background: #ef4444; color: white; border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600;">3</span>
-     </div>
-     <div style="display: flex; align-items: center; gap: 8px;">
-      <div style="width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #3b82f6, #8b5cf6); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;">
-       A
-      </div><span style="font-weight: 500; color: #1e293b;">Admin</span>
-     </div>
-    </div>
-   </div><!-- Content Area -->
-   <div style="padding: 24px;"><!-- Dashboard Section -->
-    <div id="dashboard-section" class="content-section">
-     <h2 style="font-size: 28px; font-weight: 700; color: #1e293b; margin: 0 0 24px 0;">Dashboard</h2><!-- Stats Cards -->
-     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 32px;">
-      <div class="stat-card" style="background: white; padding: 24px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
-       <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
-        <div>
-         <p style="color: #64748b; font-size: 14px; margin: 0 0 8px 0;">Doanh thu hôm nay</p>
-         <p id="todayRevenue" style="font-size: 28px; font-weight: 700; color: #1e293b; margin: 0;">0 ₫</p>
+    <!-- Main -->
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar__left">
+          <button id="btnToggleSidebar" class="icon-btn" aria-label="Mở/đóng menu">☰</button>
         </div>
-        <div style="width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, #10b981, #059669); display: flex; align-items: center; justify-content: center; font-size: 24px;">
-         💰
+        <div class="topbar__right">
+          <div class="bell">🔔<span class="counter">3</span></div>
+          <div class="profile"><div class="avatar">A</div><span>Admin</span></div>
         </div>
-       </div>
-       <p style="color: #10b981; font-size: 13px; margin: 0;">↑ +12% so với hôm qua</p>
-      </div>
-      <div class="stat-card" style="background: white; padding: 24px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
-       <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
-        <div>
-         <p style="color: #64748b; font-size: 14px; margin: 0 0 8px 0;">Đơn hàng mới</p>
-         <p id="newOrders" style="font-size: 28px; font-weight: 700; color: #1e293b; margin: 0;">0</p>
+      </header>
+
+      <!-- DASHBOARD -->
+      <section id="dashboard" class="section">
+        <h2 class="section__title">Dashboard</h2>
+        <div class="cards">
+          <div class="card card--green">
+            <p class="card__label">Doanh thu hôm nay</p>
+            <p class="card__value" id="todayRevenue">0 ₫</p>
+            <small>↑ +12% so với hôm qua</small>
+          </div>
+          <div class="card card--blue">
+            <p class="card__label">Đơn hàng mới</p>
+            <p class="card__value" id="newOrders">0</p>
+            <small>Cần xử lý</small>
+          </div>
+          <div class="card card--amber">
+            <p class="card__label">Sản phẩm trong kho</p>
+            <p class="card__value" id="totalStock">0</p>
+            <small>Tổng số lượng</small>
+          </div>
+          <div class="card card--purple">
+            <p class="card__label">Khách hàng</p>
+            <p class="card__value" id="totalCustomers">0</p>
+            <small>Tổng khách hàng</small>
+          </div>
         </div>
-        <div style="width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, #3b82f6, #2563eb); display: flex; align-items: center; justify-content: center; font-size: 24px;">
-         📦
+        <div class="grid-2">
+          <div class="panel">
+            <div class="panel__header">Doanh thu 7 ngày qua</div>
+            <canvas id="revenueChart"></canvas>
+          </div>
+          <div class="panel">
+            <div class="panel__header">Sản phẩm bán chạy</div>
+            <canvas id="topProductsChart"></canvas>
+          </div>
         </div>
-       </div>
-       <p style="color: #3b82f6; font-size: 13px; margin: 0;">Cần xử lý</p>
-      </div>
-      <div class="stat-card" style="background: white; padding: 24px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
-       <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
-        <div>
-         <p style="color: #64748b; font-size: 14px; margin: 0 0 8px 0;">Sản phẩm trong kho</p>
-         <p id="totalStock" style="font-size: 28px; font-weight: 700; color: #1e293b; margin: 0;">0</p>
+      </section>
+
+      <!-- PRODUCTS -->
+      <section id="products" class="section is-hidden">
+        <div class="section__header">
+          <h2 class="section__title">Quản lý sản phẩm</h2>
+          <button class="btn btn--primary" data-open="productModal">➕ Thêm sản phẩm</button>
         </div>
-        <div style="width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, #f59e0b, #d97706); display: flex; align-items: center; justify-content: center; font-size: 24px;">
-         📋
+        <div class="table-wrap">
+          <div class="toolbar">
+            <input id="productSearch" class="input" placeholder="🔍 Tìm kiếm sản phẩm...">
+          </div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Tên sản phẩm</th><th>Hãng</th><th>Giá</th><th>Tồn kho</th><th>Danh mục</th><th>Trạng thái</th><th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody id="productsTableBody"></tbody>
+          </table>
         </div>
-       </div>
-       <p style="color: #f59e0b; font-size: 13px; margin: 0;">Tổng số lượng</p>
-      </div>
-      <div class="stat-card" style="background: white; padding: 24px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
-       <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
-        <div>
-         <p style="color: #64748b; font-size: 14px; margin: 0 0 8px 0;">Khách hàng</p>
-         <p id="totalCustomers" style="font-size: 28px; font-weight: 700; color: #1e293b; margin: 0;">0</p>
+      </section>
+
+      <!-- ORDERS -->
+      <section id="orders" class="section is-hidden">
+        <div class="section__header">
+          <h2 class="section__title">Quản lý đơn hàng</h2>
+          <button class="btn btn--primary" data-open="orderModal">➕ Tạo đơn hàng</button>
         </div>
-        <div style="width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, #8b5cf6, #7c3aed); display: flex; align-items: center; justify-content: center; font-size: 24px;">
-         👥
+        <div class="table-wrap">
+          <div class="toolbar">
+            <input id="orderSearch" class="input" placeholder="🔍 Tìm kiếm đơn hàng...">
+          </div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Mã đơn</th><th>Khách hàng</th><th>Sản phẩm</th><th>Tổng tiền</th><th>Trạng thái</th><th>Ngày đặt</th><th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody id="ordersTableBody"></tbody>
+          </table>
         </div>
-       </div>
-       <p style="color: #8b5cf6; font-size: 13px; margin: 0;">Tổng khách hàng</p>
-      </div>
-     </div><!-- Charts -->
-     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px;">
-      <div style="background: white; padding: 24px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
-       <h3 style="font-size: 18px; font-weight: 600; color: #1e293b; margin: 0 0 20px 0;">Doanh thu 7 ngày qua</h3>
-       <div style="height: 300px; position: relative;">
-        <canvas id="revenueChart"></canvas>
-       </div>
-      </div>
-      <div style="background: white; padding: 24px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
-       <h3 style="font-size: 18px; font-weight: 600; color: #1e293b; margin: 0 0 20px 0;">Sản phẩm bán chạy</h3>
-       <div style="height: 300px; position: relative;">
-        <canvas id="topProductsChart"></canvas>
-       </div>
-      </div>
-     </div>
-    </div><!-- Products Section -->
-    <div id="products-section" class="content-section" style="display: none;">
-     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
-      <h2 style="font-size: 28px; font-weight: 700; color: #1e293b; margin: 0;">Quản lý sản phẩm</h2><button onclick="openProductModal()" class="btn" style="background: #3b82f6; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 8px;"> <span style="font-size: 18px;">➕</span> Thêm sản phẩm </button>
-     </div>
-     <div style="background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); overflow: hidden;">
-      <div style="padding: 20px; border-bottom: 1px solid #e2e8f0;"><input type="text" id="productSearch" placeholder="🔍 Tìm kiếm sản phẩm..." style="width: 100%; padding: 12px 16px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 14px;" oninput="filterProducts()">
-      </div>
-      <div style="overflow-x: auto;">
-       <table style="width: 100%; border-collapse: collapse;">
-        <thead>
-         <tr style="background: #f8fafc; border-bottom: 2px solid #e2e8f0;">
-          <th style="padding: 16px; text-align: left; font-weight: 600; color: #475569; font-size: 13px;">TÊN SẢN PHẨM</th>
-          <th style="padding: 16px; text-align: left; font-weight: 600; color: #475569; font-size: 13px;">HÃNG</th>
-          <th style="padding: 16px; text-align: left; font-weight: 600; color: #475569; font-size: 13px;">GIÁ</th>
-          <th style="padding: 16px; text-align: left; font-weight: 600; color: #475569; font-size: 13px;">TỒN KHO</th>
-          <th style="padding: 16px; text-align: left; font-weight: 600; color: #475569; font-size: 13px;">DANH MỤC</th>
-          <th style="padding: 16px; text-align: left; font-weight: 600; color: #475569; font-size: 13px;">TRẠNG THÁI</th>
-          <th style="padding: 16px; text-align: center; font-weight: 600; color: #475569; font-size: 13px;">THAO TÁC</th>
-         </tr>
-        </thead>
-        <tbody id="productsTableBody">
-        </tbody>
-       </table>
-      </div>
-     </div>
-    </div><!-- Orders Section -->
-    <div id="orders-section" class="content-section" style="display: none;">
-     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
-      <h2 style="font-size: 28px; font-weight: 700; color: #1e293b; margin: 0;">Quản lý đơn hàng</h2><button onclick="openOrderModal()" class="btn" style="background: #3b82f6; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 8px;"> <span style="font-size: 18px;">➕</span> Tạo đơn hàng </button>
-     </div>
-     <div style="background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); overflow: hidden;">
-      <div style="padding: 20px; border-bottom: 1px solid #e2e8f0;"><input type="text" id="orderSearch" placeholder="🔍 Tìm kiếm đơn hàng..." style="width: 100%; padding: 12px 16px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 14px;" oninput="filterOrders()">
-      </div>
-      <div style="overflow-x: auto;">
-       <table style="width: 100%; border-collapse: collapse;">
-        <thead>
-         <tr style="background: #f8fafc; border-bottom: 2px solid #e2e8f0;">
-          <th style="padding: 16px; text-align: left; font-weight: 600; color: #475569; font-size: 13px;">MÃ ĐƠN</th>
-          <th style="padding: 16px; text-align: left; font-weight: 600; color: #475569; font-size: 13px;">KHÁCH HÀNG</th>
-          <th style="padding: 16px; text-align: left; font-weight: 600; color: #475569; font-size: 13px;">SẢN PHẨM</th>
-          <th style="padding: 16px; text-align: left; font-weight: 600; color: #475569; font-size: 13px;">TỔNG TIỀN</th>
-          <th style="padding: 16px; text-align: left; font-weight: 600; color: #475569; font-size: 13px;">TRẠNG THÁI</th>
-          <th style="padding: 16px; text-align: left; font-weight: 600; color: #475569; font-size: 13px;">NGÀY ĐẶT</th>
-          <th style="padding: 16px; text-align: center; font-weight: 600; color: #475569; font-size: 13px;">THAO TÁC</th>
-         </tr>
-        </thead>
-        <tbody id="ordersTableBody">
-        </tbody>
-       </table>
-      </div>
-     </div>
-    </div><!-- Customers Section -->
-    <div id="customers-section" class="content-section" style="display: none;">
-     <h2 style="font-size: 28px; font-weight: 700; color: #1e293b; margin: 0 0 24px 0;">Quản lý khách hàng</h2>
-     <div style="background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); overflow: hidden;">
-      <div style="padding: 20px; border-bottom: 1px solid #e2e8f0;"><input type="text" id="customerSearch" placeholder="🔍 Tìm kiếm khách hàng..." style="width: 100%; padding: 12px 16px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 14px;" oninput="filterCustomers()">
-      </div>
-      <div style="overflow-x: auto;">
-       <table style="width: 100%; border-collapse: collapse;">
-        <thead>
-         <tr style="background: #f8fafc; border-bottom: 2px solid #e2e8f0;">
-          <th style="padding: 16px; text-align: left; font-weight: 600; color: #475569; font-size: 13px;">TÊN KHÁCH HÀNG</th>
-          <th style="padding: 16px; text-align: left; font-weight: 600; color: #475569; font-size: 13px;">EMAIL</th>
-          <th style="padding: 16px; text-align: left; font-weight: 600; color: #475569; font-size: 13px;">SỐ ĐIỆN THOẠI</th>
-          <th style="padding: 16px; text-align: left; font-weight: 600; color: #475569; font-size: 13px;">SỐ ĐƠN HÀNG</th>
-          <th style="padding: 16px; text-align: left; font-weight: 600; color: #475569; font-size: 13px;">TỔNG CHI TIÊU</th>
-         </tr>
-        </thead>
-        <tbody id="customersTableBody">
-        </tbody>
-       </table>
-      </div>
-     </div>
-    </div><!-- Inventory Section -->
-    <div id="inventory-section" class="content-section" style="display: none;">
-     <h2 style="font-size: 28px; font-weight: 700; color: #1e293b; margin: 0 0 24px 0;">Quản lý kho hàng</h2>
-     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 24px;">
-      <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); border-left: 4px solid #10b981;">
-       <p style="color: #64748b; font-size: 14px; margin: 0 0 8px 0;">Tổng giá trị kho</p>
-       <p id="inventoryValue" style="font-size: 24px; font-weight: 700; color: #1e293b; margin: 0;">0 ₫</p>
-      </div>
-      <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); border-left: 4px solid #ef4444;">
-       <p style="color: #64748b; font-size: 14px; margin: 0 0 8px 0;">Sản phẩm sắp hết</p>
-       <p id="lowStockCount" style="font-size: 24px; font-weight: 700; color: #1e293b; margin: 0;">0</p>
-      </div>
-      <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); border-left: 4px solid #3b82f6;">
-       <p style="color: #64748b; font-size: 14px; margin: 0 0 8px 0;">Tổng sản phẩm</p>
-       <p id="totalProducts" style="font-size: 24px; font-weight: 700; color: #1e293b; margin: 0;">0</p>
-      </div>
-     </div>
-     <div style="background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); padding: 24px;">
-      <h3 style="font-size: 18px; font-weight: 600; color: #1e293b; margin: 0 0 20px 0;">Cảnh báo tồn kho thấp</h3>
-      <div id="lowStockList"></div>
-     </div>
-    </div><!-- Reports Section -->
-    <div id="reports-section" class="content-section" style="display: none;">
-     <h2 style="font-size: 28px; font-weight: 700; color: #1e293b; margin: 0 0 24px 0;">Báo cáo &amp; Thống kê</h2>
-     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; margin-bottom: 24px;">
-      <div style="background: white; padding: 24px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
-       <h3 style="font-size: 18px; font-weight: 600; color: #1e293b; margin: 0 0 20px 0;">Doanh thu theo tháng</h3>
-       <div style="height: 300px; position: relative;">
-        <canvas id="monthlyRevenueChart"></canvas>
-       </div>
-      </div>
-      <div style="background: white; padding: 24px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
-       <h3 style="font-size: 18px; font-weight: 600; color: #1e293b; margin: 0 0 20px 0;">Phân bố danh mục</h3>
-       <div style="height: 300px; position: relative;">
-        <canvas id="categoryChart"></canvas>
-       </div>
-      </div>
-     </div>
-     <div style="background: white; padding: 24px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
-      <h3 style="font-size: 18px; font-weight: 600; color: #1e293b; margin: 0 0 20px 0;">Top 5 khách hàng mua nhiều nhất</h3>
-      <div id="topCustomersList"></div>
-     </div>
-    </div>
-   </div>
-  </div><!-- Product Modal -->
-  <div id="productModal" class="modal">
-   <div class="modal-content">
-    <div style="padding: 24px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
-     <h3 id="productModalTitle" style="font-size: 20px; font-weight: 600; color: #1e293b; margin: 0;">Thêm sản phẩm mới</h3><button onclick="closeProductModal()" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #64748b;">×</button>
-    </div>
-    <form id="productForm" style="padding: 24px;">
-     <div style="display: grid; gap: 16px;">
-      <div><label style="display: block; font-weight: 500; color: #475569; margin-bottom: 6px; font-size: 14px;">Tên sản phẩm</label> <input type="text" id="productName" required style="width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px;">
-      </div>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-       <div><label style="display: block; font-weight: 500; color: #475569; margin-bottom: 6px; font-size: 14px;">Hãng</label> <select id="productBrand" required style="width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px;"> <option value="">Chọn hãng</option> <option value="Dell">Dell</option> <option value="HP">HP</option> <option value="Lenovo">Lenovo</option> <option value="Asus">Asus</option> <option value="Acer">Acer</option> <option value="MSI">MSI</option> <option value="Apple">Apple</option> </select>
-       </div>
-       <div><label style="display: block; font-weight: 500; color: #475569; margin-bottom: 6px; font-size: 14px;">Danh mục</label> <select id="productCategory" required style="width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px;"> <option value="">Chọn danh mục</option> <option value="Gaming">Gaming</option> <option value="Văn phòng">Văn phòng</option> <option value="Đồ họa">Đồ họa</option> <option value="Học tập">Học tập</option> </select>
-       </div>
-      </div>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-       <div><label style="display: block; font-weight: 500; color: #475569; margin-bottom: 6px; font-size: 14px;">Giá (VNĐ)</label> <input type="number" id="productPrice" required style="width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px;">
-       </div>
-       <div><label style="display: block; font-weight: 500; color: #475569; margin-bottom: 6px; font-size: 14px;">Số lượng</label> <input type="number" id="productStock" required style="width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px;">
-       </div>
-      </div>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-       <div><label style="display: block; font-weight: 500; color: #475569; margin-bottom: 6px; font-size: 14px;">CPU</label> <input type="text" id="productCpu" required style="width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px;">
-       </div>
-       <div><label style="display: block; font-weight: 500; color: #475569; margin-bottom: 6px; font-size: 14px;">RAM</label> <input type="text" id="productRam" required style="width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px;">
-       </div>
-      </div>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-       <div><label style="display: block; font-weight: 500; color: #475569; margin-bottom: 6px; font-size: 14px;">Ổ cứng</label> <input type="text" id="productStorage" required style="width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px;">
-       </div>
-       <div><label style="display: block; font-weight: 500; color: #475569; margin-bottom: 6px; font-size: 14px;">Card đồ họa</label> <input type="text" id="productGpu" required style="width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px;">
-       </div>
-      </div>
-      <div><label style="display: block; font-weight: 500; color: #475569; margin-bottom: 6px; font-size: 14px;">Màn hình</label> <input type="text" id="productScreen" required style="width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px;">
-      </div>
-      <div><label style="display: block; font-weight: 500; color: #475569; margin-bottom: 6px; font-size: 14px;">Trạng thái</label> <select id="productStatus" required style="width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px;"> <option value="active">Đang bán</option> <option value="inactive">Ngừng bán</option> </select>
-      </div>
-     </div>
-     <div style="display: flex; gap: 12px; margin-top: 24px;"><button type="submit" class="btn" style="flex: 1; background: #3b82f6; color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: 600;">Lưu sản phẩm</button> <button type="button" onclick="closeProductModal()" style="flex: 1; background: #e2e8f0; color: #475569; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: 600;">Hủy</button>
-     </div>
-    </form>
-   </div>
-  </div><!-- Order Modal -->
-  <div id="orderModal" class="modal">
-   <div class="modal-content">
-    <div style="padding: 24px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
-     <h3 id="orderModalTitle" style="font-size: 20px; font-weight: 600; color: #1e293b; margin: 0;">Tạo đơn hàng mới</h3><button onclick="closeOrderModal()" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #64748b;">×</button>
-    </div>
-    <form id="orderForm" style="padding: 24px;">
-     <div style="display: grid; gap: 16px;">
-      <div><label style="display: block; font-weight: 500; color: #475569; margin-bottom: 6px; font-size: 14px;">Tên khách hàng</label> <input type="text" id="orderCustomerName" required style="width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px;">
-      </div>
-      <div><label style="display: block; font-weight: 500; color: #475569; margin-bottom: 6px; font-size: 14px;">Email</label> <input type="email" id="orderCustomerEmail" required style="width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px;">
-      </div>
-      <div><label style="display: block; font-weight: 500; color: #475569; margin-bottom: 6px; font-size: 14px;">Số điện thoại</label> <input type="tel" id="orderCustomerPhone" required style="width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px;">
-      </div>
-      <div><label style="display: block; font-weight: 500; color: #475569; margin-bottom: 6px; font-size: 14px;">Sản phẩm</label> <select id="orderProduct" required style="width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px;"> <option value="">Chọn sản phẩm</option> </select>
-      </div>
-      <div><label style="display: block; font-weight: 500; color: #475569; margin-bottom: 6px; font-size: 14px;">Trạng thái</label> <select id="orderStatus" required style="width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 14px;"> <option value="pending">Chờ xác nhận</option> <option value="processing">Đang xử lý</option> <option value="shipping">Đang giao</option> <option value="completed">Hoàn thành</option> <option value="cancelled">Đã hủy</option> </select>
-      </div>
-     </div>
-     <div style="display: flex; gap: 12px; margin-top: 24px;"><button type="submit" class="btn" style="flex: 1; background: #3b82f6; color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: 600;">Tạo đơn hàng</button> <button type="button" onclick="closeOrderModal()" style="flex: 1; background: #e2e8f0; color: #475569; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: 600;">Hủy</button>
-     </div>
-    </form>
-   </div>
-  </div><!-- Toast Notification -->
-  <div id="toast" class="toast">
-   <p id="toastMessage" style="margin: 0; font-weight: 500;"></p>
-  </div>
-  <script>
-    const defaultConfig = {
-      admin_title: "Quản lý cửa hàng Laptop",
-      welcome_message: "Chào mừng đến với trang quản trị"
-    };
+      </section>
 
-    let allData = [];
-    let currentEditingProduct = null;
-    let currentEditingOrder = null;
-    let revenueChart = null;
-    let topProductsChart = null;
-    let monthlyRevenueChart = null;
-    let categoryChart = null;
-    let sampleDataAdded = false;
+      <!-- CUSTOMERS -->
+      <section id="customers" class="section is-hidden">
+        <h2 class="section__title">Quản lý khách hàng</h2>
+        <div class="table-wrap">
+          <div class="toolbar">
+            <input id="customerSearch" class="input" placeholder="🔍 Tìm kiếm khách hàng...">
+          </div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Tên khách hàng</th><th>Email</th><th>Số điện thoại</th><th>Số đơn hàng</th><th>Tổng chi tiêu</th>
+              </tr>
+            </thead>
+            <tbody id="customersTableBody"></tbody>
+          </table>
+        </div>
+      </section>
 
-    const dataHandler = {
-      onDataChanged(data) {
-        allData = data;
-        updateDashboard();
-        renderProducts();
-        renderOrders();
-        renderCustomers();
-        renderInventory();
-        renderReports();
-        updateOrderProductSelect();
-        
-        // Thêm dữ liệu mẫu nếu chưa có và chưa thêm lần nào
-        if (data.length === 0 && !sampleDataAdded) {
-          sampleDataAdded = true;
-          setTimeout(() => addSampleData(), 500);
-        }
-      }
-    };
+      <!-- INVENTORY -->
+      <section id="inventory" class="section is-hidden">
+        <h2 class="section__title">Quản lý kho hàng</h2>
+        <div class="cards">
+          <div class="card card--green">
+            <p class="card__label">Tổng giá trị kho</p>
+            <p class="card__value" id="inventoryValue">0 ₫</p>
+          </div>
+          <div class="card card--red">
+            <p class="card__label">Sản phẩm sắp hết</p>
+            <p class="card__value" id="lowStockCount">0</p>
+          </div>
+          <div class="card card--blue">
+            <p class="card__label">Tổng sản phẩm</p>
+            <p class="card__value" id="totalProducts">0</p>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel__header">Cảnh báo tồn kho thấp</div>
+          <div id="lowStockList"></div>
+        </div>
+      </section>
 
-    async function addSampleData() {
-      const sampleProducts = [
-        {
-          type: 'product',
-          id: 'P001',
-          name: 'Dell XPS 13 Plus',
-          brand: 'Dell',
-          category: 'Văn phòng',
-          price: 28500000,
-          stock: 15,
-          cpu: 'Intel Core i7-1260P',
-          ram: '16GB LPDDR5',
-          storage: '512GB SSD',
-          gpu: 'Intel Iris Xe',
-          screen: '13.4" 3.5K OLED Touch',
-          status: 'active',
-          createdAt: new Date().toISOString()
-        },
-        {
-          type: 'product',
-          id: 'P002',
-          name: 'MacBook Pro 14"',
-          brand: 'Apple',
-          category: 'Đồ họa',
-          price: 52990000,
-          stock: 8,
-          cpu: 'Apple M2 Pro',
-          ram: '16GB Unified Memory',
-          storage: '512GB SSD',
-          gpu: 'Apple M2 Pro GPU',
-          screen: '14.2" Liquid Retina XDR',
-          status: 'active',
-          createdAt: new Date().toISOString()
-        },
-        {
-          type: 'product',
-          id: 'P003',
-          name: 'ASUS ROG Strix G15',
-          brand: 'Asus',
-          category: 'Gaming',
-          price: 32990000,
-          stock: 12,
-          cpu: 'AMD Ryzen 7 6800H',
-          ram: '16GB DDR5',
-          storage: '1TB SSD',
-          gpu: 'NVIDIA RTX 3070',
-          screen: '15.6" FHD 144Hz',
-          status: 'active',
-          createdAt: new Date().toISOString()
-        },
-        {
-          type: 'product',
-          id: 'P004',
-          name: 'HP Pavilion 15',
-          brand: 'HP',
-          category: 'Học tập',
-          price: 18990000,
-          stock: 25,
-          cpu: 'Intel Core i5-1235U',
-          ram: '8GB DDR4',
-          storage: '512GB SSD',
-          gpu: 'Intel Iris Xe',
-          screen: '15.6" FHD IPS',
-          status: 'active',
-          createdAt: new Date().toISOString()
-        },
-        {
-          type: 'product',
-          id: 'P005',
-          name: 'Lenovo ThinkPad X1 Carbon',
-          brand: 'Lenovo',
-          category: 'Văn phòng',
-          price: 42500000,
-          stock: 6,
-          cpu: 'Intel Core i7-1255U',
-          ram: '16GB LPDDR5',
-          storage: '1TB SSD',
-          gpu: 'Intel Iris Xe',
-          screen: '14" 2.8K OLED',
-          status: 'active',
-          createdAt: new Date().toISOString()
-        },
-        {
-          type: 'product',
-          id: 'P006',
-          name: 'MSI Creator Z16P',
-          brand: 'MSI',
-          category: 'Đồ họa',
-          price: 65990000,
-          stock: 4,
-          cpu: 'Intel Core i9-12900H',
-          ram: '32GB DDR5',
-          storage: '2TB SSD',
-          gpu: 'NVIDIA RTX 4070',
-          screen: '16" 4K+ Touch',
-          status: 'active',
-          createdAt: new Date().toISOString()
-        },
-        {
-          type: 'product',
-          id: 'P007',
-          name: 'Acer Aspire 5',
-          brand: 'Acer',
-          category: 'Học tập',
-          price: 15990000,
-          stock: 30,
-          cpu: 'AMD Ryzen 5 5500U',
-          ram: '8GB DDR4',
-          storage: '256GB SSD',
-          gpu: 'AMD Radeon Graphics',
-          screen: '15.6" FHD IPS',
-          status: 'active',
-          createdAt: new Date().toISOString()
-        },
-        {
-          type: 'product',
-          id: 'P008',
-          name: 'Dell Alienware m15 R7',
-          brand: 'Dell',
-          category: 'Gaming',
-          price: 48990000,
-          stock: 7,
-          cpu: 'Intel Core i7-12700H',
-          ram: '16GB DDR5',
-          storage: '1TB SSD',
-          gpu: 'NVIDIA RTX 3080',
-          screen: '15.6" QHD 240Hz',
-          status: 'active',
-          createdAt: new Date().toISOString()
-        }
-      ];
+      <!-- REPORTS -->
+      <section id="reports" class="section is-hidden">
+        <h2 class="section__title">Báo cáo & Thống kê</h2>
+        <div class="grid-2">
+          <div class="panel">
+            <div class="panel__header">Doanh thu theo tháng</div>
+            <canvas id="monthlyRevenueChart"></canvas>
+          </div>
+          <div class="panel">
+            <div class="panel__header">Phân bố danh mục</div>
+            <canvas id="categoryChart"></canvas>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel__header">Top 5 khách hàng mua nhiều nhất</div>
+          <div id="topCustomersList"></div>
+        </div>
+      </section>
+    </main>
 
-      const sampleOrders = [
-        {
-          type: 'order',
-          id: 'ORD001',
-          customerName: 'Nguyễn Văn An',
-          customerEmail: 'an.nguyen@email.com',
-          customerPhone: '0901234567',
-          name: 'Dell XPS 13 Plus',
-          totalAmount: 28500000,
-          orderStatus: 'completed',
-          createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString()
-        },
-        {
-          type: 'order',
-          id: 'ORD002',
-          customerName: 'Trần Thị Bình',
-          customerEmail: 'binh.tran@email.com',
-          customerPhone: '0912345678',
-          name: 'MacBook Pro 14"',
-          totalAmount: 52990000,
-          orderStatus: 'shipping',
-          createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString()
-        },
-        {
-          type: 'order',
-          id: 'ORD003',
-          customerName: 'Lê Minh Cường',
-          customerEmail: 'cuong.le@email.com',
-          customerPhone: '0923456789',
-          name: 'ASUS ROG Strix G15',
-          totalAmount: 32990000,
-          orderStatus: 'processing',
-          createdAt: new Date().toISOString()
-        },
-        {
-          type: 'order',
-          id: 'ORD004',
-          customerName: 'Phạm Thu Dung',
-          customerEmail: 'dung.pham@email.com',
-          customerPhone: '0934567890',
-          name: 'HP Pavilion 15',
-          totalAmount: 18990000,
-          orderStatus: 'pending',
-          createdAt: new Date().toISOString()
-        }
-      ];
-
-      // Thêm sản phẩm mẫu
-      for (const product of sampleProducts) {
-        await window.dataSdk.create(product);
-      }
-
-      // Thêm đơn hàng mẫu  
-      for (const order of sampleOrders) {
-        await window.dataSdk.create(order);
-      }
-
-      showToast('Đã thêm 8 sản phẩm và 4 đơn hàng mẫu!', 'success');
-    }
-
-    async function onConfigChange(config) {
-      const adminTitle = config.admin_title || defaultConfig.admin_title;
-      const welcomeMessage = config.welcome_message || defaultConfig.welcome_message;
-
-      document.getElementById('adminTitle').textContent = adminTitle;
-      document.getElementById('welcomeMessage').textContent = welcomeMessage;
-    }
-
-    window.elementSdk.init({
-      defaultConfig,
-      onConfigChange,
-      mapToCapabilities: (config) => ({
-        recolorables: [],
-        borderables: [],
-        fontEditable: undefined,
-        fontSizeable: undefined
-      }),
-      mapToEditPanelValues: (config) => new Map([
-        ["admin_title", config.admin_title || defaultConfig.admin_title],
-        ["welcome_message", config.welcome_message || defaultConfig.welcome_message]
-      ])
-    });
-
-    async function init() {
-      const result = await window.dataSdk.init(dataHandler);
-      if (!result.isOk) {
-        showToast('Không thể kết nối dữ liệu', 'error');
-        return;
-      }
-      
-      initCharts();
-      onConfigChange(window.elementSdk.config);
-    }
-
-    function showSection(section) {
-      document.querySelectorAll('.content-section').forEach(s => s.style.display = 'none');
-      document.getElementById(`${section}-section`).style.display = 'block';
-      
-      document.querySelectorAll('.menu-item').forEach(item => {
-        item.style.background = 'transparent';
-      });
-      event.target.closest('.menu-item').style.background = 'rgba(255,255,255,0.1)';
-    }
-
-    function toggleMobileSidebar() {
-      document.getElementById('sidebar').classList.toggle('mobile-open');
-    }
-
-    function updateDashboard() {
-      const products = allData.filter(d => d.type === 'product');
-      const orders = allData.filter(d => d.type === 'order');
-      const customers = getUniqueCustomers();
-
-      const todayOrders = orders.filter(o => {
-        const orderDate = new Date(o.createdAt);
-        const today = new Date();
-        return orderDate.toDateString() === today.toDateString();
-      });
-
-      const todayRevenue = todayOrders.reduce((sum, o) => sum + (o.totalAmount || 0), 0);
-      const totalStock = products.reduce((sum, p) => sum + (p.stock || 0), 0);
-      const newOrders = orders.filter(o => o.orderStatus === 'pending').length;
-
-      document.getElementById('todayRevenue').textContent = formatCurrency(todayRevenue);
-      document.getElementById('newOrders').textContent = newOrders;
-      document.getElementById('totalStock').textContent = totalStock;
-      document.getElementById('totalCustomers').textContent = customers.length;
-
-      updateRevenueChart();
-      updateTopProductsChart();
-    }
-
-    function initCharts() {
-      const chartOptions = {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: true,
-            position: 'bottom'
-          }
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            ticks: {
-              callback: function(value) {
-                return new Intl.NumberFormat('vi-VN').format(value) + ' ₫';
-              }
-            }
-          }
-        }
-      };
-
-      const barChartOptions = {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: true,
-            position: 'bottom'
-          }
-        },
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
-      };
-
-      // Khởi tạo biểu đồ với dữ liệu mẫu
-      revenueChart = new Chart(document.getElementById('revenueChart'), {
-        type: 'line',
-        data: {
-          labels: ['26/12', '27/12', '28/12', '29/12', '30/12', '31/12', '01/01'],
-          datasets: [{
-            label: 'Doanh thu (VNĐ)',
-            data: [15000000, 22000000, 18000000, 25000000, 30000000, 28000000, 35000000],
-            borderColor: '#3b82f6',
-            backgroundColor: 'rgba(59, 130, 246, 0.1)',
-            tension: 0.4,
-            fill: true
-          }]
-        },
-        options: chartOptions
-      });
-
-      topProductsChart = new Chart(document.getElementById('topProductsChart'), {
-        type: 'bar',
-        data: {
-          labels: ['Dell XPS 13', 'MacBook Pro', 'ThinkPad X1', 'HP Pavilion', 'Asus ROG'],
-          datasets: [{
-            label: 'Số lượng bán',
-            data: [12, 8, 6, 4, 3],
-            backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6']
-          }]
-        },
-        options: barChartOptions
-      });
-
-      monthlyRevenueChart = new Chart(document.getElementById('monthlyRevenueChart'), {
-        type: 'bar',
-        data: {
-          labels: ['Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
-          datasets: [{
-            label: 'Doanh thu (VNĐ)',
-            data: [450000000, 520000000, 480000000, 600000000, 580000000, 650000000],
-            backgroundColor: '#3b82f6'
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              display: true,
-              position: 'bottom'
-            }
-          },
-          scales: {
-            y: {
-              beginAtZero: true,
-              ticks: {
-                callback: function(value) {
-                  return new Intl.NumberFormat('vi-VN').format(value) + ' ₫';
-                }
-              }
-            }
-          }
-        }
-      });
-
-      categoryChart = new Chart(document.getElementById('categoryChart'), {
-        type: 'doughnut',
-        data: {
-          labels: ['Gaming', 'Văn phòng', 'Đồ họa', 'Học tập'],
-          datasets: [{
-            data: [35, 25, 20, 20],
-            backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#ef4444']
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              display: true,
-              position: 'bottom'
-            }
-          }
-        }
-      });
-    }
-
-    function updateRevenueChart() {
-      const orders = allData.filter(d => d.type === 'order');
-      const last7Days = [];
-      const revenues = [];
-
-      for (let i = 6; i >= 0; i--) {
-        const date = new Date();
-        date.setDate(date.getDate() - i);
-        const dateStr = date.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit' });
-        last7Days.push(dateStr);
-
-        const dayRevenue = orders
-          .filter(o => new Date(o.createdAt).toDateString() === date.toDateString())
-          .reduce((sum, o) => sum + (o.totalAmount || 0), 0);
-        revenues.push(dayRevenue);
-      }
-
-      revenueChart.data.labels = last7Days;
-      revenueChart.data.datasets[0].data = revenues;
-      revenueChart.update();
-    }
-
-    function updateTopProductsChart() {
-      const orders = allData.filter(d => d.type === 'order');
-      const productSales = {};
-
-      orders.forEach(order => {
-        const productName = order.name || 'Không rõ';
-        productSales[productName] = (productSales[productName] || 0) + 1;
-      });
-
-      const sortedProducts = Object.entries(productSales)
-        .sort((a, b) => b[1] - a[1])
-        .slice(0, 5);
-
-      topProductsChart.data.labels = sortedProducts.map(p => p[0]);
-      topProductsChart.data.datasets[0].data = sortedProducts.map(p => p[1]);
-      topProductsChart.update();
-    }
-
-    function renderProducts() {
-      const products = allData.filter(d => d.type === 'product');
-      const tbody = document.getElementById('productsTableBody');
-      
-      if (products.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="7" style="padding: 40px; text-align: center; color: #64748b;">Chưa có sản phẩm nào. Nhấn "Thêm sản phẩm" để bắt đầu.</td></tr>';
-        return;
-      }
-
-      tbody.innerHTML = products.map(product => `
-        <tr class="table-row" style="border-bottom: 1px solid #e2e8f0;">
-          <td style="padding: 16px;">
-            <div style="font-weight: 500; color: #1e293b;">${product.name}</div>
-            <div style="font-size: 12px; color: #64748b; margin-top: 2px;">${product.cpu} • ${product.ram}</div>
-          </td>
-          <td style="padding: 16px; color: #475569;">${product.brand}</td>
-          <td style="padding: 16px; color: #1e293b; font-weight: 600;">${formatCurrency(product.price)}</td>
-          <td style="padding: 16px;">
-            <span class="badge" style="background: ${product.stock < 10 ? '#fee2e2' : '#dcfce7'}; color: ${product.stock < 10 ? '#dc2626' : '#16a34a'};">
-              ${product.stock} cái
-            </span>
-          </td>
-          <td style="padding: 16px; color: #475569;">${product.category}</td>
-          <td style="padding: 16px;">
-            <span class="badge" style="background: ${product.status === 'active' ? '#dcfce7' : '#fee2e2'}; color: ${product.status === 'active' ? '#16a34a' : '#dc2626'};">
-              ${product.status === 'active' ? 'Đang bán' : 'Ngừng bán'}
-            </span>
-          </td>
-          <td style="padding: 16px; text-align: center;">
-            <button onclick="editProduct('${product.__backendId}')" style="background: #3b82f6; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; margin-right: 4px; font-size: 12px;">✏️ Sửa</button>
-            <button onclick="confirmDeleteProduct('${product.__backendId}')" style="background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px;">🗑️ Xóa</button>
-          </td>
-        </tr>
-      `).join('');
-    }
-
-    function renderOrders() {
-      const orders = allData.filter(d => d.type === 'order');
-      const tbody = document.getElementById('ordersTableBody');
-      
-      if (orders.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="7" style="padding: 40px; text-align: center; color: #64748b;">Chưa có đơn hàng nào. Nhấn "Tạo đơn hàng" để bắt đầu.</td></tr>';
-        return;
-      }
-
-      tbody.innerHTML = orders.map(order => {
-        const statusColors = {
-          pending: { bg: '#fef3c7', text: '#92400e' },
-          processing: { bg: '#dbeafe', text: '#1e40af' },
-          shipping: { bg: '#e0e7ff', text: '#4338ca' },
-          completed: { bg: '#dcfce7', text: '#16a34a' },
-          cancelled: { bg: '#fee2e2', text: '#dc2626' }
-        };
-        const statusLabels = {
-          pending: 'Chờ xác nhận',
-          processing: 'Đang xử lý',
-          shipping: 'Đang giao',
-          completed: 'Hoàn thành',
-          cancelled: 'Đã hủy'
-        };
-        const color = statusColors[order.orderStatus] || statusColors.pending;
-        
-        return `
-          <tr class="table-row" style="border-bottom: 1px solid #e2e8f0;">
-            <td style="padding: 16px;">
-              <div style="font-weight: 600; color: #3b82f6;">#${order.id}</div>
-            </td>
-            <td style="padding: 16px;">
-              <div style="font-weight: 500; color: #1e293b;">${order.customerName}</div>
-              <div style="font-size: 12px; color: #64748b; margin-top: 2px;">${order.customerEmail}</div>
-            </td>
-            <td style="padding: 16px; color: #475569;">${order.name}</td>
-            <td style="padding: 16px; color: #1e293b; font-weight: 600;">${formatCurrency(order.totalAmount)}</td>
-            <td style="padding: 16px;">
-              <span class="badge" style="background: ${color.bg}; color: ${color.text};">
-                ${statusLabels[order.orderStatus]}
-              </span>
-            </td>
-            <td style="padding: 16px; color: #475569;">${new Date(order.createdAt).toLocaleDateString('vi-VN')}</td>
-            <td style="padding: 16px; text-align: center;">
-              <button onclick="editOrder('${order.__backendId}')" style="background: #3b82f6; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; margin-right: 4px; font-size: 12px;">✏️ Sửa</button>
-              <button onclick="confirmDeleteOrder('${order.__backendId}')" style="background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px;">🗑️ Xóa</button>
-            </td>
-          </tr>
-        `;
-      }).join('');
-    }
-
-    function renderCustomers() {
-      const customers = getUniqueCustomers();
-      const tbody = document.getElementById('customersTableBody');
-      
-      if (customers.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="5" style="padding: 40px; text-align: center; color: #64748b;">Chưa có khách hàng nào.</td></tr>';
-        return;
-      }
-
-      tbody.innerHTML = customers.map(customer => `
-        <tr class="table-row" style="border-bottom: 1px solid #e2e8f0;">
-          <td style="padding: 16px;">
-            <div style="font-weight: 500; color: #1e293b;">${customer.name}</div>
-          </td>
-          <td style="padding: 16px; color: #475569;">${customer.email}</td>
-          <td style="padding: 16px; color: #475569;">${customer.phone}</td>
-          <td style="padding: 16px; color: #1e293b; font-weight: 600;">${customer.orderCount}</td>
-          <td style="padding: 16px; color: #1e293b; font-weight: 600;">${formatCurrency(customer.totalSpent)}</td>
-        </tr>
-      `).join('');
-    }
-
-    function renderInventory() {
-      const products = allData.filter(d => d.type === 'product');
-      const totalValue = products.reduce((sum, p) => sum + (p.price * p.stock), 0);
-      const lowStock = products.filter(p => p.stock < 10);
-
-      document.getElementById('inventoryValue').textContent = formatCurrency(totalValue);
-      document.getElementById('lowStockCount').textContent = lowStock.length;
-      document.getElementById('totalProducts').textContent = products.length;
-
-      const lowStockList = document.getElementById('lowStockList');
-      if (lowStock.length === 0) {
-        lowStockList.innerHTML = '<p style="color: #64748b; text-align: center; padding: 20px;">Tất cả sản phẩm đều có đủ hàng trong kho 👍</p>';
-      } else {
-        lowStockList.innerHTML = lowStock.map(product => `
-          <div style="padding: 12px; border: 1px solid #fee2e2; border-radius: 8px; margin-bottom: 8px; background: #fef2f2;">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <div>
-                <div style="font-weight: 500; color: #1e293b;">${product.name}</div>
-                <div style="font-size: 12px; color: #64748b; margin-top: 2px;">${product.brand}</div>
-              </div>
-              <span class="badge" style="background: #fee2e2; color: #dc2626;">Còn ${product.stock} cái</span>
+    <!-- PRODUCT MODAL -->
+    <div class="modal" id="productModal">
+      <div class="modal__content">
+        <div class="modal__header">
+          <h3 id="productModalTitle">Thêm sản phẩm mới</h3>
+          <button class="modal__close" data-close>×</button>
+        </div>
+        <form id="productForm">
+          <div class="grid-2">
+            <div class="form-group">
+              <label>Tên sản phẩm</label>
+              <input id="productName" class="input" required />
+            </div>
+            <div class="form-group">
+              <label>Hãng</label>
+              <select id="productBrand" class="input" required>
+                <option value="">Chọn hãng</option>
+                <option>Dell</option><option>HP</option><option>Lenovo</option><option>Asus</option><option>Acer</option><option>MSI</option><option>Apple</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Danh mục</label>
+              <select id="productCategory" class="input" required>
+                <option value="">Chọn danh mục</option>
+                <option>Gaming</option><option>Văn phòng</option><option>Đồ họa</option><option>Học tập</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Giá (VNĐ)</label>
+              <input type="number" id="productPrice" class="input" required />
+            </div>
+            <div class="form-group">
+              <label>Số lượng</label>
+              <input type="number" id="productStock" class="input" required />
+            </div>
+            <div class="form-group"><label>CPU</label><input id="productCpu" class="input" required /></div>
+            <div class="form-group"><label>RAM</label><input id="productRam" class="input" required /></div>
+            <div class="form-group"><label>Ổ cứng</label><input id="productStorage" class="input" required /></div>
+            <div class="form-group"><label>Card đồ họa</label><input id="productGpu" class="input" required /></div>
+            <div class="form-group"><label>Màn hình</label><input id="productScreen" class="input" required /></div>
+            <div class="form-group">
+              <label>Trạng thái</label>
+              <select id="productStatus" class="input" required>
+                <option value="active">Đang bán</option>
+                <option value="inactive">Ngừng bán</option>
+              </select>
             </div>
           </div>
-        `).join('');
-      }
-    }
-
-    function renderReports() {
-      const products = allData.filter(d => d.type === 'product');
-      const categoryCount = {};
-      
-      products.forEach(p => {
-        categoryCount[p.category] = (categoryCount[p.category] || 0) + 1;
-      });
-
-      categoryChart.data.labels = Object.keys(categoryCount);
-      categoryChart.data.datasets[0].data = Object.values(categoryCount);
-      categoryChart.update();
-
-      const customers = getUniqueCustomers();
-      const topCustomers = customers.sort((a, b) => b.totalSpent - a.totalSpent).slice(0, 5);
-      
-      const topCustomersList = document.getElementById('topCustomersList');
-      if (topCustomers.length === 0) {
-        topCustomersList.innerHTML = '<p style="color: #64748b; text-align: center; padding: 20px;">Chưa có dữ liệu khách hàng</p>';
-      } else {
-        topCustomersList.innerHTML = topCustomers.map((customer, index) => `
-          <div style="padding: 16px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
-            <div style="display: flex; align-items: center; gap: 12px;">
-              <div style="width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #3b82f6, #8b5cf6); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 14px;">${index + 1}</div>
-              <div>
-                <div style="font-weight: 500; color: #1e293b;">${customer.name}</div>
-                <div style="font-size: 12px; color: #64748b;">${customer.orderCount} đơn hàng</div>
-              </div>
-            </div>
-            <div style="font-weight: 600; color: #1e293b;">${formatCurrency(customer.totalSpent)}</div>
+          <div class="modal__actions">
+            <button type="submit" class="btn btn--primary">Lưu sản phẩm</button>
+            <button type="button" class="btn" data-close>Hủy</button>
           </div>
-        `).join('');
-      }
-    }
+        </form>
+      </div>
+    </div>
 
-    function getUniqueCustomers() {
-      const orders = allData.filter(d => d.type === 'order');
-      const customerMap = {};
+    <!-- ORDER MODAL -->
+    <div class="modal" id="orderModal">
+      <div class="modal__content">
+        <div class="modal__header">
+          <h3 id="orderModalTitle">Tạo đơn hàng mới</h3>
+          <button class="modal__close" data-close>×</button>
+        </div>
+        <form id="orderForm">
+          <div class="grid-2">
+            <div class="form-group"><label>Tên khách hàng</label><input id="orderCustomerName" class="input" required></div>
+            <div class="form-group"><label>Email</label><input type="email" id="orderCustomerEmail" class="input" required></div>
+            <div class="form-group"><label>Số điện thoại</label><input id="orderCustomerPhone" class="input" required></div>
+            <div class="form-group"><label>Sản phẩm</label><select id="orderProduct" class="input" required><option value="">Chọn sản phẩm</option></select></div>
+            <div class="form-group"><label>Trạng thái</label>
+              <select id="orderStatus" class="input" required>
+                <option value="pending">Chờ xác nhận</option>
+                <option value="processing">Đang xử lý</option>
+                <option value="shipping">Đang giao</option>
+                <option value="completed">Hoàn thành</option>
+                <option value="cancelled">Đã hủy</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal__actions">
+            <button type="submit" class="btn btn--primary">Tạo đơn hàng</button>
+            <button type="button" class="btn" data-close>Hủy</button>
+          </div>
+        </form>
+      </div>
+    </div>
 
-      orders.forEach(order => {
-        const email = order.customerEmail;
-        if (!customerMap[email]) {
-          customerMap[email] = {
-            name: order.customerName,
-            email: order.customerEmail,
-            phone: order.customerPhone,
-            orderCount: 0,
-            totalSpent: 0
-          };
-        }
-        customerMap[email].orderCount++;
-        customerMap[email].totalSpent += order.totalAmount || 0;
-      });
+    <!-- Toast -->
+    <div id="toast" class="toast"><p id="toastMessage"></p></div>
 
-      return Object.values(customerMap);
-    }
-
-    function openProductModal() {
-      currentEditingProduct = null;
-      document.getElementById('productModalTitle').textContent = 'Thêm sản phẩm mới';
-      document.getElementById('productForm').reset();
-      document.getElementById('productModal').classList.add('active');
-    }
-
-    function closeProductModal() {
-      document.getElementById('productModal').classList.remove('active');
-      currentEditingProduct = null;
-    }
-
-    function editProduct(backendId) {
-      const product = allData.find(d => d.__backendId === backendId);
-      if (!product) return;
-
-      currentEditingProduct = product;
-      document.getElementById('productModalTitle').textContent = 'Chỉnh sửa sản phẩm';
-      document.getElementById('productName').value = product.name;
-      document.getElementById('productBrand').value = product.brand;
-      document.getElementById('productCategory').value = product.category;
-      document.getElementById('productPrice').value = product.price;
-      document.getElementById('productStock').value = product.stock;
-      document.getElementById('productCpu').value = product.cpu;
-      document.getElementById('productRam').value = product.ram;
-      document.getElementById('productStorage').value = product.storage;
-      document.getElementById('productGpu').value = product.gpu;
-      document.getElementById('productScreen').value = product.screen;
-      document.getElementById('productStatus').value = product.status;
-      document.getElementById('productModal').classList.add('active');
-    }
-
-    async function confirmDeleteProduct(backendId) {
-      const product = allData.find(d => d.__backendId === backendId);
-      if (!product) return;
-
-      const deleteBtn = event.target;
-      const originalText = deleteBtn.innerHTML;
-      deleteBtn.innerHTML = '✓ Xác nhận xóa?';
-      deleteBtn.style.background = '#dc2626';
-
-      const confirmDelete = async () => {
-        deleteBtn.disabled = true;
-        deleteBtn.innerHTML = '⏳ Đang xóa...';
-        
-        const result = await window.dataSdk.delete(product);
-        if (result.isOk) {
-          showToast('Đã xóa sản phẩm thành công', 'success');
-        } else {
-          showToast('Không thể xóa sản phẩm', 'error');
-          deleteBtn.disabled = false;
-          deleteBtn.innerHTML = originalText;
-          deleteBtn.style.background = '#ef4444';
-        }
-      };
-
-      const cancelDelete = () => {
-        deleteBtn.innerHTML = originalText;
-        deleteBtn.style.background = '#ef4444';
-        deleteBtn.removeEventListener('click', confirmDelete);
-        document.removeEventListener('click', outsideClick);
-      };
-
-      const outsideClick = (e) => {
-        if (e.target !== deleteBtn) {
-          cancelDelete();
-        }
-      };
-
-      deleteBtn.addEventListener('click', confirmDelete, { once: true });
-      setTimeout(() => {
-        document.addEventListener('click', outsideClick, { once: true });
-      }, 100);
-    }
-
-    function openOrderModal() {
-      currentEditingOrder = null;
-      document.getElementById('orderModalTitle').textContent = 'Tạo đơn hàng mới';
-      document.getElementById('orderForm').reset();
-      document.getElementById('orderModal').classList.add('active');
-    }
-
-    function closeOrderModal() {
-      document.getElementById('orderModal').classList.remove('active');
-      currentEditingOrder = null;
-    }
-
-    function editOrder(backendId) {
-      const order = allData.find(d => d.__backendId === backendId);
-      if (!order) return;
-
-      currentEditingOrder = order;
-      document.getElementById('orderModalTitle').textContent = 'Chỉnh sửa đơn hàng';
-      document.getElementById('orderCustomerName').value = order.customerName;
-      document.getElementById('orderCustomerEmail').value = order.customerEmail;
-      document.getElementById('orderCustomerPhone').value = order.customerPhone;
-      document.getElementById('orderProduct').value = order.name;
-      document.getElementById('orderStatus').value = order.orderStatus;
-      document.getElementById('orderModal').classList.add('active');
-    }
-
-    async function confirmDeleteOrder(backendId) {
-      const order = allData.find(d => d.__backendId === backendId);
-      if (!order) return;
-
-      const deleteBtn = event.target;
-      const originalText = deleteBtn.innerHTML;
-      deleteBtn.innerHTML = '✓ Xác nhận xóa?';
-      deleteBtn.style.background = '#dc2626';
-
-      const confirmDelete = async () => {
-        deleteBtn.disabled = true;
-        deleteBtn.innerHTML = '⏳ Đang xóa...';
-        
-        const result = await window.dataSdk.delete(order);
-        if (result.isOk) {
-          showToast('Đã xóa đơn hàng thành công', 'success');
-        } else {
-          showToast('Không thể xóa đơn hàng', 'error');
-          deleteBtn.disabled = false;
-          deleteBtn.innerHTML = originalText;
-          deleteBtn.style.background = '#ef4444';
-        }
-      };
-
-      const cancelDelete = () => {
-        deleteBtn.innerHTML = originalText;
-        deleteBtn.style.background = '#ef4444';
-        deleteBtn.removeEventListener('click', confirmDelete);
-        document.removeEventListener('click', outsideClick);
-      };
-
-      const outsideClick = (e) => {
-        if (e.target !== deleteBtn) {
-          cancelDelete();
-        }
-      };
-
-      deleteBtn.addEventListener('click', confirmDelete, { once: true });
-      setTimeout(() => {
-        document.addEventListener('click', outsideClick, { once: true });
-      }, 100);
-    }
-
-    function updateOrderProductSelect() {
-      const products = allData.filter(d => d.type === 'product' && d.status === 'active');
-      const select = document.getElementById('orderProduct');
-      
-      select.innerHTML = '<option value="">Chọn sản phẩm</option>' + 
-        products.map(p => `<option value="${p.name}" data-price="${p.price}">${p.name} - ${formatCurrency(p.price)}</option>`).join('');
-    }
-
-    document.getElementById('productForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      
-      const submitBtn = e.target.querySelector('button[type="submit"]');
-      submitBtn.disabled = true;
-      submitBtn.textContent = '⏳ Đang lưu...';
-
-      const productData = {
-        type: 'product',
-        id: currentEditingProduct ? currentEditingProduct.id : 'P' + Date.now(),
-        name: document.getElementById('productName').value,
-        brand: document.getElementById('productBrand').value,
-        category: document.getElementById('productCategory').value,
-        price: parseFloat(document.getElementById('productPrice').value),
-        stock: parseInt(document.getElementById('productStock').value),
-        cpu: document.getElementById('productCpu').value,
-        ram: document.getElementById('productRam').value,
-        storage: document.getElementById('productStorage').value,
-        gpu: document.getElementById('productGpu').value,
-        screen: document.getElementById('productScreen').value,
-        status: document.getElementById('productStatus').value,
-        createdAt: currentEditingProduct ? currentEditingProduct.createdAt : new Date().toISOString()
-      };
-
-      let result;
-      if (currentEditingProduct) {
-        result = await window.dataSdk.update({ ...productData, __backendId: currentEditingProduct.__backendId });
-      } else {
-        if (allData.length >= 999) {
-          showToast('Đã đạt giới hạn 999 bản ghi. Vui lòng xóa bớt dữ liệu.', 'error');
-          submitBtn.disabled = false;
-          submitBtn.textContent = 'Lưu sản phẩm';
-          return;
-        }
-        result = await window.dataSdk.create(productData);
-      }
-
-      if (result.isOk) {
-        showToast(currentEditingProduct ? 'Đã cập nhật sản phẩm' : 'Đã thêm sản phẩm mới', 'success');
-        closeProductModal();
-      } else {
-        showToast('Có lỗi xảy ra', 'error');
-      }
-
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Lưu sản phẩm';
-    });
-
-    document.getElementById('orderForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      
-      const submitBtn = e.target.querySelector('button[type="submit"]');
-      submitBtn.disabled = true;
-      submitBtn.textContent = '⏳ Đang tạo...';
-
-      const productSelect = document.getElementById('orderProduct');
-      const selectedOption = productSelect.options[productSelect.selectedIndex];
-      const productPrice = parseFloat(selectedOption.dataset.price) || 0;
-
-      const orderData = {
-        type: 'order',
-        id: currentEditingOrder ? currentEditingOrder.id : 'ORD' + Date.now(),
-        customerName: document.getElementById('orderCustomerName').value,
-        customerEmail: document.getElementById('orderCustomerEmail').value,
-        customerPhone: document.getElementById('orderCustomerPhone').value,
-        name: productSelect.value,
-        totalAmount: productPrice,
-        orderStatus: document.getElementById('orderStatus').value,
-        createdAt: currentEditingOrder ? currentEditingOrder.createdAt : new Date().toISOString()
-      };
-
-      let result;
-      if (currentEditingOrder) {
-        result = await window.dataSdk.update({ ...orderData, __backendId: currentEditingOrder.__backendId });
-      } else {
-        if (allData.length >= 999) {
-          showToast('Đã đạt giới hạn 999 bản ghi. Vui lòng xóa bớt dữ liệu.', 'error');
-          submitBtn.disabled = false;
-          submitBtn.textContent = 'Tạo đơn hàng';
-          return;
-        }
-        result = await window.dataSdk.create(orderData);
-      }
-
-      if (result.isOk) {
-        showToast(currentEditingOrder ? 'Đã cập nhật đơn hàng' : 'Đã tạo đơn hàng mới', 'success');
-        closeOrderModal();
-      } else {
-        showToast('Có lỗi xảy ra', 'error');
-      }
-
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Tạo đơn hàng';
-    });
-
-    function filterProducts() {
-      const searchTerm = document.getElementById('productSearch').value.toLowerCase();
-      const rows = document.querySelectorAll('#productsTableBody tr');
-      
-      rows.forEach(row => {
-        const text = row.textContent.toLowerCase();
-        row.style.display = text.includes(searchTerm) ? '' : 'none';
-      });
-    }
-
-    function filterOrders() {
-      const searchTerm = document.getElementById('orderSearch').value.toLowerCase();
-      const rows = document.querySelectorAll('#ordersTableBody tr');
-      
-      rows.forEach(row => {
-        const text = row.textContent.toLowerCase();
-        row.style.display = text.includes(searchTerm) ? '' : 'none';
-      });
-    }
-
-    function filterCustomers() {
-      const searchTerm = document.getElementById('customerSearch').value.toLowerCase();
-      const rows = document.querySelectorAll('#customersTableBody tr');
-      
-      rows.forEach(row => {
-        const text = row.textContent.toLowerCase();
-        row.style.display = text.includes(searchTerm) ? '' : 'none';
-      });
-    }
-
-    function formatCurrency(amount) {
-      return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
-    }
-
-    function showToast(message, type = 'success') {
-      const toast = document.getElementById('toast');
-      const toastMessage = document.getElementById('toastMessage');
-      
-      toastMessage.textContent = message;
-      toast.style.background = type === 'success' ? '#dcfce7' : '#fee2e2';
-      toastMessage.style.color = type === 'success' ? '#16a34a' : '#dc2626';
-      
-      toast.classList.add('active');
-      setTimeout(() => {
-        toast.classList.remove('active');
-      }, 3000);
-    }
-
-    window.addEventListener('resize', () => {
-      const mobileBtn = document.querySelector('.mobile-menu-btn');
-      if (window.innerWidth <= 768) {
-        mobileBtn.style.display = 'block';
-      } else {
-        mobileBtn.style.display = 'none';
-        document.getElementById('sidebar').classList.remove('mobile-open');
-      }
-    });
-
-    if (window.innerWidth <= 768) {
-      document.querySelector('.mobile-menu-btn').style.display = 'block';
-    }
-
-    init();
-  </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'996bbb943412bd68',t:'MTc2MTgzNTkwNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+    <script src="admin.js"></script>
+  </body>
 </html>
