@@ -422,3 +422,33 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // Header đã bỏ chữ "Menu" — chỉ còn icon ☰.
 });
+// admin.js -- thêm kiểm tra quyền admin khi trang admin được mở
+function checkAdminAuth() {
+  try {
+    const isAdmin = localStorage.getItem('isAdmin');
+    if (isAdmin !== 'true') {
+      // Nếu chưa đăng nhập admin -> chuyển về trang đăng nhập
+      // Bạn có thể đổi đường dẫn nếu file đăng nhập ở chỗ khác
+      window.location.href = "Dangnhap.html";
+      return false;
+    }
+    return true;
+  } catch (e) {
+    window.location.href = "Dangnhap.html";
+    return false;
+  }
+}
+
+// Nếu bạn có window.addEventListener("DOMContentLoaded", ...) sẵn trong file,
+// gọi checkAdminAuth() ngay khi nội dung DOM load:
+window.addEventListener("DOMContentLoaded", () => {
+  if (!checkAdminAuth()) return; // nếu không phải admin thì dừng mọi logic khác
+  // Phần init gốc của bạn tiếp tục ở đây:
+  loadState();
+  initSidebar();
+  initModals();
+  bindProductForm();
+  bindOrderForm();
+  renderAll();
+});
+
