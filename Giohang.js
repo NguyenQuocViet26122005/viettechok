@@ -157,37 +157,95 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Xử lý khi nhấn nút "Thanh toán"
-    checkoutBtn.addEventListener("click", (event) => {
-        event.preventDefault(); // Ngăn chặn gửi biểu mẫu mặc định
+   checkoutBtn.addEventListener("click", (event) => {
+    event.preventDefault(); // Ngăn chặn gửi biểu mẫu mặc định
 
-        if (cart.length === 0) {
-            alert(" Giỏ hàng trống. Vui lòng thêm sản phẩm trước khi thanh toán.");
-            return;
+    if (cart.length === 0) {
+        alert(" Giỏ hàng trống. Vui lòng thêm sản phẩm trước khi thanh toán.");
+        return;
+    }
+
+    const fullName = fullNameInput.value;
+    const phoneNumber = phoneNumberInput.value;
+    const email = emailInput.value;
+
+    if (!validateFullName(fullName)) {
+        alert("Vui lòng nhập họ tên hợp lệ (chỉ chứa chữ cái và khoảng trắng).");
+        fullNameInput.focus();
+        return;
+    }
+
+    if (!validatePhoneNumber(phoneNumber)) {
+        alert(" Vui lòng nhập số điện thoại hợp lệ (bắt đầu bằng 0 hoặc +84 và có 10 chữ số).");
+        phoneNumberInput.focus();
+        return;
+    }
+
+    if (!validateEmail(email)) {
+        alert(" Vui lòng nhập email hợp lệ (ví dụ: example@gmail.com).");
+        emailInput.focus();
+        return;
+    }
+
+    // =============================
+    //  ĐỒNG BỘ VỚI TRANG ADMIN
+    // =============================
+    const LS_KEY = "laptop_admin_data_v1";
+    let adminState = { products: [], orders: [] };
+
+    try {
+        const raw = localStorage.getItem(LS_KEY);
+        if (raw) {
+            adminState = JSON.parse(raw);
         }
+    } catch (e) {
+        console.error("Không đọc được dữ liệu admin:", e);
+    }
 
-        const fullName = fullNameInput.value;
-        const phoneNumber = phoneNumberInput.value;
-        const email = emailInput.value;
+    let totalAmount = 0;
 
-        if (!validateFullName(fullName)) {
-            alert("Vui lòng nhập họ tên hợp lệ (chỉ chứa chữ cái và khoảng trắng).");
-            fullNameInput.focus();
-            return;
+    // Giảm tồn kho theo từng sản phẩm trong giỏ
+    cart.forEach((item) => {
+        totalAmount += item.price * item.quantity;
+
+        const prod = adminState.products.find(p =>
+            // ưu tiên so id nếu có, không có thì so theo tên
+            (item.id && p.id === item.id) || p.name === item.name
+        );
+
+        if (prod) {
+            if (typeof prod.stock !== "number") prod.stock = 0;
+            prod.stock = Math.max(0, prod.stock - item.quantity);
         }
-
-        if (!validatePhoneNumber(phoneNumber)) {
-            alert(" Vui lòng nhập số điện thoại hợp lệ (bắt đầu bằng 0 hoặc +84 và có 10 chữ số).");
-            phoneNumberInput.focus();
-            return;
-        }
-
-        if (!validateEmail(email)) {
-            alert(" Vui lòng nhập email hợp lệ (ví dụ: example@gmail.com).");
-            emailInput.focus();
-            return;
-        }
-
-        alert("Thanh toán thành công! Cảm ơn bạn đã mua hàng.");
-        // Thực hiện các bước tiếp theo, ví dụ: gửi dữ liệu
     });
+
+    // Tạo một đơn hàng tổng trong admin
+    const newOrder = {
+        id: "ORD" + Date.now(),
+        customerName: fullName,
+        customerEmail: email,
+        customerPhone: phoneNumber,
+        productName: cart.map(i => i.name).join(", "),
+        totalAmount: totalAmount,
+        status: "pending",
+        createdAt: new Date().toISOString()
+    };
+
+    adminState.orders.push(newOrder);
+
+    try {
+        localStorage.setItem(LS_KEY, JSON.stringify(adminState));
+    } catch (e) {
+        console.error("Không lưu được dữ liệu admin:", e);
+    }
+
+    // Xóa giỏ hàng sau khi thanh toán
+    cart = [];
+    localStorage.setItem("cart", JSON.stringify(cart));
+    updateCartDisplay();
+
+    alert("Thanh toán thành công! Cảm ơn bạn đã mua hàng.");
+    window.location.href = "index.html";
 });
+
+    });

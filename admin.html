@@ -5,11 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Quản lý Laptop - Admin</title>
     <link rel="stylesheet" href="admin.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body>
-    
     <!-- Sidebar -->
     <aside id="sidebar" class="sidebar">
       <div class="sidebar__header">
@@ -17,12 +19,24 @@
         <p class="app-sub">Chào mừng đến với trang quản trị</p>
       </div>
       <nav class="menu">
-        <button class="menu__item active" data-target="dashboard">📊 <span>Dashboard</span></button>
-        <button class="menu__item" data-target="products">💻 <span>Sản phẩm</span></button>
-        <button class="menu__item" data-target="orders">📦 <span>Đơn hàng</span></button>
-        <button class="menu__item" data-target="customers">👥 <span>Khách hàng</span></button>
-        <button class="menu__item" data-target="inventory">📋 <span>Kho hàng</span></button>
-        <button class="menu__item" data-target="reports">📈 <span>Báo cáo</span></button>
+        <button class="menu__item active" data-target="dashboard">
+          📊 <span>Dashboard</span>
+        </button>
+        <button class="menu__item" data-target="products">
+          💻 <span>Sản phẩm</span>
+        </button>
+        <button class="menu__item" data-target="orders">
+          📦 <span>Đơn hàng</span>
+        </button>
+        <button class="menu__item" data-target="customers">
+          👥 <span>Khách hàng</span>
+        </button>
+        <button class="menu__item" data-target="inventory">
+          📋 <span>Kho hàng</span>
+        </button>
+        <button class="menu__item" data-target="reports">
+          📈 <span>Báo cáo</span>
+        </button>
       </nav>
     </aside>
 
@@ -30,13 +44,22 @@
     <main class="main">
       <header class="topbar">
         <div class="topbar__left">
-          <button id="btnToggleSidebar" class="icon-btn" aria-label="Mở/đóng menu">☰</button>
+          <button
+            id="btnToggleSidebar"
+            class="icon-btn"
+            aria-label="Mở/đóng menu"
+          >
+            ☰
+          </button>
         </div>
         <div class="topbar__right">
-          <div class="bell">🔔<span class="counter">3</span></div>
-          <div class="profile"><div class="avatar">A</div><span>Admin</span></div>
+          <div class="bell">
+            🔔<span class="counter">3</span>
+          </div>
+          <div class="profile">
+            <div class="avatar">A</div><span>Admin</span>
+          </div>
         </div>
-        
       </header>
 
       <!-- DASHBOARD -->
@@ -80,16 +103,28 @@
       <section id="products" class="section is-hidden">
         <div class="section__header">
           <h2 class="section__title">Quản lý sản phẩm</h2>
-          <button class="btn btn--primary" data-open="productModal">➕ Thêm sản phẩm</button>
+          <button class="btn btn--primary" data-open="productModal">
+            ➕ Thêm sản phẩm
+          </button>
         </div>
         <div class="table-wrap">
           <div class="toolbar">
-            <input id="productSearch" class="input" placeholder="🔍 Tìm kiếm sản phẩm...">
+            <input
+              id="productSearch"
+              class="input"
+              placeholder="🔍 Tìm kiếm sản phẩm..."
+            />
           </div>
           <table class="table">
             <thead>
               <tr>
-                <th>Tên sản phẩm</th><th>Hãng</th><th>Giá</th><th>Tồn kho</th><th>Danh mục</th><th>Trạng thái</th><th>Thao tác</th>
+                <th>Tên sản phẩm</th>
+                <th>Hãng</th>
+                <th>Giá</th>
+                <th>Tồn kho</th>
+                <th>Danh mục</th>
+                <th>Trạng thái</th>
+                <th>Thao tác</th>
               </tr>
             </thead>
             <tbody id="productsTableBody"></tbody>
@@ -101,16 +136,28 @@
       <section id="orders" class="section is-hidden">
         <div class="section__header">
           <h2 class="section__title">Quản lý đơn hàng</h2>
-          <button class="btn btn--primary" data-open="orderModal">➕ Tạo đơn hàng</button>
+          <button class="btn btn--primary" data-open="orderModal">
+            ➕ Tạo đơn hàng
+          </button>
         </div>
         <div class="table-wrap">
           <div class="toolbar">
-            <input id="orderSearch" class="input" placeholder="🔍 Tìm kiếm đơn hàng...">
+            <input
+              id="orderSearch"
+              class="input"
+              placeholder="🔍 Tìm kiếm đơn hàng..."
+            />
           </div>
           <table class="table">
             <thead>
               <tr>
-                <th>Mã đơn</th><th>Khách hàng</th><th>Sản phẩm</th><th>Tổng tiền</th><th>Trạng thái</th><th>Ngày đặt</th><th>Thao tác</th>
+                <th>Mã đơn</th>
+                <th>Khách hàng</th>
+                <th>Sản phẩm</th>
+                <th>Tổng tiền</th>
+                <th>Trạng thái</th>
+                <th>Ngày đặt</th>
+                <th>Thao tác</th>
               </tr>
             </thead>
             <tbody id="ordersTableBody"></tbody>
@@ -123,12 +170,20 @@
         <h2 class="section__title">Quản lý khách hàng</h2>
         <div class="table-wrap">
           <div class="toolbar">
-            <input id="customerSearch" class="input" placeholder="🔍 Tìm kiếm khách hàng...">
+            <input
+              id="customerSearch"
+              class="input"
+              placeholder="🔍 Tìm kiếm khách hàng..."
+            />
           </div>
           <table class="table">
             <thead>
               <tr>
-                <th>Tên khách hàng</th><th>Email</th><th>Số điện thoại</th><th>Số đơn hàng</th><th>Tổng chi tiêu</th>
+                <th>Tên khách hàng</th>
+                <th>Email</th>
+                <th>Số điện thoại</th>
+                <th>Số đơn hàng</th>
+                <th>Tổng chi tiêu</th>
               </tr>
             </thead>
             <tbody id="customersTableBody"></tbody>
@@ -196,14 +251,23 @@
               <label>Hãng</label>
               <select id="productBrand" class="input" required>
                 <option value="">Chọn hãng</option>
-                <option>Dell</option><option>HP</option><option>Lenovo</option><option>Asus</option><option>Acer</option><option>MSI</option><option>Apple</option>
+                <option>Dell</option>
+                <option>HP</option>
+                <option>Lenovo</option>
+                <option>Asus</option>
+                <option>Acer</option>
+                <option>MSI</option>
+                <option>Apple</option>
               </select>
             </div>
             <div class="form-group">
               <label>Danh mục</label>
               <select id="productCategory" class="input" required>
                 <option value="">Chọn danh mục</option>
-                <option>Gaming</option><option>Văn phòng</option><option>Đồ họa</option><option>Học tập</option>
+                <option>Gaming</option>
+                <option>Văn phòng</option>
+                <option>Đồ họa</option>
+                <option>Học tập</option>
               </select>
             </div>
             <div class="form-group">
@@ -214,11 +278,69 @@
               <label>Số lượng</label>
               <input type="number" id="productStock" class="input" required />
             </div>
-            <div class="form-group"><label>CPU</label><input id="productCpu" class="input" required /></div>
-            <div class="form-group"><label>RAM</label><input id="productRam" class="input" required /></div>
-            <div class="form-group"><label>Ổ cứng</label><input id="productStorage" class="input" required /></div>
-            <div class="form-group"><label>Card đồ họa</label><input id="productGpu" class="input" required /></div>
-            <div class="form-group"><label>Màn hình</label><input id="productScreen" class="input" required /></div>
+            <div class="form-group">
+              <label>CPU</label>
+              <input id="productCpu" class="input" required />
+            </div>
+            <div class="form-group">
+              <label>RAM</label>
+              <input id="productRam" class="input" required />
+            </div>
+            <div class="form-group">
+              <label>Ổ cứng</label>
+              <input id="productStorage" class="input" required />
+            </div>
+            <div class="form-group">
+              <label>Card đồ họa</label>
+              <input id="productGpu" class="input" required />
+            </div>
+            <div class="form-group">
+              <label>Màn hình</label>
+              <input id="productScreen" class="input" required />
+            </div>
+
+            <!-- 5 HÌNH ẢNH SẢN PHẨM -->
+            <div class="form-group">
+              <label>Ảnh 1 (ảnh chính)</label>
+              <input
+                id="productImage1"
+                class="input"
+                placeholder="vd: images/laptop1-1.jpg"
+              />
+            </div>
+            <div class="form-group">
+              <label>Ảnh 2</label>
+              <input
+                id="productImage2"
+                class="input"
+                placeholder="vd: images/laptop1-2.jpg"
+              />
+            </div>
+            <div class="form-group">
+              <label>Ảnh 3</label>
+              <input
+                id="productImage3"
+                class="input"
+                placeholder="vd: images/laptop1-3.jpg"
+              />
+            </div>
+            <div class="form-group">
+              <label>Ảnh 4</label>
+              <input
+                id="productImage4"
+                class="input"
+                placeholder="vd: images/laptop1-4.jpg"
+              />
+            </div>
+            <div class="form-group">
+              <label>Ảnh 5</label>
+              <input
+                id="productImage5"
+                class="input"
+                placeholder="vd: images/laptop1-5.jpg"
+              />
+            </div>
+
             <div class="form-group">
               <label>Trạng thái</label>
               <select id="productStatus" class="input" required>
@@ -228,7 +350,9 @@
             </div>
           </div>
           <div class="modal__actions">
-            <button type="submit" class="btn btn--primary">Lưu sản phẩm</button>
+            <button type="submit" class="btn btn--primary">
+              Lưu sản phẩm
+            </button>
             <button type="button" class="btn" data-close>Hủy</button>
           </div>
         </form>
@@ -244,11 +368,31 @@
         </div>
         <form id="orderForm">
           <div class="grid-2">
-            <div class="form-group"><label>Tên khách hàng</label><input id="orderCustomerName" class="input" required></div>
-            <div class="form-group"><label>Email</label><input type="email" id="orderCustomerEmail" class="input" required></div>
-            <div class="form-group"><label>Số điện thoại</label><input id="orderCustomerPhone" class="input" required></div>
-            <div class="form-group"><label>Sản phẩm</label><select id="orderProduct" class="input" required><option value="">Chọn sản phẩm</option></select></div>
-            <div class="form-group"><label>Trạng thái</label>
+            <div class="form-group">
+              <label>Tên khách hàng</label
+              ><input id="orderCustomerName" class="input" required />
+            </div>
+            <div class="form-group">
+              <label>Email</label
+              ><input
+                type="email"
+                id="orderCustomerEmail"
+                class="input"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label>Số điện thoại</label
+              ><input id="orderCustomerPhone" class="input" required />
+            </div>
+            <div class="form-group">
+              <label>Sản phẩm</label
+              ><select id="orderProduct" class="input" required>
+                <option value="">Chọn sản phẩm</option></select
+              >
+            </div>
+            <div class="form-group">
+              <label>Trạng thái</label>
               <select id="orderStatus" class="input" required>
                 <option value="pending">Chờ xác nhận</option>
                 <option value="processing">Đang xử lý</option>
@@ -259,7 +403,9 @@
             </div>
           </div>
           <div class="modal__actions">
-            <button type="submit" class="btn btn--primary">Tạo đơn hàng</button>
+            <button type="submit" class="btn btn--primary">
+              Tạo đơn hàng
+            </button>
             <button type="button" class="btn" data-close>Hủy</button>
           </div>
         </form>
