@@ -7,18 +7,24 @@ document.addEventListener("DOMContentLoaded", () => {
     const emailInput = document.getElementById("email");
     const checkoutBtn = document.getElementById("checkoutBtn");
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let appliedPromo = null; // Lưu mã giảm giá đã áp dụng
 
     function updateCartDisplay() {
         cartItemsContainer.innerHTML = "";
-        let totalPayment = 0;
+        let subtotal = 0;
 
         if (cart.length === 0) {
             cartItemsContainer.innerHTML = "<p>Giỏ hàng trống</p>";
             cartCountElement.textContent = "0"; 
-            checkoutBtn.disabled = true; 
+            checkoutBtn.disabled = true;
+            // Reset promo khi giỏ hàng trống
+            appliedPromo = null;
+            document.getElementById('promoCodeInput').value = '';
+            document.getElementById('promoMessage').textContent = '';
+            document.getElementById('promoMessage').className = 'promo-message';
         } else {
             cart.forEach((item, index) => {
-                totalPayment += item.price * item.quantity;
+                subtotal += item.price * item.quantity;
 
                 const cartItem = document.createElement("div");
                 cartItem.classList.add("cart-item");
@@ -29,11 +35,13 @@ document.addEventListener("DOMContentLoaded", () => {
                         <p>${item.price.toLocaleString()}₫</p>
                     </div>
                     <div class="quantity">
-                        <button class="decrease" data-index="${index}">-</button>
+                        <button class="decrease" data-index="${index}" title="Giảm số lượng">-</button>
                         <span>${item.quantity}</span>
-                        <button class="increase" data-index="${index}">+</button>
+                        <button class="increase" data-index="${index}" title="Tăng số lượng">+</button>
                     </div>
-                    <button class="delete" data-index="${index}">Xóa</button>
+                    <button class="delete" data-index="${index}" title="Xóa sản phẩm">
+                        <i class="fa fa-trash"></i> Xóa
+                    </button>
                 `;
                 cartItemsContainer.appendChild(cartItem);
             });
@@ -44,7 +52,41 @@ document.addEventListener("DOMContentLoaded", () => {
             checkoutBtn.disabled = false; // Kích hoạt nút "Thanh toán"
         }
 
-        // Cập nhật tổng tiền
+        // Tính toán giảm giá và tổng tiền
+        calculateTotal(subtotal);
+    }
+
+    function calculateTotal(subtotal) {
+        const subtotalElement = document.getElementById('cart-subtotal');
+        const discountElement = document.getElementById('cart-discount');
+        const discountRow = document.getElementById('discountRow');
+        let discount = 0;
+        let totalPayment = subtotal;
+
+        // Áp dụng mã giảm giá nếu có
+        if (appliedPromo && subtotal > 0) {
+            if (appliedPromo.type === 'percent') {
+                discount = (subtotal * appliedPromo.value) / 100;
+            } else if (appliedPromo.type === 'fixed') {
+                discount = appliedPromo.value;
+            }
+            // Đảm bảo giảm giá không vượt quá tổng tiền
+            discount = Math.min(discount, subtotal);
+            totalPayment = subtotal - discount;
+        }
+
+        // Cập nhật hiển thị
+        if (subtotalElement) {
+            subtotalElement.textContent = `${subtotal.toLocaleString()}₫`;
+        }
+        
+        if (discount > 0) {
+            discountElement.textContent = `-${discount.toLocaleString()}₫`;
+            discountRow.style.display = 'block';
+        } else {
+            discountRow.style.display = 'none';
+        }
+        
         cartPaymentElement.textContent = `${totalPayment.toLocaleString()}₫`;
     }
 
@@ -63,9 +105,109 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         localStorage.setItem("cart", JSON.stringify(cart));
         updateCartDisplay();
+        
+        // Nếu có mã giảm giá đã áp dụng, tính lại tổng tiền
+        if (appliedPromo && cart.length > 0) {
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            calculateTotal(subtotal);
+        }
     });
 
     updateCartDisplay();
+
+    // Xử lý mã giảm giá
+    const promoCodeInput = document.getElementById('promoCodeInput');
+    const applyPromoBtn = document.getElementById('applyPromoBtn');
+    const promoMessage = document.getElementById('promoMessage');
+
+    function applyPromoCode() {
+        const code = promoCodeInput.value.trim().toUpperCase();
+        
+        if (!code) {
+            promoMessage.textContent = 'Vui lòng nhập mã giảm giá!';
+            promoMessage.className = 'promo-message error';
+            return;
+        }
+
+        // Lấy dữ liệu promotions từ localStorage
+        const LS_KEY = "laptop_admin_data_v1";
+        let adminState = { promotions: [] };
+
+        try {
+            const raw = localStorage.getItem(LS_KEY);
+            if (raw) {
+                adminState = JSON.parse(raw);
+            }
+        } catch (e) {
+            console.error("Không đọc được dữ liệu admin:", e);
+        }
+
+        // Tìm mã giảm giá
+        const promotion = adminState.promotions?.find(p => 
+            p.code.toUpperCase() === code && p.status === 'active'
+        );
+
+        if (!promotion) {
+            promoMessage.textContent = 'Mã giảm giá không hợp lệ hoặc đã hết hạn!';
+            promoMessage.className = 'promo-message error';
+            appliedPromo = null;
+            // Recalculate total
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            calculateTotal(subtotal);
+            return;
+        }
+
+        // Kiểm tra ngày hiệu lực
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const startDate = new Date(promotion.startDate);
+        startDate.setHours(0, 0, 0, 0);
+        const endDate = new Date(promotion.endDate);
+        endDate.setHours(23, 59, 59, 999);
+
+        if (today < startDate) {
+            promoMessage.textContent = 'Mã giảm giá chưa có hiệu lực!';
+            promoMessage.className = 'promo-message error';
+            appliedPromo = null;
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            calculateTotal(subtotal);
+            return;
+        }
+
+        if (today > endDate) {
+            promoMessage.textContent = 'Mã giảm giá đã hết hạn!';
+            promoMessage.className = 'promo-message error';
+            appliedPromo = null;
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            calculateTotal(subtotal);
+            return;
+        }
+
+        // Áp dụng mã giảm giá thành công
+        appliedPromo = promotion;
+        const discountText = promotion.type === 'percent' 
+            ? `Giảm ${promotion.value}%` 
+            : `Giảm ${promotion.value.toLocaleString()}₫`;
+        promoMessage.textContent = `✓ Áp dụng thành công: ${promotion.name} (${discountText})`;
+        promoMessage.className = 'promo-message success';
+        
+        // Recalculate total
+        const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        calculateTotal(subtotal);
+    }
+
+    // Event listeners cho mã giảm giá
+    if (applyPromoBtn) {
+        applyPromoBtn.addEventListener('click', applyPromoCode);
+    }
+
+    if (promoCodeInput) {
+        promoCodeInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                applyPromoCode();
+            }
+        });
+    }
 
     // Dữ liệu tỉnh, huyện, xã
     const data = {
@@ -202,11 +344,11 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("Không đọc được dữ liệu admin:", e);
     }
 
-    let totalAmount = 0;
+    let subtotal = 0;
 
     // Giảm tồn kho theo từng sản phẩm trong giỏ
     cart.forEach((item) => {
-        totalAmount += item.price * item.quantity;
+        subtotal += item.price * item.quantity;
 
         const prod = adminState.products.find(p =>
             // ưu tiên so id nếu có, không có thì so theo tên
@@ -219,6 +361,20 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    // Tính toán giảm giá và tổng tiền cuối cùng
+    let discount = 0;
+    let totalAmount = subtotal;
+    
+    if (appliedPromo) {
+        if (appliedPromo.type === 'percent') {
+            discount = (subtotal * appliedPromo.value) / 100;
+        } else if (appliedPromo.type === 'fixed') {
+            discount = appliedPromo.value;
+        }
+        discount = Math.min(discount, subtotal);
+        totalAmount = subtotal - discount;
+    }
+
     // Tạo một đơn hàng tổng trong admin
     const newOrder = {
         id: "ORD" + Date.now(),
@@ -226,6 +382,9 @@ document.addEventListener("DOMContentLoaded", () => {
         customerEmail: email,
         customerPhone: phoneNumber,
         productName: cart.map(i => i.name).join(", "),
+        subtotal: subtotal,
+        discount: discount,
+        promoCode: appliedPromo ? appliedPromo.code : null,
         totalAmount: totalAmount,
         status: "pending",
         createdAt: new Date().toISOString()

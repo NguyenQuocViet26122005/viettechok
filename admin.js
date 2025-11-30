@@ -139,6 +139,7 @@ function seedSample() {
       storage: "512GB SSD",
       gpu: "Intel Iris Xe",
       screen: '13.4" 3.5K OLED',
+      description: "Laptop cao cấp với màn hình OLED sắc nét, hiệu năng mạnh mẽ phù hợp cho công việc văn phòng và giải trí.",
       status: "active",
       mainImage: "images/dell-xps-1.jpg",
       images: [
@@ -161,6 +162,7 @@ function seedSample() {
       storage: "512GB SSD",
       gpu: "M2 Pro GPU",
       screen: '14.2" XDR',
+      description: "MacBook Pro với chip M2 Pro mạnh mẽ, màn hình XDR tuyệt đẹp, hoàn hảo cho công việc đồ họa và video editing chuyên nghiệp.",
       status: "active",
       mainImage: "images/mbp14-1.jpg",
       images: [
@@ -183,6 +185,7 @@ function seedSample() {
       storage: "1TB SSD",
       gpu: "RTX 3070",
       screen: '15.6" 144Hz',
+      description: "Laptop gaming mạnh mẽ với card đồ họa RTX 3070, màn hình 144Hz mượt mà, thiết kế RGB đẹp mắt, hoàn hảo cho game thủ.",
       status: "active",
       mainImage: "images/rog-g15-1.jpg",
       images: [
@@ -370,7 +373,9 @@ function renderProducts() {
         p.status === "active"
           ? '<span class="badge badge--ok">Đang bán</span>'
           : '<span class="badge badge--warn">Ngừng bán</span>';
+      const productCode = p.code || p.id;
       return `<tr>
+        <td><strong style="color:#000">#${productCode}</strong></td>
         <td><strong>${p.name}</strong><div style="color:#64748b;font-size:12px">${p.cpu} • ${
         p.ram
       }</div></td>
@@ -409,6 +414,7 @@ function openEditProduct(id) {
 
   updateProductCategorySelect();
 
+  $("#productCode").value = p.code || p.id || "";
   $("#productName").value = p.name || "";
   $("#productBrand").value = p.brand || "";
   $("#productCategory").value = p.category || "";
@@ -419,6 +425,7 @@ function openEditProduct(id) {
   $("#productStorage").value = p.storage || "";
   $("#productGpu").value = p.gpu || "";
   $("#productScreen").value = p.screen || "";
+  $("#productDescription").value = p.description || "";
   $("#productStatus").value = p.status || "active";
 
   const imgs = p.images || [];
@@ -451,8 +458,12 @@ function bindProductForm() {
       $("#productImage5").value.trim(),
     ].filter(Boolean);
 
+    const productId = currentEditingProduct ? currentEditingProduct.id : "P" + Date.now();
+    const productCode = $("#productCode").value.trim() || productId;
+    
     const data = {
-      id: currentEditingProduct ? currentEditingProduct.id : "P" + Date.now(),
+      id: productId,
+      code: productCode,
       name: $("#productName").value.trim(),
       brand: $("#productBrand").value,
       category: $("#productCategory").value,
@@ -463,6 +474,7 @@ function bindProductForm() {
       storage: $("#productStorage").value,
       gpu: $("#productGpu").value,
       screen: $("#productScreen").value,
+      description: $("#productDescription").value.trim(),
       status: $("#productStatus").value,
       mainImage:
         img1 ||
@@ -628,7 +640,10 @@ function renderCustomers() {
   const rows = getCustomers()
     .filter((c) => JSON.stringify(c).toLowerCase().includes(q))
     .map(
-      (c) => `<tr>
+      (c) => {
+        const customerCode = c.code || c.id;
+        return `<tr>
+        <td><strong style="color:#000">#${customerCode}</strong></td>
         <td>${c.name}</td>
         <td>${c.email}</td>
         <td>${c.phone || "-"}</td>
@@ -643,13 +658,14 @@ function renderCustomers() {
           <button class="btn btn--ghost" onclick="openEditCustomer('${c.id}')" style="padding:4px 8px;font-size:12px">✏️ Sửa</button>
           <button class="btn btn--danger" onclick="deleteCustomer('${c.id}')" style="padding:4px 8px;font-size:12px;margin-left:4px">🗑️ Xóa</button>
         </td>
-      </tr>`
+      </tr>`;
+      }
     )
     .join("");
 
   tbody.innerHTML =
     rows ||
-    `<tr><td colspan="8" style="text-align:center;color:#64748b;padding:28px">Chưa có khách hàng</td></tr>`;
+    `<tr><td colspan="9" style="text-align:center;color:#64748b;padding:28px">Chưa có khách hàng</td></tr>`;
 
   $("#customerSearch").addEventListener("input", renderCustomers, {
     once: true,
@@ -686,6 +702,7 @@ function openEditCustomer(id) {
   if (!c) return;
   currentEditingCustomer = c;
   $("#customerModalTitle").textContent = "Chỉnh sửa khách hàng";
+  $("#customerCode").value = c.code || c.id || "";
   $("#customerName").value = c.name || "";
   $("#customerEmail").value = c.email || "";
   $("#customerPhone").value = c.phone || "";
@@ -721,6 +738,8 @@ function bindCustomerForm() {
       return;
     }
 
+    const customerCode = $("#customerCode").value.trim();
+    
     if (currentEditingCustomer) {
       // Sửa
       const existing = state.customers.find((c) => c.email === email && c.id !== currentEditingCustomer.id);
@@ -733,6 +752,7 @@ function bindCustomerForm() {
         toast("Tài khoản đã tồn tại!");
         return;
       }
+      currentEditingCustomer.code = customerCode || currentEditingCustomer.id;
       currentEditingCustomer.name = name;
       currentEditingCustomer.email = email;
       currentEditingCustomer.phone = phone;
@@ -755,6 +775,7 @@ function bindCustomerForm() {
       const newId = "CUST" + String(state.customers.length + 1).padStart(3, "0");
       state.customers.push({
         id: newId,
+        code: customerCode || newId,
         name,
         email,
         phone,
@@ -770,34 +791,6 @@ function bindCustomerForm() {
     renderAll();
     toast(isEdit ? "Đã cập nhật khách hàng" : "Đã thêm khách hàng");
   });
-}
-
-// ======= Inventory =======
-function renderInventory() {
-  const totalValue = state.products.reduce(
-    (s, p) => s + (p.price || 0) * (p.stock || 0),
-    0
-  );
-  const lowStock = state.products.filter((p) => (p.stock || 0) < 10);
-  $("#inventoryValue").textContent = money(totalValue);
-  $("#lowStockCount").textContent = lowStock.length;
-  $("#totalProducts").textContent = state.products.length;
-
-  const list = $("#lowStockList");
-  list.innerHTML =
-    lowStock
-      .map(
-        (p) =>
-          `<div style="padding:12px;border:1px solid #fee2e2;background:#fef2f2;border-radius:10px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">
-            <div>
-              <div style="font-weight:600">${p.name}</div>
-              <div style="color:#64748b;font-size:12px">${p.brand}</div>
-            </div>
-            <span class="badge badge--warn">Còn ${p.stock} cái</span>
-          </div>`
-      )
-      .join("") ||
-    `<p style="color:#64748b;text-align:center;padding:16px">Tất cả sản phẩm đều đủ hàng 👍</p>`;
 }
 
 // ======= Reports =======
@@ -841,25 +834,46 @@ function renderReports() {
     });
   }
 
+  // Đếm số đơn hàng theo danh mục (ưa chuộng nhất)
   const catMap = {};
-  state.products.forEach(
-    (p) => (catMap[p.category] = (catMap[p.category] || 0) + 1)
-  );
+  state.orders.forEach((order) => {
+    // Tìm sản phẩm trong đơn hàng để lấy category
+    const productNames = order.productName ? order.productName.split(", ") : [];
+    productNames.forEach((productName) => {
+      const product = state.products.find((p) => p.name === productName.trim());
+      if (product && product.category) {
+        catMap[product.category] = (catMap[product.category] || 0) + 1;
+      }
+    });
+  });
+  
   const ctx2 = $("#categoryChart");
   if (ctx2) {
     categoryChart && categoryChart.destroy();
+    
+    const categories = Object.keys(catMap);
+    const counts = Object.values(catMap);
+    
     categoryChart = new Chart(ctx2, {
       type: "doughnut",
       data: {
-        labels: Object.keys(catMap),
+        labels: categories.length > 0 ? categories : ["Chưa có dữ liệu"],
         datasets: [
           {
-            data: Object.values(catMap),
-            backgroundColor: ["#3b82f6", "#10b981", "#f59e0b", "#ef4444"],
+            label: "Số đơn hàng",
+            data: counts.length > 0 ? counts : [0],
+            backgroundColor: ["#3b82f6", "#10b981", "#f59e0b", "#ef4444", "#8b5cf6", "#ec4899"],
           },
         ],
       },
-      options: { responsive: true },
+      options: { 
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'bottom'
+          }
+        }
+      },
     });
   }
 
@@ -1058,7 +1072,9 @@ function renderCategories() {
           ? '<span class="badge badge--ok">Hoạt động</span>'
           : '<span class="badge badge--warn">Tạm ngưng</span>';
 
+      const categoryCode = c.code || c.id;
       return `<tr>
+        <td><strong style="color:#000">#${categoryCode}</strong></td>
         <td><strong>${c.name}</strong></td>
         <td>${c.description || "-"}</td>
         <td><strong>${productCount}</strong> sản phẩm</td>
@@ -1091,6 +1107,7 @@ function openEditCategory(id) {
   currentEditingCategory = c;
   $("#categoryModalTitle").textContent = "Chỉnh sửa danh mục";
 
+  $("#categoryCode").value = c.code || c.id || "";
   $("#categoryName").value = c.name || "";
   $("#categoryDescription").value = c.description || "";
   $("#categoryStatus").value = c.status || "active";
@@ -1117,8 +1134,12 @@ function bindCategoryForm() {
   $("#categoryForm").addEventListener("submit", (e) => {
     e.preventDefault();
 
+    const categoryId = currentEditingCategory ? currentEditingCategory.id : "CAT" + Date.now();
+    const categoryCode = $("#categoryCode").value.trim() || categoryId;
+    
     const data = {
-      id: currentEditingCategory ? currentEditingCategory.id : "CAT" + Date.now(),
+      id: categoryId,
+      code: categoryCode,
       name: $("#categoryName").value.trim(),
       description: $("#categoryDescription").value.trim(),
       status: $("#categoryStatus").value,
@@ -1160,7 +1181,6 @@ function renderAll() {
   renderProducts();
   renderOrders();
   renderCustomers();
-  renderInventory();
   renderReports();
   renderPromotions();
   renderCategories();

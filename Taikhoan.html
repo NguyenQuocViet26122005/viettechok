@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tài khoản của tôi - VietTechStore</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            background-color: #f5f5f5;
+        }
+        
+        .account-page {
+            display: flex;
+            max-width: 1200px;
+            margin: 40px auto;
+            gap: 20px;
+            padding: 20px;
+        }
+        
+        .account-sidebar {
+            width: 280px;
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            height: fit-content;
+        }
+        
+        .user-profile {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+            margin-bottom: 20px;
+        }
+        
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 32px;
+            color: #666;
+        }
+        
+        .user-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .user-phone {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .sidebar-menu li {
+            margin-bottom: 5px;
+        }
+        
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            color: #333;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        
+        .sidebar-menu a:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .sidebar-menu a.active {
+            background-color: #e3f2fd;
+            color: #007bff;
+        }
+        
+        .sidebar-menu a.active i {
+            color: #007bff;
+        }
+        
+        .sidebar-menu i {
+            width: 20px;
+            color: #666;
+        }
+        
+        .account-content {
+            flex: 1;
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .content-section {
+            display: none;
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        .section-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 25px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        
+        .form-group input:disabled {
+            background-color: #f5f5f5;
+            cursor: not-allowed;
+        }
+        
+        .radio-group {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: normal;
+            cursor: pointer;
+        }
+        
+        .radio-group input[type="radio"] {
+            width: auto;
+        }
+        
+        .btn-save {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 40px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+        
+        .btn-save:hover {
+            background-color: #0056b3;
+        }
+        
+        /* Table styles from admin */
+        .table-wrap {
+            background: white;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            padding: 10px 12px;
+        }
+        
+        .toolbar {
+            margin-bottom: 10px;
+        }
+        
+        .input {
+            width: 100%;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            padding: 7px 9px;
+            font-size: 13px;
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        
+        .table th,
+        .table td {
+            padding: 8px 10px;
+            border-bottom: 1px solid #e2e8f0;
+            text-align: left;
+        }
+        
+        .table th {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #64748b;
+            font-weight: 600;
+        }
+        
+        .table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .table tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        
+        .badge--warn {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+        
+        .badge--ok {
+            background-color: #dcfce7;
+            color: #16a34a;
+        }
+        
+        .badge--info {
+            background-color: #dbeafe;
+            color: #1e40af;
+        }
+        
+        .badge--info-shipping {
+            background-color: #e0e7ff;
+            color: #4338ca;
+        }
+        
+        .badge--danger {
+            background-color: #fee2e2;
+            color: #dc2626;
+        }
+        
+        .section__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+        
+        .empty-state i {
+            font-size: 64px;
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+        
+        .btn-cancel {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .btn-cancel:hover {
+            background-color: #c82333;
+        }
+        
+        .btn-cancel i {
+            font-size: 11px;
+        }
+        
+        .table td:last-child {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header từ index.html -->
+    <div class="top-header">
+        <div class="container"> 
+            <div class="logo">
+                <img src="anh/logo.jpg" alt="logo">
+                <div class="contact-info">
+                    <p><b>VietTechStore</b></p>
+                    <p><b>079.949.6002</b></p>
+                </div>
+                <div class="contact-icons">
+                    <a href="tel:0123456789" target="_blank">
+                        <img src="anh/contact_icon_1.png" alt="Gọi điện">
+                    </a>
+                    <a href="https://zalo.me/0123456789" target="_blank">
+                        <img src="anh/contact_icon_2.png" alt="Zalo">
+                    </a>
+                    <a href="https://m.me/yourpageid" target="_blank">
+                        <img src="anh/contact_icon_3.png" alt="Messenger">
+                    </a>
+                </div>
+            </div>
+            <nav class="menu">
+                <a href="index.html">Giới thiệu</a>
+                <div class="dropdown">
+                    <a href="#">Laptop</a>
+                    <div class="dropdown-content">
+                        <div class="cot">
+                            <p>HP</p>
+                            <ul>
+                                <li><a href="#">HP Probook</a></li>
+                                <li><a href="#">HP Folio</a></li>
+                                <li><a href="#">HP Elitebook</a></li>
+                                <li><a href="#">HP Spectre</a></li>
+                                <li><a href="#">HP Pavilion</a></li>
+                                <li><a href="#">HP Envy</a></li>
+                            </ul>
+                        </div>
+                        <div class="cot">
+                            <p>ASUS</p>
+                            <ul>
+                                <li><a href="#">Asus S Series</a></li>
+                                <li><a href="#">Asus Vivobook Series</a></li>
+                                <li><a href="#">Asus Zenbook Series</a></li>
+                                <li><a href="#">Asus TUF</a></li>
+                            </ul>
+                        </div>
+                        <div class="cot">
+                            <p>DELL</p>
+                            <ul>
+                                <li><a href="#">Dell XPS</a></li>
+                                <li><a href="#">Dell Precision</a></li>
+                                <li><a href="#">Dell Latitude</a></li>
+                                <li><a href="#">Dell Inspiron</a></li>
+                                <li><a href="#">Dell Alienware</a></li>
+                            </ul>
+                        </div>
+                        <div class="cot">
+                            <p>LENOVO</p>
+                            <ul>
+                                <li><a href="#">Lenovo Yoga Series</a></li>
+                                <li><a href="muclenovo.html">Lenovo Gaming</a></li>
+                                <li><a href="#">Lenovo Legion</a></li>
+                                <li><a href="#">IdeaPad</a></li>
+                                <li><a href="#">IdeaPad Gaming</a></li>
+                                <li><a href="#">Thinkbook</a></li>
+                            </ul>
+                        </div>
+                        <div class="cot">
+                            <p>THINKPAD</p>
+                            <ul>
+                                <li><a href="#">ThinkPad X1 Carbon</a></li>
+                                <li><a href="#">ThinkPad X Series</a></li>
+                                <li><a href="#">ThinkPad E Series</a></li>
+                                <li><a href="#">ThinkPad T Series</a></li>
+                                <li><a href="#">ThinkPad Workstations</a></li>
+                            </ul>
+                        </div>
+                        <div class="cot">
+                            <p>Theo nhu cầu</p>
+                            <ul>
+                                <li><a href="#">Mỏng Nhẹ</a></li>
+                                <li><a href="#">Workstations</a></li>
+                                <li><a href="#">Siêu phẩm</a></li>
+                                <li><a href="#">Đồ Họa, Kỹ thuật</a></li>
+                                <li><a href="#">Học tập, Văn phòng</a></li>
+                                <li><a href="#">Lập trình</a></li>
+                                <li><a href="#">Game</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <a href="#">Phụ kiện</a>
+                    <div class="dropdown-content">
+                        <div class="cot">
+                            <p>Phụ kiện</p>
+                            <ul>
+                                <li><a href="#">Tai nghe</a></li>
+                                <li><a href="#">Chuột</a></li>
+                                <li><a href="#">Bàn phím</a></li>
+                                <li><a href="#">Cáp sạc</a></li>
+                            </ul>
+                        </div>
+                        <div class="cot">
+                            <p>Khác</p>
+                            <ul>
+                                <li><a href="#">Ổ cứng</a></li>
+                                <li><a href="#">RAM</a></li>
+                                <li><a href="#">Pin</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <a href="#">Khuyến mãi</a>
+            </nav>
+            <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <i class="fa fa-bars"></i>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Tìm kiếm laptop và phụ kiện">
+                <button><i class="fa fa-search"></i></button>
+            </div>
+            <div class="icons">
+                <a href="Giohang.html">
+                    <i class="fa fa-shopping-cart"></i>
+                    <span id="cartCount">0</span>
+                </a>
+                <div id="userDisplay" class="user-dropdown-container">
+                    <a href="Dangnhap.html" id="userLink"><i class="fa fa-user"></i></a>
+                    <div id="userDropdown" class="user-dropdown-menu">
+                        <a href="Taikhoan.html" class="dropdown-item">
+                            <i class="fa fa-user-circle"></i> Tài khoản
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" id="logoutLink" class="dropdown-item logout-item">
+                            <i class="fa fa-sign-out-alt"></i> Đăng xuất
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav class="mobile-menu" id="mobileMenu">
+            <a href="index.html">Giới thiệu</a>
+            <a href="#">Laptop</a>
+            <a href="#">Phụ kiện</a>
+            <a href="#">Khuyến mãi</a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="account-page">
+        <!-- Sidebar -->
+        <div class="account-sidebar">
+            <div class="user-profile">
+                <div class="user-avatar">
+                    <i class="fa fa-user"></i>
+                </div>
+                <div class="user-name" id="sidebarUserName">Nguyễn Quốc Việt</div>
+                <div class="user-phone" id="sidebarUserPhone">0799496002</div>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="#" class="menu-item active" data-section="info">
+                    <i class="fa fa-user"></i> Thông tin tài khoản
+                </a></li>
+                <li><a href="#" class="menu-item" data-section="orders">
+                    <i class="fa fa-shopping-bag"></i> Quản lý đơn hàng
+                </a></li>
+            </ul>
+        </div>
+
+        <!-- Content Area -->
+        <div class="account-content">
+            <!-- Thông tin tài khoản -->
+            <div class="content-section active" id="infoSection">
+                <h2 class="section-title">Thông tin tài khoản</h2>
+                <form id="accountForm">
+                    <div class="form-group">
+                        <label>Họ Tên</label>
+                        <input type="text" id="fullName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Giới tính</label>
+                        <div class="radio-group">
+                            <label>
+                                <input type="radio" name="gender" value="male" checked> Nam
+                            </label>
+                            <label>
+                                <input type="radio" name="gender" value="female"> Nữ
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Số điện thoại</label>
+                        <input type="tel" id="phone">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="email" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label>Tài khoản</label>
+                        <input type="text" id="username" disabled>
+                    </div>
+                    <button type="submit" class="btn-save">LƯU THAY ĐỔI</button>
+                </form>
+                
+                <!-- Form đổi mật khẩu -->
+                <div style="margin-top: 40px; padding-top: 30px; border-top: 1px solid #e0e0e0;">
+                    <h3 class="section-title" style="font-size: 20px; margin-bottom: 20px;">Đổi mật khẩu</h3>
+                    <form id="changePasswordForm">
+                        <div class="form-group">
+                            <label>Mật khẩu hiện tại</label>
+                            <input type="password" id="currentPassword" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Mật khẩu mới</label>
+                            <input type="password" id="newPassword" required minlength="6">
+                        </div>
+                        <div class="form-group">
+                            <label>Xác nhận mật khẩu mới</label>
+                            <input type="password" id="confirmPassword" required minlength="6">
+                        </div>
+                        <button type="submit" class="btn-save">ĐỔI MẬT KHẨU</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Quản lý đơn hàng -->
+            <div class="content-section" id="ordersSection">
+                <div class="section__header">
+                    <h2 class="section-title">Quản lý đơn hàng</h2>
+                </div>
+                <div class="table-wrap">
+                    <div class="toolbar">
+                        <input
+                            id="orderSearch"
+                            class="input"
+                            placeholder="🔍 Tìm kiếm đơn hàng..."
+                        />
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Mã đơn</th>
+                                <th>Sản phẩm</th>
+                                <th>Tổng tiền</th>
+                                <th>Trạng thái</th>
+                                <th>Ngày đặt</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ordersTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer từ index.html -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h4>VỀ VIETTECH</h4>
+                <ul>
+                    <li><a href="#">Giới thiệu</a></li>
+                    <li><a href="#">Tuyển dụng</a></li>
+                    <li><a href="#">Liên hệ</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>CHÍNH SÁCH</h4>
+                <ul>
+                    <li><a href="#">Chính sách bảo hành</a></li>
+                    <li><a href="#">Chính sách giao hàng</a></li>
+                    <li><a href="#">Chính sách bảo mật</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>THÔNG TIN</h4>
+                <ul>
+                    <li><a href="#">Hệ thống cửa hàng</a></li>
+                    <li><a href="#">Hướng dẫn mua hàng</a></li>
+                    <li><a href="#">Hướng dẫn thanh toán</a></li>
+                    <li><a href="#">Hướng dẫn trả góp</a></li>
+                    <li><a href="#">Tra cứu địa chỉ bảo hành</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>TỔNG ĐÀI HỖ TRỢ (8:00 - 21:00)</h4>
+                <ul>
+                    <li>Mua hàng: <a href="tel:19005301">1900.5301</a></li>
+                    <li>Bảo hành: <a href="tel:19005325">1900.5325</a></li>
+                    <li>Kiếu nại: <a href="tel:18006173">1800.6173</a></li>
+                    <li>Email: <a href="mailto:cskh@viettech.com">cskh@VietTechStore .com</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>BẢN ĐỒ</h4>
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14931.339738709165!2d106.05463020248972!3d20.676293444177908!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135c0cd38f568f3%3A0x50681a4fcf414c4b!2zQW4gVOG6o28sIFRwLiBIxrBuZyBZw6puLCBIxrBuZyBZw6puLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1743648692178!5m2!1svi!2s" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="Dongbogiohang.js"></script>
+    <script>
+        // Load user info
+        function loadUserInfo() {
+            try {
+                const currentUserStr = localStorage.getItem('currentUser');
+                if (currentUserStr) {
+                    const currentUser = JSON.parse(currentUserStr);
+                    
+                    // Update sidebar
+                    document.getElementById('sidebarUserName').textContent = currentUser.name || 'Người dùng';
+                    document.getElementById('sidebarUserPhone').textContent = currentUser.phone || '';
+                    
+                    // Update form
+                    document.getElementById('fullName').value = currentUser.name || '';
+                    document.getElementById('phone').value = currentUser.phone || '';
+                    document.getElementById('email').value = currentUser.email || '';
+                    
+                    // Load username from customers data
+                    const LS_KEY = "laptop_admin_data_v1";
+                    const adminData = JSON.parse(localStorage.getItem(LS_KEY) || '{}');
+                    if (adminData.customers) {
+                        const customer = adminData.customers.find(c => c.email === currentUser.email);
+                        if (customer && customer.username) {
+                            document.getElementById('username').value = customer.username;
+                        }
+                    }
+                    
+                    // Update header user display
+                    const userLink = document.getElementById('userLink');
+                    if (userLink && currentUser.name && currentUser.role === 'user') {
+                        userLink.innerHTML = `
+                            <i class="fa fa-user"></i>
+                            <div class="user-greeting">
+                                <div class="greeting-text">Xin chào</div>
+                                <div class="user-name">${currentUser.name}</div>
+                            </div>
+                        `;
+                        userLink.classList.add('user-logged-in');
+                        userLink.style.textDecoration = 'none';
+                    }
+                } else {
+                    window.location.href = 'Dangnhap.html';
+                }
+            } catch (e) {
+                console.error("Lỗi:", e);
+            }
+        }
+        
+        // Menu navigation
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                const section = this.dataset.section;
+                
+                // Update active menu
+                document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Show corresponding section
+                document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+                document.getElementById(section + 'Section').classList.add('active');
+                
+                if (section === 'orders') {
+                    loadOrders();
+                }
+            });
+        });
+        
+        // Load orders in table format
+        function loadOrders() {
+            const ordersTableBody = document.getElementById('ordersTableBody');
+            if (!ordersTableBody) return;
+            
+            try {
+                const currentUserStr = localStorage.getItem('currentUser');
+                if (!currentUserStr) {
+                    ordersTableBody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#64748b;padding:28px">Vui lòng đăng nhập</td></tr>';
+                    return;
+                }
+                
+                const currentUser = JSON.parse(currentUserStr);
+                const LS_KEY = "laptop_admin_data_v1";
+                const adminData = JSON.parse(localStorage.getItem(LS_KEY) || '{}');
+                const orders = adminData.orders || [];
+                
+                // Filter by user
+                let userOrders = orders.filter(order => 
+                    order.customerEmail === currentUser.email || 
+                    order.customerName === currentUser.name
+                );
+                
+                // Sort by date
+                userOrders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                
+                // Search filter
+                const searchTerm = (document.getElementById('orderSearch')?.value || '').toLowerCase();
+                if (searchTerm) {
+                    userOrders = userOrders.filter(order => 
+                        order.id.toLowerCase().includes(searchTerm) ||
+                        (order.productName || '').toLowerCase().includes(searchTerm)
+                    );
+                }
+                
+                if (userOrders.length === 0) {
+                    ordersTableBody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#64748b;padding:28px">Chưa có đơn hàng</td></tr>';
+                    return;
+                }
+                
+                const statusMap = {
+                    'pending': { text: 'Chờ xác nhận', class: 'badge--warn' },
+                    'processing': { text: 'Đang xử lý', class: 'badge--info' },
+                    'shipping': { text: 'Đang giao', class: 'badge--info-shipping' },
+                    'completed': { text: 'Hoàn thành', class: 'badge--ok' },
+                    'cancelled': { text: 'Đã hủy', class: 'badge--danger' }
+                };
+                
+                const money = (n) => new Intl.NumberFormat('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND'
+                }).format(n || 0);
+                
+                ordersTableBody.innerHTML = userOrders.map(order => {
+                    const date = new Date(order.createdAt);
+                    const dateStr = date.toLocaleDateString('vi-VN', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric'
+                    });
+                    
+                    const status = statusMap[order.status] || statusMap['pending'];
+                    
+                    // Chỉ cho phép hủy đơn nếu trạng thái là pending, processing hoặc shipping (giống admin)
+                    const canCancel = order.status === 'pending' || order.status === 'processing' || order.status === 'shipping';
+                    const cancelButton = canCancel 
+                        ? `<button class="btn-cancel" onclick="cancelOrder('${order.id}')" title="Hủy đơn hàng">
+                            <i class="fa fa-times"></i> Hủy đơn
+                           </button>`
+                        : '<span style="color: #999; font-size: 12px;">-</span>';
+                    
+                    return `
+                        <tr>
+                            <td><strong>${order.id}</strong></td>
+                            <td>${order.productName || 'N/A'}</td>
+                            <td><strong>${money(order.totalAmount)}</strong></td>
+                            <td><span class="badge ${status.class}">${status.text}</span></td>
+                            <td>${dateStr}</td>
+                            <td>${cancelButton}</td>
+                        </tr>
+                    `;
+                }).join('');
+            } catch (e) {
+                console.error("Lỗi:", e);
+                ordersTableBody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#64748b;padding:28px">Có lỗi xảy ra</td></tr>';
+            }
+        }
+        
+        // Hủy đơn hàng
+        function cancelOrder(orderId) {
+            if (!confirm('Bạn có chắc chắn muốn hủy đơn hàng này?')) {
+                return;
+            }
+            
+            try {
+                const LS_KEY = "laptop_admin_data_v1";
+                const adminData = JSON.parse(localStorage.getItem(LS_KEY) || '{}');
+                const orders = adminData.orders || [];
+                
+                // Tìm và cập nhật trạng thái đơn hàng
+                const orderIndex = orders.findIndex(order => order.id === orderId);
+                if (orderIndex !== -1) {
+                    const order = orders[orderIndex];
+                    
+                    // Kiểm tra xem đơn hàng có thể hủy không
+                    if (order.status === 'completed') {
+                        alert('Không thể hủy đơn hàng đã hoàn thành!');
+                        return;
+                    }
+                    
+                    if (order.status === 'cancelled') {
+                        alert('Đơn hàng này đã được hủy trước đó!');
+                        return;
+                    }
+                    
+                    // Cập nhật trạng thái thành 'cancelled'
+                    orders[orderIndex].status = 'cancelled';
+                    adminData.orders = orders;
+                    localStorage.setItem(LS_KEY, JSON.stringify(adminData));
+                    
+                    alert('Đã hủy đơn hàng thành công!');
+                    
+                    // Reload danh sách đơn hàng
+                    loadOrders();
+                } else {
+                    alert('Không tìm thấy đơn hàng!');
+                }
+            } catch (e) {
+                console.error("Lỗi:", e);
+                alert('Có lỗi xảy ra khi hủy đơn hàng!');
+            }
+        }
+        
+        // Search orders
+        const orderSearch = document.getElementById('orderSearch');
+        if (orderSearch) {
+            orderSearch.addEventListener('input', loadOrders);
+        }
+        
+        // Save account info
+        document.getElementById('accountForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const fullName = document.getElementById('fullName').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const gender = document.querySelector('input[name="gender"]:checked').value;
+            
+            if (!fullName) {
+                alert('Vui lòng nhập họ và tên');
+                return;
+            }
+            
+            try {
+                const currentUserStr = localStorage.getItem('currentUser');
+                if (currentUserStr) {
+                    const currentUser = JSON.parse(currentUserStr);
+                    currentUser.name = fullName;
+                    currentUser.phone = phone;
+                    currentUser.gender = gender;
+                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                    
+                    // Update in admin data
+                    const LS_KEY = "laptop_admin_data_v1";
+                    const adminData = JSON.parse(localStorage.getItem(LS_KEY) || '{}');
+                    if (adminData.customers) {
+                        const customer = adminData.customers.find(c => c.email === currentUser.email);
+                        if (customer) {
+                            customer.name = fullName;
+                            customer.phone = phone;
+                            localStorage.setItem(LS_KEY, JSON.stringify(adminData));
+                        }
+                    }
+                    
+                    // Update sidebar
+                    document.getElementById('sidebarUserName').textContent = fullName;
+                    document.getElementById('sidebarUserPhone').textContent = phone;
+                    
+                    alert('Đã lưu thông tin thành công!');
+                }
+            } catch (e) {
+                console.error("Lỗi:", e);
+                alert('Có lỗi xảy ra khi lưu thông tin');
+            }
+        });
+        
+        // Change password
+        document.getElementById('changePasswordForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            // Validation
+            if (!currentPassword || !newPassword || !confirmPassword) {
+                alert('Vui lòng điền đầy đủ thông tin!');
+                return;
+            }
+            
+            if (newPassword.length < 6) {
+                alert('Mật khẩu mới phải có ít nhất 6 ký tự!');
+                return;
+            }
+            
+            if (newPassword !== confirmPassword) {
+                alert('Mật khẩu xác nhận không khớp!');
+                return;
+            }
+            
+            if (currentPassword === newPassword) {
+                alert('Mật khẩu mới phải khác mật khẩu hiện tại!');
+                return;
+            }
+            
+            try {
+                const currentUserStr = localStorage.getItem('currentUser');
+                if (!currentUserStr) {
+                    alert('Vui lòng đăng nhập lại!');
+                    window.location.href = 'Dangnhap.html';
+                    return;
+                }
+                
+                const currentUser = JSON.parse(currentUserStr);
+                const LS_KEY = "laptop_admin_data_v1";
+                const adminData = JSON.parse(localStorage.getItem(LS_KEY) || '{}');
+                
+                if (!adminData.customers) {
+                    alert('Không tìm thấy thông tin tài khoản!');
+                    return;
+                }
+                
+                // Tìm customer theo email
+                const customer = adminData.customers.find(c => c.email === currentUser.email);
+                if (!customer) {
+                    alert('Không tìm thấy thông tin tài khoản!');
+                    return;
+                }
+                
+                // Kiểm tra mật khẩu hiện tại
+                if (customer.password !== currentPassword) {
+                    alert('Mật khẩu hiện tại không đúng!');
+                    return;
+                }
+                
+                // Cập nhật mật khẩu mới
+                customer.password = newPassword;
+                adminData.customers = adminData.customers.map(c => 
+                    c.email === currentUser.email ? customer : c
+                );
+                
+                localStorage.setItem(LS_KEY, JSON.stringify(adminData));
+                
+                // Xóa các trường mật khẩu
+                document.getElementById('currentPassword').value = '';
+                document.getElementById('newPassword').value = '';
+                document.getElementById('confirmPassword').value = '';
+                
+                alert('Đổi mật khẩu thành công!');
+            } catch (e) {
+                console.error("Lỗi:", e);
+                alert('Có lỗi xảy ra khi đổi mật khẩu!');
+            }
+        });
+        
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUserInfo();
+        });
+    </script>
+    <style>
+        .icons {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .user-dropdown-container {
+            position: relative;
+        }
+        
+        .icons a.user-logged-in {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 6px;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            height: fit-content;
+            cursor: pointer;
+            pointer-events: auto;
+        }
+        
+        .icons a.user-logged-in:hover {
+            background-color: #0056b3;
+        }
+        
+        .icons a.user-logged-in i {
+            font-size: 16px;
+            color: white;
+        }
+        
+        .icons a.user-logged-in .user-greeting {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+        
+        .icons a.user-logged-in .greeting-text {
+            font-size: 10px;
+            opacity: 0.9;
+        }
+        
+        .icons a.user-logged-in .user-name {
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        
+        .user-dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 5px;
+            background-color: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            min-width: 200px;
+            z-index: 1000;
+            overflow: hidden;
+        }
+        
+        .user-dropdown-container:hover .user-dropdown-menu,
+        .user-dropdown-menu:hover {
+            display: block;
+        }
+        
+        /* Tạo vùng vô hình để kết nối banner và dropdown - giúp di chuột không bị mất */
+        .user-dropdown-container::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            right: 0;
+            width: 100%;
+            height: 5px;
+            background: transparent;
+            pointer-events: none;
+        }
+        
+        .user-dropdown-menu .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            color: #333;
+            text-decoration: none;
+            transition: background-color 0.2s;
+            font-size: 14px;
+        }
+        
+        .user-dropdown-menu .dropdown-item:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .user-dropdown-menu .dropdown-item i {
+            width: 18px;
+            color: #666;
+        }
+        
+        .user-dropdown-menu .dropdown-divider {
+            height: 1px;
+            background-color: #e0e0e0;
+            margin: 4px 0;
+        }
+        
+        .user-dropdown-menu .logout-item {
+            color: #dc3545;
+        }
+        
+        .user-dropdown-menu .logout-item:hover {
+            background-color: #fee;
+        }
+        
+        .user-dropdown-menu .logout-item i {
+            color: #dc3545;
+        }
+    </style>
+</body>
+</html>
+

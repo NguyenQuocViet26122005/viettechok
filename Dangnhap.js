@@ -1,4 +1,4 @@
-// Dangnhap.js (thay thế toàn bộ file)
+// Dangnhap.js
 document.querySelector('.login-form').addEventListener('submit', function (e) {
     e.preventDefault();
     const emailInput = document.getElementById('email');
@@ -20,17 +20,48 @@ document.querySelector('.login-form').addEventListener('submit', function (e) {
 
     if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
         // Đăng nhập admin thành công
-        localStorage.setItem('isAdmin', 'true'); // flag để bảo vệ trang admin
-        // (tuỳ chọn) lưu thông tin user
-        localStorage.setItem('currentUser', JSON.stringify({ email, role: 'admin' }));
-        // chuyển đến trang admin
+        localStorage.setItem('isAdmin', 'true');
+        localStorage.setItem('currentUser', JSON.stringify({ 
+            email, 
+            name: 'Admin',
+            role: 'admin' 
+        }));
         window.location.href = "admin.html";
         return;
     }
 
-    // Nếu không phải admin: xử lý như user bình thường (giữ hành vi cũ)
-    // Bạn có thể sửa phần này để kiểm tra user khác, đăng ký, v.v.
-    localStorage.setItem('isAdmin', 'false');
-    localStorage.setItem('currentUser', JSON.stringify({ email, role: 'user' }));
-    window.location.href = "index.html";
+    // Kiểm tra khách hàng từ state.customers
+    const LS_KEY = "laptop_admin_data_v1";
+    let adminState = {
+        customers: []
+    };
+
+    try {
+        const raw = localStorage.getItem(LS_KEY);
+        if (raw) {
+            adminState = JSON.parse(raw);
+        }
+    } catch (e) {
+        console.error("Lỗi đọc dữ liệu admin:", e);
+    }
+
+    // Tìm khách hàng theo email
+    const customer = adminState.customers?.find(c => c.email === email);
+    
+    if (customer && customer.password === password) {
+        // Đăng nhập thành công
+        localStorage.setItem('isAdmin', 'false');
+        localStorage.setItem('currentUser', JSON.stringify({ 
+            email: customer.email,
+            name: customer.name,
+            phone: customer.phone,
+            username: customer.username,
+            role: 'user',
+            id: customer.id
+        }));
+        alert('Đăng nhập thành công! Chào mừng ' + customer.name);
+        window.location.href = "index.html";
+    } else {
+        alert('Email hoặc mật khẩu không đúng. Vui lòng thử lại.');
+    }
 });
