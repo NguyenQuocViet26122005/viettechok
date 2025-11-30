@@ -37,6 +37,36 @@ body {
   position: fixed;
   left: 0;
   top: 0;
+  transition: width 0.3s ease;
+  overflow: hidden;
+}
+
+.sidebar.collapsed {
+  width: 80px;
+}
+
+.sidebar.collapsed .sidebar__header {
+  text-align: center;
+}
+
+.sidebar.collapsed .app-title {
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sidebar.collapsed .app-sub {
+  display: none;
+}
+
+.sidebar.collapsed .menu__item span {
+  display: none;
+}
+
+.sidebar.collapsed .menu__item {
+  justify-content: center;
+  padding: 10px;
 }
 
 .sidebar__header {
@@ -88,6 +118,11 @@ body {
   margin-left: 260px;
   padding: 18px 22px 32px;
   width: 100%;
+  transition: margin-left 0.3s ease;
+}
+
+.sidebar.collapsed ~ .main {
+  margin-left: 80px;
 }
 
 .topbar {
@@ -431,10 +466,28 @@ body {
     transform: translateX(-100%);
     transition: transform 0.25s ease;
     z-index: 60;
+    width: 260px !important;
   }
 
   .sidebar.open {
     transform: translateX(0);
+  }
+
+  .sidebar.collapsed {
+    width: 260px !important;
+  }
+
+  .sidebar.collapsed .app-sub {
+    display: block;
+  }
+
+  .sidebar.collapsed .menu__item span {
+    display: block;
+  }
+
+  .sidebar.collapsed .menu__item {
+    justify-content: flex-start;
+    padding: 10px 12px;
   }
 
   .cards {

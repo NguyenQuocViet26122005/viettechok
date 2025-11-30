@@ -22,13 +22,34 @@ const LS_KEY = "laptop_admin_data_v1";
 let state = {
   products: [],
   orders: [],
+  promotions: [],
+  categories: [],
 };
 
 function loadState() {
   try {
     const raw = localStorage.getItem(LS_KEY);
     if (raw) {
-      state = JSON.parse(raw);
+      const loaded = JSON.parse(raw);
+      state = {
+        products: loaded.products || [],
+        orders: loaded.orders || [],
+        promotions: loaded.promotions || [],
+        categories: loaded.categories || [],
+      };
+      // Nếu không có categories hoặc promotions, seed sample
+      if (!state.categories || state.categories.length === 0) {
+        state.categories = [
+          { id: "CAT001", name: "Gaming", description: "Laptop chơi game", status: "active" },
+          { id: "CAT002", name: "Văn phòng", description: "Laptop văn phòng", status: "active" },
+          { id: "CAT003", name: "Đồ họa", description: "Laptop đồ họa, kỹ thuật", status: "active" },
+          { id: "CAT004", name: "Học tập", description: "Laptop học tập, sinh viên", status: "active" },
+        ];
+        saveState();
+      }
+      if (!state.promotions || state.promotions.length === 0) {
+        state.promotions = [];
+      }
     } else {
       seedSample();
     }
@@ -42,6 +63,27 @@ function saveState() {
 }
 
 function seedSample() {
+  state.categories = [
+    { id: "CAT001", name: "Gaming", description: "Laptop chơi game", status: "active" },
+    { id: "CAT002", name: "Văn phòng", description: "Laptop văn phòng", status: "active" },
+    { id: "CAT003", name: "Đồ họa", description: "Laptop đồ họa, kỹ thuật", status: "active" },
+    { id: "CAT004", name: "Học tập", description: "Laptop học tập, sinh viên", status: "active" },
+  ];
+
+  state.promotions = [
+    {
+      id: "PROM001",
+      code: "KM001",
+      name: "Giảm giá 20%",
+      type: "percent",
+      value: 20,
+      startDate: new Date().toISOString().split('T')[0],
+      endDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+      description: "Giảm giá 20% cho tất cả sản phẩm",
+      status: "active",
+    },
+  ];
+
   state.products = [
     {
       id: "P001",
@@ -159,11 +201,34 @@ function activateSection(id) {
 }
 
 function initSidebar() {
+  // Load trạng thái sidebar từ localStorage
+  const sidebarCollapsed = localStorage.getItem("sidebarCollapsed") === "true";
+  if (sidebarCollapsed) {
+    $("#sidebar").classList.add("collapsed");
+  }
+
+  // Toggle sidebar (thu gọn/mở rộng)
   $("#btnToggleSidebar").addEventListener("click", () => {
-    $("#sidebar").classList.toggle("open");
+    if (window.innerWidth <= 960) {
+      // Trên mobile: toggle open/close
+      $("#sidebar").classList.toggle("open");
+    } else {
+      // Trên desktop: toggle collapsed/expanded
+      const sidebar = $("#sidebar");
+      sidebar.classList.toggle("collapsed");
+      // Lưu trạng thái vào localStorage
+      localStorage.setItem("sidebarCollapsed", sidebar.classList.contains("collapsed"));
+    }
   });
+
   $$(".menu__item").forEach((btn) =>
-    btn.addEventListener("click", () => activateSection(btn.dataset.target))
+    btn.addEventListener("click", () => {
+      activateSection(btn.dataset.target);
+      // Trên mobile, đóng sidebar sau khi chọn menu
+      if (window.innerWidth <= 960) {
+        $("#sidebar").classList.remove("open");
+      }
+    })
   );
 }
 
@@ -299,6 +364,8 @@ function openEditProduct(id) {
   if (!p) return;
   currentEditingProduct = p;
   $("#productModalTitle").textContent = "Chỉnh sửa sản phẩm";
+
+  updateProductCategorySelect();
 
   $("#productName").value = p.name || "";
   $("#productBrand").value = p.brand || "";
@@ -668,7 +735,24 @@ function hideModal(id) {
 function initModals() {
   // open
   $$("[data-open]").forEach((b) =>
-    b.addEventListener("click", () => showModal(b.dataset.open))
+    b.addEventListener("click", () => {
+      const modalId = b.dataset.open;
+      if (modalId === "productModal") {
+        currentEditingProduct = null;
+        $("#productModalTitle").textContent = "Thêm sản phẩm mới";
+        updateProductCategorySelect();
+        $("#productForm").reset();
+      } else if (modalId === "promotionModal") {
+        currentEditingPromotion = null;
+        $("#promotionModalTitle").textContent = "Thêm khuyến mãi mới";
+        $("#promotionForm").reset();
+      } else if (modalId === "categoryModal") {
+        currentEditingCategory = null;
+        $("#categoryModalTitle").textContent = "Thêm danh mục mới";
+        $("#categoryForm").reset();
+      }
+      showModal(modalId);
+    })
   );
   // close
   $$("[data-close]").forEach((b) =>
@@ -683,6 +767,229 @@ function initModals() {
   );
 }
 
+// ======= Promotions =======
+function renderPromotions() {
+  const tbody = $("#promotionsTableBody");
+  const q = ($("#promotionSearch").value || "").toLowerCase();
+  const rows = state.promotions
+    .filter((p) => JSON.stringify(p).toLowerCase().includes(q))
+    .map((p) => {
+      const now = new Date();
+      const startDate = new Date(p.startDate);
+      const endDate = new Date(p.endDate);
+      let statusBadge = "";
+      if (now < startDate) {
+        statusBadge = '<span class="badge badge--warn">Chưa bắt đầu</span>';
+      } else if (now > endDate) {
+        statusBadge = '<span class="badge" style="background:#fee2e2;color:#dc2626">Đã hết hạn</span>';
+      } else {
+        statusBadge = '<span class="badge badge--ok">Đang áp dụng</span>';
+      }
+
+      const valueDisplay = p.type === "percent" 
+        ? `${p.value}%` 
+        : money(p.value);
+
+      return `<tr>
+        <td><strong>${p.code}</strong></td>
+        <td>${p.name}</td>
+        <td>${p.type === "percent" ? "Giảm %" : "Giảm tiền"}</td>
+        <td><strong>${valueDisplay}</strong></td>
+        <td>${new Date(p.startDate).toLocaleDateString("vi-VN")}</td>
+        <td>${new Date(p.endDate).toLocaleDateString("vi-VN")}</td>
+        <td>${statusBadge}</td>
+        <td>
+          <button class="btn btn--ghost" data-edit-promo="${p.id}">✏️ Sửa</button>
+          <button class="btn btn--danger" data-del-promo="${p.id}">🗑️ Xóa</button>
+        </td>
+      </tr>`;
+    })
+    .join("");
+
+  tbody.innerHTML =
+    rows ||
+    `<tr><td colspan="8" style="text-align:center;color:#64748b;padding:28px">Chưa có khuyến mãi</td></tr>`;
+
+  $$("[data-edit-promo]").forEach((b) =>
+    b.addEventListener("click", () => openEditPromotion(b.dataset.editPromo))
+  );
+  $$("[data-del-promo]").forEach((b) =>
+    b.addEventListener("click", () => deletePromotion(b.dataset.delPromo))
+  );
+}
+
+let currentEditingPromotion = null;
+
+function openEditPromotion(id) {
+  const p = state.promotions.find((x) => x.id === id);
+  if (!p) return;
+  currentEditingPromotion = p;
+  $("#promotionModalTitle").textContent = "Chỉnh sửa khuyến mãi";
+
+  $("#promotionCode").value = p.code || "";
+  $("#promotionName").value = p.name || "";
+  $("#promotionType").value = p.type || "";
+  $("#promotionValue").value = p.value || "";
+  $("#promotionStartDate").value = p.startDate || "";
+  $("#promotionEndDate").value = p.endDate || "";
+  $("#promotionDescription").value = p.description || "";
+
+  showModal("promotionModal");
+}
+
+function deletePromotion(id) {
+  state.promotions = state.promotions.filter((x) => x.id !== id);
+  saveState();
+  renderAll();
+  toast("Đã xóa khuyến mãi");
+}
+
+function bindPromotionForm() {
+  $("#promotionForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const data = {
+      id: currentEditingPromotion ? currentEditingPromotion.id : "PROM" + Date.now(),
+      code: $("#promotionCode").value.trim(),
+      name: $("#promotionName").value.trim(),
+      type: $("#promotionType").value,
+      value: parseFloat($("#promotionValue").value) || 0,
+      startDate: $("#promotionStartDate").value,
+      endDate: $("#promotionEndDate").value,
+      description: $("#promotionDescription").value.trim(),
+      status: "active",
+    };
+
+    if (currentEditingPromotion) {
+      const idx = state.promotions.findIndex(
+        (p) => p.id === currentEditingPromotion.id
+      );
+      state.promotions[idx] = data;
+    } else {
+      state.promotions.push(data);
+    }
+
+    currentEditingPromotion = null;
+    saveState();
+    hideModal("promotionModal");
+    renderAll();
+    toast("Đã lưu khuyến mãi");
+  });
+
+  $("#promotionSearch").addEventListener("input", renderPromotions);
+}
+
+// ======= Categories =======
+function renderCategories() {
+  const tbody = $("#categoriesTableBody");
+  const q = ($("#categorySearch").value || "").toLowerCase();
+  const rows = state.categories
+    .filter((c) => JSON.stringify(c).toLowerCase().includes(q))
+    .map((c) => {
+      const productCount = state.products.filter(
+        (p) => p.category === c.name
+      ).length;
+      const status =
+        c.status === "active"
+          ? '<span class="badge badge--ok">Hoạt động</span>'
+          : '<span class="badge badge--warn">Tạm ngưng</span>';
+
+      return `<tr>
+        <td><strong>${c.name}</strong></td>
+        <td>${c.description || "-"}</td>
+        <td><strong>${productCount}</strong> sản phẩm</td>
+        <td>${status}</td>
+        <td>
+          <button class="btn btn--ghost" data-edit-cat="${c.id}">✏️ Sửa</button>
+          <button class="btn btn--danger" data-del-cat="${c.id}">🗑️ Xóa</button>
+        </td>
+      </tr>`;
+    })
+    .join("");
+
+  tbody.innerHTML =
+    rows ||
+    `<tr><td colspan="5" style="text-align:center;color:#64748b;padding:28px">Chưa có danh mục</td></tr>`;
+
+  $$("[data-edit-cat]").forEach((b) =>
+    b.addEventListener("click", () => openEditCategory(b.dataset.editCat))
+  );
+  $$("[data-del-cat]").forEach((b) =>
+    b.addEventListener("click", () => deleteCategory(b.dataset.delCat))
+  );
+}
+
+let currentEditingCategory = null;
+
+function openEditCategory(id) {
+  const c = state.categories.find((x) => x.id === id);
+  if (!c) return;
+  currentEditingCategory = c;
+  $("#categoryModalTitle").textContent = "Chỉnh sửa danh mục";
+
+  $("#categoryName").value = c.name || "";
+  $("#categoryDescription").value = c.description || "";
+  $("#categoryStatus").value = c.status || "active";
+
+  showModal("categoryModal");
+}
+
+function deleteCategory(id) {
+  const cat = state.categories.find((c) => c.id === id);
+  if (cat) {
+    const productCount = state.products.filter((p) => p.category === cat.name).length;
+    if (productCount > 0) {
+      toast("Không thể xóa danh mục đang có sản phẩm!");
+      return;
+    }
+  }
+  state.categories = state.categories.filter((x) => x.id !== id);
+  saveState();
+  renderAll();
+  toast("Đã xóa danh mục");
+}
+
+function bindCategoryForm() {
+  $("#categoryForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const data = {
+      id: currentEditingCategory ? currentEditingCategory.id : "CAT" + Date.now(),
+      name: $("#categoryName").value.trim(),
+      description: $("#categoryDescription").value.trim(),
+      status: $("#categoryStatus").value,
+    };
+
+    if (currentEditingCategory) {
+      const idx = state.categories.findIndex(
+        (c) => c.id === currentEditingCategory.id
+      );
+      state.categories[idx] = data;
+    } else {
+      state.categories.push(data);
+    }
+
+    currentEditingCategory = null;
+    saveState();
+    hideModal("categoryModal");
+    renderAll();
+    toast("Đã lưu danh mục");
+  });
+
+  $("#categorySearch").addEventListener("input", renderCategories);
+}
+
+function updateProductCategorySelect() {
+  const select = $("#productCategory");
+  if (!select) return;
+  select.innerHTML =
+    '<option value="">Chọn danh mục</option>' +
+    state.categories
+      .filter((c) => c.status === "active")
+      .map((c) => `<option value="${c.name}">${c.name}</option>`)
+      .join("");
+}
+
 // ======= Master render =======
 function renderAll() {
   renderDashboard();
@@ -691,7 +998,10 @@ function renderAll() {
   renderCustomers();
   renderInventory();
   renderReports();
+  renderPromotions();
+  renderCategories();
   updateOrderProductSelect();
+  updateProductCategorySelect();
 }
 
 // ======= Auth check (bảo vệ trang admin) =======
@@ -709,13 +1019,32 @@ function checkAdminAuth() {
   }
 }
 
+// ======= Logout =======
+function logout() {
+  if (confirm("Bạn có chắc chắn muốn đăng xuất?")) {
+    localStorage.removeItem("isAdmin");
+    localStorage.removeItem("currentUser");
+    window.location.href = "Dangnhap.html";
+  }
+}
+
+function initLogout() {
+  const logoutBtn = $("#logoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", logout);
+  }
+}
+
 // ======= Init =======
 function initAdminApp() {
   loadState();
   initSidebar();
   initModals();
+  initLogout();
   bindProductForm();
   bindOrderForm();
+  bindPromotionForm();
+  bindCategoryForm();
   renderAll();
 }
 

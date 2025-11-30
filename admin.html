@@ -37,6 +37,12 @@
         <button class="menu__item" data-target="reports">
           📈 <span>Báo cáo</span>
         </button>
+        <button class="menu__item" data-target="promotions">
+          🎁 <span>Khuyến mãi</span>
+        </button>
+        <button class="menu__item" data-target="categories">
+          📂 <span>Danh mục</span>
+        </button>
       </nav>
     </aside>
 
@@ -59,6 +65,9 @@
           <div class="profile">
             <div class="avatar">A</div><span>Admin</span>
           </div>
+          <button id="logoutBtn" class="btn btn--danger" style="margin-left: 10px;">
+            🚪 Đăng xuất
+          </button>
         </div>
       </header>
 
@@ -230,6 +239,71 @@
         <div class="panel">
           <div class="panel__header">Top 5 khách hàng mua nhiều nhất</div>
           <div id="topCustomersList"></div>
+        </div>
+      </section>
+
+      <!-- PROMOTIONS -->
+      <section id="promotions" class="section is-hidden">
+        <div class="section__header">
+          <h2 class="section__title">Quản lý khuyến mãi</h2>
+          <button class="btn btn--primary" data-open="promotionModal">
+            ➕ Thêm khuyến mãi
+          </button>
+        </div>
+        <div class="table-wrap">
+          <div class="toolbar">
+            <input
+              id="promotionSearch"
+              class="input"
+              placeholder="🔍 Tìm kiếm khuyến mãi..."
+            />
+          </div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Mã khuyến mãi</th>
+                <th>Tên chương trình</th>
+                <th>Loại</th>
+                <th>Giá trị</th>
+                <th>Ngày bắt đầu</th>
+                <th>Ngày kết thúc</th>
+                <th>Trạng thái</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody id="promotionsTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- CATEGORIES -->
+      <section id="categories" class="section is-hidden">
+        <div class="section__header">
+          <h2 class="section__title">Quản lý danh mục</h2>
+          <button class="btn btn--primary" data-open="categoryModal">
+            ➕ Thêm danh mục
+          </button>
+        </div>
+        <div class="table-wrap">
+          <div class="toolbar">
+            <input
+              id="categorySearch"
+              class="input"
+              placeholder="🔍 Tìm kiếm danh mục..."
+            />
+          </div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Tên danh mục</th>
+                <th>Mô tả</th>
+                <th>Số sản phẩm</th>
+                <th>Trạng thái</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody id="categoriesTableBody"></tbody>
+          </table>
         </div>
       </section>
     </main>
@@ -405,6 +479,94 @@
           <div class="modal__actions">
             <button type="submit" class="btn btn--primary">
               Tạo đơn hàng
+            </button>
+            <button type="button" class="btn" data-close>Hủy</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- PROMOTION MODAL -->
+    <div class="modal" id="promotionModal">
+      <div class="modal__content">
+        <div class="modal__header">
+          <h3 id="promotionModalTitle">Thêm khuyến mãi mới</h3>
+          <button class="modal__close" data-close>×</button>
+        </div>
+        <form id="promotionForm">
+          <div class="grid-2">
+            <div class="form-group">
+              <label>Mã khuyến mãi <span>(*)</span></label>
+              <input id="promotionCode" class="input" placeholder="VD: KM001" required />
+            </div>
+            <div class="form-group">
+              <label>Tên chương trình <span>(*)</span></label>
+              <input id="promotionName" class="input" placeholder="VD: Giảm giá 20%" required />
+            </div>
+            <div class="form-group">
+              <label>Loại khuyến mãi <span>(*)</span></label>
+              <select id="promotionType" class="input" required>
+                <option value="">Chọn loại</option>
+                <option value="percent">Giảm %</option>
+                <option value="amount">Giảm số tiền</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Giá trị <span>(*)</span></label>
+              <input type="number" id="promotionValue" class="input" required />
+              <small style="color: #64748b; font-size: 11px;">Nhập % hoặc số tiền</small>
+            </div>
+            <div class="form-group">
+              <label>Ngày bắt đầu <span>(*)</span></label>
+              <input type="date" id="promotionStartDate" class="input" required />
+            </div>
+            <div class="form-group">
+              <label>Ngày kết thúc <span>(*)</span></label>
+              <input type="date" id="promotionEndDate" class="input" required />
+            </div>
+            <div class="form-group" style="grid-column: 1 / -1;">
+              <label>Mô tả <span>(*)</span></label>
+              <textarea id="promotionDescription" class="input" rows="4" placeholder="Nhập mô tả chi tiết về chương trình khuyến mãi..." required></textarea>
+            </div>
+          </div>
+          <div class="modal__actions">
+            <button type="submit" class="btn btn--primary">
+              Lưu khuyến mãi
+            </button>
+            <button type="button" class="btn" data-close>Hủy</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- CATEGORY MODAL -->
+    <div class="modal" id="categoryModal">
+      <div class="modal__content">
+        <div class="modal__header">
+          <h3 id="categoryModalTitle">Thêm danh mục mới</h3>
+          <button class="modal__close" data-close>×</button>
+        </div>
+        <form id="categoryForm">
+          <div class="grid-2">
+            <div class="form-group">
+              <label>Tên danh mục <span>(*)</span></label>
+              <input id="categoryName" class="input" placeholder="VD: Gaming" required />
+            </div>
+            <div class="form-group">
+              <label>Trạng thái <span>(*)</span></label>
+              <select id="categoryStatus" class="input" required>
+                <option value="active">Hoạt động</option>
+                <option value="inactive">Tạm ngưng</option>
+              </select>
+            </div>
+            <div class="form-group" style="grid-column: 1 / -1;">
+              <label>Mô tả</label>
+              <textarea id="categoryDescription" class="input" rows="3" placeholder="Nhập mô tả về danh mục..."></textarea>
+            </div>
+          </div>
+          <div class="modal__actions">
+            <button type="submit" class="btn btn--primary">
+              Lưu danh mục
             </button>
             <button type="button" class="btn" data-close>Hủy</button>
           </div>
