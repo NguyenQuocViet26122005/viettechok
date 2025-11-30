@@ -30,8 +30,8 @@ body {
 /* ========== SIDEBAR ========== */
 .sidebar {
   width: 260px;
-  background: #0f172a;
-  color: #e5e7eb;
+  background: #2563eb;
+  color: #ffffff;
   min-height: 100vh;
   padding: 18px 16px;
   position: fixed;
@@ -39,6 +39,7 @@ body {
   top: 0;
   transition: width 0.3s ease;
   overflow: hidden;
+  z-index: 50;
 }
 
 .sidebar.collapsed {
@@ -80,7 +81,7 @@ body {
 
 .app-sub {
   font-size: 12px;
-  color: #9ca3af;
+  color: #bfdbfe;
 }
 
 .menu {
@@ -93,7 +94,7 @@ body {
   border: none;
   outline: none;
   background: transparent;
-  color: #e5e7eb;
+  color: #ffffff;
   padding: 10px 12px;
   border-radius: 10px;
   text-align: left;
@@ -110,7 +111,8 @@ body {
 
 .menu__item.active,
 .menu__item:hover {
-  background: #1d283a;
+  background: #1d4ed8;
+  color: #ffffff;
 }
 
 /* ========== MAIN / TOPBAR ========== */
@@ -119,6 +121,8 @@ body {
   padding: 18px 22px 32px;
   width: 100%;
   transition: margin-left 0.3s ease;
+  background: #f1f5f9;
+  min-height: 100vh;
 }
 
 .sidebar.collapsed ~ .main {

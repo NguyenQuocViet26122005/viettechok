@@ -31,17 +31,17 @@
         <button class="menu__item" data-target="customers">
           👥 <span>Khách hàng</span>
         </button>
-        <button class="menu__item" data-target="inventory">
-          📋 <span>Kho hàng</span>
-        </button>
-        <button class="menu__item" data-target="reports">
-          📈 <span>Báo cáo</span>
-        </button>
         <button class="menu__item" data-target="promotions">
           🎁 <span>Khuyến mãi</span>
         </button>
         <button class="menu__item" data-target="categories">
           📂 <span>Danh mục</span>
+        </button>
+        <button class="menu__item" data-target="inventory">
+          📋 <span>Kho hàng</span>
+        </button>
+        <button class="menu__item" data-target="reports">
+          📈 <span>Báo cáo</span>
         </button>
       </nav>
     </aside>
@@ -59,9 +59,6 @@
           </button>
         </div>
         <div class="topbar__right">
-          <div class="bell">
-            🔔<span class="counter">3</span>
-          </div>
           <div class="profile">
             <div class="avatar">A</div><span>Admin</span>
           </div>
@@ -176,7 +173,12 @@
 
       <!-- CUSTOMERS -->
       <section id="customers" class="section is-hidden">
-        <h2 class="section__title">Quản lý khách hàng</h2>
+        <div class="section__header">
+          <h2 class="section__title">Quản lý khách hàng</h2>
+          <button class="btn btn--primary" data-open="customerModal">
+            ➕ Thêm khách hàng
+          </button>
+        </div>
         <div class="table-wrap">
           <div class="toolbar">
             <input
@@ -191,8 +193,11 @@
                 <th>Tên khách hàng</th>
                 <th>Email</th>
                 <th>Số điện thoại</th>
+                <th>Tài khoản</th>
+                <th>Mật khẩu</th>
                 <th>Số đơn hàng</th>
                 <th>Tổng chi tiêu</th>
+                <th>Thao tác</th>
               </tr>
             </thead>
             <tbody id="customersTableBody"></tbody>
@@ -532,6 +537,50 @@
           <div class="modal__actions">
             <button type="submit" class="btn btn--primary">
               Lưu khuyến mãi
+            </button>
+            <button type="button" class="btn" data-close>Hủy</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- CUSTOMER MODAL -->
+    <div class="modal" id="customerModal">
+      <div class="modal__content">
+        <div class="modal__header">
+          <h3 id="customerModalTitle">Thêm khách hàng mới</h3>
+          <button class="modal__close" data-close>×</button>
+        </div>
+        <form id="customerForm">
+          <div class="grid-2">
+            <div class="form-group">
+              <label>Tên khách hàng <span>(*)</span></label>
+              <input id="customerName" class="input" placeholder="VD: Nguyễn Văn A" required />
+            </div>
+            <div class="form-group">
+              <label>Email <span>(*)</span></label>
+              <input id="customerEmail" type="email" class="input" placeholder="VD: email@example.com" required />
+            </div>
+            <div class="form-group">
+              <label>Số điện thoại <span>(*)</span></label>
+              <input id="customerPhone" class="input" placeholder="VD: 0123456789" required />
+            </div>
+            <div class="form-group">
+              <label>Tài khoản <span>(*)</span></label>
+              <input id="customerUsername" class="input" placeholder="VD: nguyenvana" required />
+            </div>
+            <div class="form-group">
+              <label>Mật khẩu <span>(*)</span></label>
+              <input id="customerPassword" type="password" class="input" placeholder="Nhập mật khẩu" required />
+            </div>
+            <div class="form-group">
+              <label>Xác nhận mật khẩu <span>(*)</span></label>
+              <input id="customerPasswordConfirm" type="password" class="input" placeholder="Nhập lại mật khẩu" required />
+            </div>
+          </div>
+          <div class="modal__actions">
+            <button type="submit" class="btn btn--primary">
+              Lưu khách hàng
             </button>
             <button type="button" class="btn" data-close>Hủy</button>
           </div>

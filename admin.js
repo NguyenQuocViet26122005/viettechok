@@ -24,6 +24,7 @@ let state = {
   orders: [],
   promotions: [],
   categories: [],
+  customers: [],
 };
 
 function loadState() {
@@ -36,6 +37,7 @@ function loadState() {
         orders: loaded.orders || [],
         promotions: loaded.promotions || [],
         categories: loaded.categories || [],
+        customers: loaded.customers || [],
       };
       // Nếu không có categories hoặc promotions, seed sample
       if (!state.categories || state.categories.length === 0) {
@@ -49,6 +51,27 @@ function loadState() {
       }
       if (!state.promotions || state.promotions.length === 0) {
         state.promotions = [];
+      }
+      if (!state.customers || state.customers.length === 0) {
+        state.customers = [
+          {
+            id: "CUST001",
+            name: "Nguyễn Văn An",
+            email: "an.nguyen@email.com",
+            phone: "0123456789",
+            username: "nguyenvana",
+            password: "123456",
+          },
+          {
+            id: "CUST002",
+            name: "Trần Thị Bình",
+            email: "binh.tran@email.com",
+            phone: "0987654321",
+            username: "tranthibinh",
+            password: "123456",
+          },
+        ];
+        saveState();
       }
     } else {
       seedSample();
@@ -81,6 +104,25 @@ function seedSample() {
       endDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
       description: "Giảm giá 20% cho tất cả sản phẩm",
       status: "active",
+    },
+  ];
+
+  state.customers = [
+    {
+      id: "CUST001",
+      name: "Nguyễn Văn An",
+      email: "an.nguyen@email.com",
+      phone: "0123456789",
+      username: "nguyenvana",
+      password: "123456",
+    },
+    {
+      id: "CUST002",
+      name: "Trần Thị Bình",
+      email: "binh.tran@email.com",
+      phone: "0987654321",
+      username: "tranthibinh",
+      password: "123456",
     },
   ];
 
@@ -217,7 +259,7 @@ function initSidebar() {
       const sidebar = $("#sidebar");
       sidebar.classList.toggle("collapsed");
       // Lưu trạng thái vào localStorage
-      localStorage.setItem("sidebarCollapsed", sidebar.classList.contains("collapsed"));
+      localStorage.setItem("sidebarCollapsed", sidebar.classList.contains("collapsed") ? "true" : "false");
     }
   });
 
@@ -569,22 +611,15 @@ function updateOrderProductSelect() {
 
 // ======= Customers =======
 function getCustomers() {
-  const map = {};
-  state.orders.forEach((o) => {
-    const k = o.customerEmail;
-    if (!map[k]) {
-      map[k] = {
-        name: o.customerName,
-        email: o.customerEmail,
-        phone: o.customerPhone,
-        orderCount: 0,
-        totalSpent: 0,
-      };
-    }
-    map[k].orderCount++;
-    map[k].totalSpent += o.totalAmount || 0;
+  // Lấy từ state.customers và tính toán orderCount, totalSpent từ orders
+  return state.customers.map((c) => {
+    const orders = state.orders.filter((o) => o.customerEmail === c.email);
+    return {
+      ...c,
+      orderCount: orders.length,
+      totalSpent: orders.reduce((sum, o) => sum + (o.totalAmount || 0), 0),
+    };
   });
-  return Object.values(map);
 }
 
 function renderCustomers() {
@@ -596,19 +631,144 @@ function renderCustomers() {
       (c) => `<tr>
         <td>${c.name}</td>
         <td>${c.email}</td>
-        <td>${c.phone}</td>
+        <td>${c.phone || "-"}</td>
+        <td>${c.username || "-"}</td>
+        <td>
+          <span id="pwd-${c.id}" data-password="${(c.password || "").replace(/"/g, "&quot;")}" style="font-family: monospace;">${"*".repeat(c.password?.length || 0)}</span>
+          <button class="btn btn--ghost" onclick="togglePassword('${c.id}')" style="padding:2px 6px;font-size:11px;margin-left:4px" title="Hiện/Ẩn mật khẩu" id="toggleBtn-${c.id}">🔒</button>
+        </td>
         <td><strong>${c.orderCount}</strong></td>
         <td><strong>${money(c.totalSpent)}</strong></td>
+        <td>
+          <button class="btn btn--ghost" onclick="openEditCustomer('${c.id}')" style="padding:4px 8px;font-size:12px">✏️ Sửa</button>
+          <button class="btn btn--danger" onclick="deleteCustomer('${c.id}')" style="padding:4px 8px;font-size:12px;margin-left:4px">🗑️ Xóa</button>
+        </td>
       </tr>`
     )
     .join("");
 
   tbody.innerHTML =
     rows ||
-    `<tr><td colspan="5" style="text-align:center;color:#64748b;padding:28px">Chưa có khách hàng</td></tr>`;
+    `<tr><td colspan="8" style="text-align:center;color:#64748b;padding:28px">Chưa có khách hàng</td></tr>`;
 
   $("#customerSearch").addEventListener("input", renderCustomers, {
     once: true,
+  });
+}
+
+function togglePassword(customerId) {
+  const pwdSpan = $(`#pwd-${customerId}`);
+  const toggleBtn = $(`#toggleBtn-${customerId}`);
+  if (!pwdSpan) return;
+  
+  const password = pwdSpan.getAttribute("data-password") || "";
+  if (!password) return;
+  
+  // Kiểm tra xem đang hiển thị mật khẩu hay dấu sao
+  const currentText = pwdSpan.textContent;
+  const isHidden = currentText.includes("*");
+  
+  if (isHidden) {
+    // Hiển thị mật khẩu thực
+    pwdSpan.textContent = password;
+    if (toggleBtn) toggleBtn.textContent = "🔓";
+  } else {
+    // Ẩn mật khẩu bằng dấu sao
+    pwdSpan.textContent = "*".repeat(password.length);
+    if (toggleBtn) toggleBtn.textContent = "🔒";
+  }
+}
+
+let currentEditingCustomer = null;
+
+function openEditCustomer(id) {
+  const c = state.customers.find((x) => x.id === id);
+  if (!c) return;
+  currentEditingCustomer = c;
+  $("#customerModalTitle").textContent = "Chỉnh sửa khách hàng";
+  $("#customerName").value = c.name || "";
+  $("#customerEmail").value = c.email || "";
+  $("#customerPhone").value = c.phone || "";
+  $("#customerUsername").value = c.username || "";
+  $("#customerPassword").value = "";
+  $("#customerPasswordConfirm").value = "";
+  showModal("customerModal");
+}
+
+function deleteCustomer(id) {
+  const c = state.customers.find((x) => x.id === id);
+  if (!c) return;
+  if (confirm(`Bạn có chắc chắn muốn xóa khách hàng "${c.name}"?`)) {
+    state.customers = state.customers.filter((x) => x.id !== id);
+    saveState();
+    renderAll();
+    toast("Đã xóa khách hàng");
+  }
+}
+
+function bindCustomerForm() {
+  $("#customerForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const name = $("#customerName").value.trim();
+    const email = $("#customerEmail").value.trim();
+    const phone = $("#customerPhone").value.trim();
+    const username = $("#customerUsername").value.trim();
+    const password = $("#customerPassword").value;
+    const passwordConfirm = $("#customerPasswordConfirm").value;
+
+    if (password !== passwordConfirm) {
+      toast("Mật khẩu xác nhận không khớp!");
+      return;
+    }
+
+    if (currentEditingCustomer) {
+      // Sửa
+      const existing = state.customers.find((c) => c.email === email && c.id !== currentEditingCustomer.id);
+      if (existing) {
+        toast("Email đã tồn tại!");
+        return;
+      }
+      const existingUsername = state.customers.find((c) => c.username === username && c.id !== currentEditingCustomer.id);
+      if (existingUsername) {
+        toast("Tài khoản đã tồn tại!");
+        return;
+      }
+      currentEditingCustomer.name = name;
+      currentEditingCustomer.email = email;
+      currentEditingCustomer.phone = phone;
+      currentEditingCustomer.username = username;
+      if (password) {
+        currentEditingCustomer.password = password;
+      }
+    } else {
+      // Thêm mới
+      const existing = state.customers.find((c) => c.email === email);
+      if (existing) {
+        toast("Email đã tồn tại!");
+        return;
+      }
+      const existingUsername = state.customers.find((c) => c.username === username);
+      if (existingUsername) {
+        toast("Tài khoản đã tồn tại!");
+        return;
+      }
+      const newId = "CUST" + String(state.customers.length + 1).padStart(3, "0");
+      state.customers.push({
+        id: newId,
+        name,
+        email,
+        phone,
+        username,
+        password,
+      });
+    }
+
+    const isEdit = !!currentEditingCustomer;
+    currentEditingCustomer = null;
+    saveState();
+    hideModal("customerModal");
+    renderAll();
+    toast(isEdit ? "Đã cập nhật khách hàng" : "Đã thêm khách hàng");
   });
 }
 
@@ -750,6 +910,10 @@ function initModals() {
         currentEditingCategory = null;
         $("#categoryModalTitle").textContent = "Thêm danh mục mới";
         $("#categoryForm").reset();
+      } else if (modalId === "customerModal") {
+        currentEditingCustomer = null;
+        $("#customerModalTitle").textContent = "Thêm khách hàng mới";
+        $("#customerForm").reset();
       }
       showModal(modalId);
     })
@@ -1045,6 +1209,7 @@ function initAdminApp() {
   bindOrderForm();
   bindPromotionForm();
   bindCategoryForm();
+  bindCustomerForm();
   renderAll();
 }
 
