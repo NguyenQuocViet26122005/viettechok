@@ -11,8 +11,10 @@
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    width: 400px;
+    width: 100%;
+    max-width: 400px;
     text-align: center;
+    box-sizing: border-box;
 }
 
 .login-container h2 {
@@ -46,13 +48,69 @@
 }
 
 .login-form input {
-    width: 380px; /* Đặt chiều rộng cố định cho ô nhập */
+    width: 100%;
+    max-width: 380px;
     padding: 12px;
-    margin: 0 auto 15px auto; /* Căn giữa ô nhập */
-    display: block; /* Đảm bảo ô nhập nằm trên một dòng riêng */
+    margin: 0 auto 15px auto;
+    display: block;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 14px;
+    box-sizing: border-box;
+}
+
+/* Password input wrapper */
+.password-input-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 380px;
+    margin: 0 auto 15px auto;
+    display: block;
+}
+
+.password-input-wrapper input {
+    width: 100%;
+    padding-right: 45px;
+    margin: 0;
+    display: block;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 12px;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    color: #666;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    z-index: 10;
+}
+
+.toggle-password:hover {
+    color: #007bff;
+}
+
+.toggle-password:focus {
+    outline: none;
+}
+
+.toggle-password i {
+    font-size: 16px;
 }
 
 .login-form .form-footer {
@@ -71,7 +129,8 @@
 }
 
 .login-button {
-    width: 300px; /* Đặt chiều rộng cố định cho nút */
+    width: 100%;
+    max-width: 380px;
     padding: 12px;
     background-color: #007bff;
     color: #fff;
@@ -80,8 +139,9 @@
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
-    margin: 0 auto; /* Căn giữa nút */
-    display: block; /* Đảm bảo nút nằm trên một dòng riêng */
+    margin: 0 auto;
+    display: block;
+    box-sizing: border-box;
 }
 
 .login-button:hover {

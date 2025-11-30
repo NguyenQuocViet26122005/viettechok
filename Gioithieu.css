@@ -1,0 +1,287 @@
+/* Global Font */
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* Main Container */
+.gioithieu-main {
+    background-color: #f9f9f9;
+    padding: 40px 20px;
+    min-height: calc(100vh - 200px);
+    font-family: Arial, sans-serif;
+}
+
+.gioithieu-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+}
+
+/* Header */
+.gioithieu-header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 3px solid #007bff;
+}
+
+.gioithieu-header h1 {
+    font-size: 36px;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+}
+
+/* Sections */
+.gioithieu-section {
+    margin-bottom: 50px;
+}
+
+.gioithieu-section h2 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #007bff;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.gioithieu-section h3 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #333;
+    margin: 25px 0 15px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.gioithieu-section h3 i {
+    color: #007bff;
+}
+
+/* Content Wrapper */
+.content-wrapper {
+    line-height: 1.8;
+    color: #555;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+}
+
+.content-wrapper p {
+    margin-bottom: 15px;
+    text-align: justify;
+}
+
+.content-wrapper strong {
+    color: #333;
+    font-weight: 600;
+}
+
+/* External Links */
+.external-link {
+    color: #007bff;
+    text-decoration: none;
+    word-break: break-all;
+}
+
+.external-link:hover {
+    text-decoration: underline;
+    color: #0056b3;
+}
+
+/* Lists */
+.highlight-list,
+.feature-list {
+    margin: 20px 0;
+    padding-left: 25px;
+}
+
+.highlight-list li,
+.feature-list li {
+    margin-bottom: 12px;
+    line-height: 1.7;
+}
+
+.highlight-list li {
+    color: #007bff;
+    font-weight: 500;
+}
+
+.feature-list li {
+    color: #555;
+}
+
+/* Quote */
+.quote {
+    background: #f0f7ff;
+    border-left: 4px solid #007bff;
+    padding: 20px 25px;
+    margin: 25px 0;
+    font-style: italic;
+    font-size: 18px;
+    color: #333;
+    border-radius: 5px;
+}
+
+/* Product Categories */
+.product-categories {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 25px;
+}
+
+.product-categories ul {
+    margin-top: 15px;
+    padding-left: 25px;
+}
+
+.product-categories li {
+    margin-bottom: 10px;
+    color: #555;
+}
+
+/* Mission & Vision */
+.mission-vision {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    margin-top: 25px;
+}
+
+.mission-box,
+.vision-box {
+    background: linear-gradient(135deg, #f0f7ff 0%, #e6f2ff 100%);
+    padding: 25px;
+    border-radius: 10px;
+    border: 2px solid #007bff;
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.1);
+}
+
+.mission-box h3,
+.vision-box h3 {
+    color: #007bff;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.mission-box p,
+.vision-box p {
+    margin: 0;
+    color: #555;
+    line-height: 1.7;
+}
+
+/* Value Items */
+.value-item {
+    background: #f8f9fa;
+    padding: 25px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    border-left: 4px solid #007bff;
+}
+
+.value-item h3 {
+    margin-top: 0;
+    color: #007bff;
+}
+
+.value-item p {
+    margin-bottom: 0;
+}
+
+/* Conclusion */
+.conclusion {
+    background: linear-gradient(135deg, #e6f2ff 0%, #f0f7ff 100%);
+    padding: 30px;
+    border-radius: 10px;
+    margin-top: 40px;
+    text-align: center;
+}
+
+.conclusion-text {
+    font-size: 17px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.thank-you {
+    font-size: 20px;
+    font-weight: 600;
+    color: #007bff;
+    margin: 0;
+    font-style: italic;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .gioithieu-container {
+        padding: 30px;
+    }
+    
+    .mission-vision {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .gioithieu-main {
+        padding: 20px 10px;
+    }
+    
+    .gioithieu-container {
+        padding: 20px;
+    }
+    
+    .gioithieu-header h1 {
+        font-size: 28px;
+    }
+    
+    .gioithieu-section h2 {
+        font-size: 24px;
+    }
+    
+    .gioithieu-section h3 {
+        font-size: 20px;
+    }
+    
+    .content-wrapper {
+        font-size: 15px;
+    }
+    
+    .quote {
+        font-size: 16px;
+        padding: 15px 20px;
+    }
+    
+    .mission-box,
+    .vision-box {
+        padding: 20px;
+    }
+    
+    .value-item {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .gioithieu-header h1 {
+        font-size: 24px;
+    }
+    
+    .gioithieu-section h2 {
+        font-size: 20px;
+    }
+    
+    .content-wrapper {
+        font-size: 14px;
+    }
+}
+

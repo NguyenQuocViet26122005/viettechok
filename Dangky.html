@@ -167,7 +167,12 @@
                 <input type="email" id="email" name="email" placeholder="Nhập địa chỉ email*" required>
                 
                 <label for="password">Mật khẩu</label>
-                <input type="password" id="password" name="password" placeholder="Mật khẩu*" required>
+                <div class="password-input-wrapper">
+                    <input type="password" id="password" name="password" placeholder="Mật khẩu*" required>
+                    <button type="button" class="toggle-password" id="togglePassword" title="Hiện/Ẩn mật khẩu">
+                        <i class="fa fa-lock"></i>
+                    </button>
+                </div>
                 
                 <button type="submit" class="register-button">Tạo tài khoản</button>
             </form>
@@ -217,9 +222,40 @@
             }
         }
         
+        // Toggle hiển thị mật khẩu
+        function initTogglePassword() {
+            const toggleBtn = document.getElementById('togglePassword');
+            const passwordInput = document.getElementById('password');
+            
+            if (toggleBtn && passwordInput) {
+                toggleBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                    passwordInput.setAttribute('type', type);
+                    
+                    // Đổi icon
+                    const icon = toggleBtn.querySelector('i');
+                    if (icon) {
+                        if (type === 'text') {
+                            icon.classList.remove('fa-lock');
+                            icon.classList.add('fa-unlock');
+                            toggleBtn.setAttribute('title', 'Ẩn mật khẩu');
+                        } else {
+                            icon.classList.remove('fa-unlock');
+                            icon.classList.add('fa-lock');
+                            toggleBtn.setAttribute('title', 'Hiện mật khẩu');
+                        }
+                    }
+                });
+            }
+        }
+        
         document.addEventListener('DOMContentLoaded', function() {
             displayUserName();
             initLogout();
+            initTogglePassword();
         });
     </script>
     <style>

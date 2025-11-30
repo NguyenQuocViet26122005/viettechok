@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giới thiệu - VietTechStore</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="Gioithieu.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="top-header">
+        <div class="container"> 
+            <div class="logo">
+                <img src="anh/logo.jpg" alt="logo">
+                <div class="contact-info">
+                    <p><b>VietTechStore</b></p>
+                    <p><b>079.949.6002</b></p>
+                </div>
+                <div class="contact-icons">
+                    <a href="tel:0123456789" target="_blank">
+                        <img src="anh/contact_icon_1.png" alt="Gọi điện">
+                    </a>
+                    <a href="https://zalo.me/0123456789" target="_blank">
+                        <img src="anh/contact_icon_2.png" alt="Zalo">
+                    </a>
+                    <a href="https://m.me/yourpageid" target="_blank">
+                        <img src="anh/contact_icon_3.png" alt="Messenger">
+                    </a>
+                </div>
+            </div>
+            <nav class="menu">
+                <a href="Gioithieu.html">Giới thiệu</a>
+                <div class="dropdown">
+                    <a href="#">Laptop</a>
+                    <div class="dropdown-content">
+                        <div class="cot">
+                            <p>HP</p>
+                            <ul>
+                                <li><a href="#">HP Probook</a></li>
+                                <li><a href="#">HP Folio</a></li>
+                                <li><a href="#">HP Elitebook</a></li>
+                                <li><a href="#">HP Spectre</a></li>
+                                <li><a href="#">HP Pavilion</a></li>
+                                <li><a href="#">HP Envy</a></li>
+                            </ul>
+                        </div>
+                        <div class="cot">
+                            <p>ASUS</p>
+                            <ul>
+                                <li><a href="#">Asus S Series</a></li>
+                                <li><a href="#">Asus Vivobook Series</a></li>
+                                <li><a href="#">Asus Zenbook Series</a></li>
+                                <li><a href="#">Asus TUF</a></li>
+                            </ul>
+                        </div>
+                        <div class="cot">
+                            <p>DELL</p>
+                            <ul>
+                                <li><a href="#">Dell XPS</a></li>
+                                <li><a href="#">Dell Precision</a></li>
+                                <li><a href="#">Dell Latitude</a></li>
+                                <li><a href="#">Dell Inspiron</a></li>
+                                <li><a href="#">Dell Alienware</a></li>
+                            </ul>
+                        </div>
+                        <div class="cot">
+                            <p>LENOVO</p>
+                            <ul>
+                                <li><a href="#">Lenovo Yoga Series</a></li>
+                                <li><a href="muclenovo.html">Lenovo Gaming</a></li>
+                                <li><a href="#">Lenovo Legion</a></li>
+                                <li><a href="#">IdeaPad</a></li>
+                                <li><a href="#">IdeaPad Gaming</a></li>
+                                <li><a href="#">Thinkbook</a></li>
+                            </ul>
+                        </div>
+                        <div class="cot">
+                            <p>THINKPAD</p>
+                            <ul>
+                                <li><a href="#">ThinkPad X1 Carbon</a></li>
+                                <li><a href="#">ThinkPad X Series</a></li>
+                                <li><a href="#">ThinkPad E Series</a></li>
+                                <li><a href="#">ThinkPad T Series</a></li>
+                                <li><a href="#">ThinkPad Workstations</a></li>
+                            </ul>
+                        </div>
+                        <div class="cot">
+                            <p>Theo nhu cầu</p>
+                            <ul>
+                                <li><a href="#">Mỏng Nhẹ</a></li>
+                                <li><a href="#">Workstations</a></li>
+                                <li><a href="#">Siêu phẩm</a></li>
+                                <li><a href="#">Đồ Họa, Kỹ thuật</a></li>
+                                <li><a href="#">Học tập, Văn phòng</a></li>
+                                <li><a href="#">Lập trình</a></li>
+                                <li><a href="#">Game</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <a href="#">Phụ kiện</a>
+                    <div class="dropdown-content">
+                        <div class="cot">
+                            <p>Phụ kiện</p>
+                            <ul>
+                                <li><a href="#">Tai nghe</a></li>
+                                <li><a href="#">Chuột</a></li>
+                                <li><a href="#">Bàn phím</a></li>
+                                <li><a href="#">Cáp sạc</a></li>
+                            </ul>
+                        </div>
+                        <div class="cot">
+                            <p>Khác</p>
+                            <ul>
+                                <li><a href="#">Ổ cứng</a></li>
+                                <li><a href="#">RAM</a></li>
+                                <li><a href="#">Pin</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <a href="#">Khuyến mãi</a>
+            </nav>
+            <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <i class="fa fa-bars"></i>
+              </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Tìm kiếm laptop và phụ kiện">
+                <button><i class="fa fa-search"></i></button>
+            </div>
+            <div class="icons">
+                <a href="Giohang.html">
+                    <i class="fa fa-shopping-cart"></i>
+                    <span id="cartCount">0</span>
+                </a>
+                <div id="userDisplay" class="user-dropdown-container">
+                    <a href="Dangnhap.html" id="userLink"><i class="fa fa-user"></i></a>
+                    <div id="userDropdown" class="user-dropdown-menu">
+                        <a href="Taikhoan.html" class="dropdown-item">
+                            <i class="fa fa-user-circle"></i> Tài khoản
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" id="logoutLink" class="dropdown-item logout-item">
+                            <i class="fa fa-sign-out-alt"></i> Đăng xuất
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav class="mobile-menu" id="mobileMenu">
+            <a href="Gioithieu.html">Giới thiệu</a>
+            <a href="#">Laptop</a>
+            <a href="#">Phụ kiện</a>
+            <a href="#">Khuyến mãi</a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <main class="gioithieu-main">
+        <div class="gioithieu-container">
+            <div class="gioithieu-header">
+                <h1>Về VietTechStore</h1>
+            </div>
+
+            <!-- Section 1: Lịch sử hình thành -->
+            <section class="gioithieu-section">
+                <h2>1. Lịch sử hình thành</h2>
+                <div class="content-wrapper">
+                    <p>
+                        Hệ Thống bán lẻ máy tính toàn quốc VietTechStore là một trong những điểm đến tin cậy của người tiêu dùng thông thái bắt nguồn từ diễn đàn mua bán <strong>www.vozforums.com</strong> – diễn đàn công nghệ lớn nhất Việt Nam. VietTechStore là thương hiệu đã được bảo hộ bởi Công Ty Cổ Phần Thương Mại Dịch Vụ VietTechStore.
+                    </p>
+                    <p>
+                        Link topic bán Thinkpad, HP Elitebook, Dell Precision, Apple: 
+                        <a href="http://vozforums.com/showthread.php?t=625984" target="_blank" class="external-link">
+                            http://vozforums.com/showthread.php?t=625984
+                        </a>
+                    </p>
+                    <ul class="highlight-list">
+                        <li>Được sự ủng hộ của sân chơi công nghệ tinh tế nhất lên đến gần <strong>500 trang</strong> (gần <strong>5000 lời bình luận</strong>) và gần <strong>1,4 triệu lượt views</strong>.</li>
+                        <li>Được cộng đồng vozforums.com đánh giá cao về bán hàng uy tín, tin cậy, hỗ trợ kĩ thuật nhiệt tình.</li>
+                    </ul>
+                    <p>
+                        Bắt nguồn từ một topic bán hàng của thetrungbk, người dùng biết đến chúng tôi với kim chỉ nam:
+                    </p>
+                    <blockquote class="quote">
+                        "Luôn song hành và đứng về phía khách hàng"
+                    </blockquote>
+                    <p>
+                        Với tinh thần bán hàng trung thực, hài hước, lấy 4 đối tượng sản phẩm, khách hàng, chất lượng dịch vụ, nhân sự làm trọng tâm, chúng tôi cực kì chú trọng đến xây dựng quy trình cung cấp dịch vụ chuẩn, không ngừng nâng cấp để:
+                    </p>
+                    <ul class="feature-list">
+                        <li>Luôn nhập được hàng tốt với giá đầu vào tốt, các sản phẩm được kiểm tra kĩ càng bởi đội ngũ kiểm tra chất lượng chuẩn trước khi bán ra.</li>
+                        <li>Luôn làm hài lòng khách hàng về giá bán, thời gian phục vụ nhanh chóng, và giải quyết thỏa đáng các vấn đề trong bảo hành.</li>
+                    </ul>
+                    <p>
+                        Sau 5 năm hoạt động VietTechStore đã trở thành điểm đến quen thuộc của người yêu công nghệ Hà Nội và ba miền toàn quốc, được biết đến như một điểm sáng trong cộng động yêu công nghệ Việt Nam.
+                    </p>
+                    <div class="product-categories">
+                        <p><strong>Dưới đây là các hạng mục sản phẩm mà hệ thống VietTechStore cung cấp:</strong></p>
+                        <ul>
+                            <li>Các sản phẩm của Apple: iPhone, iPad USA</li>
+                            <li>Các sản phẩm Thinkpad: T, X, W Series USA</li>
+                            <li>Các sản phẩm HP dòng business USA bền bỉ: HP Elitebook, HP Probook.</li>
+                            <li>Các sản phẩm Dell dòng business USA bền bỉ: Dell Latitude, Dell Precision.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: Tầm nhìn - sứ mệnh -->
+            <section class="gioithieu-section">
+                <h2>2. Tầm nhìn – sứ mệnh</h2>
+                <div class="content-wrapper">
+                    <div class="mission-vision">
+                        <div class="mission-box">
+                            <h3><i class="fa fa-bullseye"></i> Sứ mệnh</h3>
+                            <p>Chúng tôi lấy khách hàng làm trung tâm, lấy tổ chức chuyên nghiệp làm sức mạnh cạnh tranh, không ngừng nỗ lực cung cấp những sản phẩm, dịch vụ giá trị mới, chất lượng cao với giá hợp lý để đóng góp vào mục tiêu nâng cao chất lượng cuộc sống thông tin.</p>
+                        </div>
+                        <div class="vision-box">
+                            <h3><i class="fa fa-eye"></i> Tầm nhìn</h3>
+                            <p>Trở thành một công ty hàng đầu cung cấp sản phẩm, dịch vụ các thế hệ máy tính xách tay USA dòng business, Multimedia giải trí cao cấp, iPhone, iPad USA trong đó lấy chất lượng phục vụ khách hàng làm sự phát triển bền vững.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: Những Giá Trị Cốt Lõi -->
+            <section class="gioithieu-section">
+                <h2>3. Những Giá Trị Cốt Lõi</h2>
+                <div class="content-wrapper">
+                    <p>
+                        Giá trị cốt lõi của VietTechStore là các giá trị bền vững làm nên thành công, là tôn chỉ toàn bộ hành động của công ty, được hình thành qua những ngày tháng gian khổ đầu tiên của công ty, được xây dựng từ những kinh nghiệm và học hỏi, tôi luyện qua những thử thách trong suốt quá trình phát triển.
+                    </p>
+                    
+                    <div class="value-item">
+                        <h3><i class="fa fa-sitemap"></i> Tư duy hệ thống xã hội hóa</h3>
+                        <p>
+                            Công ty được tổ chức như một hệ thống với những nhiệm vụ sứ mệnh rõ ràng, được tổ chức toàn vẹn và hiệu quả, không ngừng nâng cấp để thay đổi về tầm ảnh hưởng, hệ thống sẽ được Xã Hội Hóa theo hướng là tài sản chung của toàn bộ cán bộ, nhân viên VietTechStore và đóng góp để trở thành 1 phần hữu cơ của Xã Hội.
+                        </p>
+                    </div>
+
+                    <div class="value-item">
+                        <h3><i class="fa fa-users"></i> Thành công của con người là thành công của tổ chức</h3>
+                        <p>
+                            Công ty VietTechStore xây dựng đội ngũ nhân viên như những người đồng đội trên cùng một chiến thuyền, mỗi cá nhân được đánh thức nhân sinh quan và hướng dẫn cách nhận định, phấn đấu vì mục tiêu sống, thành công của mỗi nhân viên là thành công của tổ chức. Hội tụ càng nhiều thành công này, tổ chức đạt được mục tiêu. Trên cùng một chiến thuyền, giữa biển khơi bao la…đòi hỏi một tập thể phải biết tối ưu ở mọi cấp độ, đoàn kết và tin tưởng vào mục tiêu của tổ chức. Hệ thống đòi hỏi những con người phải biết thành công và dám thành công.
+                        </p>
+                    </div>
+
+                    <div class="value-item">
+                        <h3><i class="fa fa-heart"></i> Giá trị doanh nghiệp nằm ở khách hàng</h3>
+                        <p>
+                            Giá trị doanh nghiệp nằm ở khách hàng, kết nối khách hàng thành một xã hội và phục vụ xã hội này với những năng lực, tư duy luôn đổi mới. Mỗi khách hàng là một hạt nhân quan trọng trên bước đường cóp nhặt thành công của công ty. Toàn thể từ lãnh đạo đến nhân viên trước khách hàng luôn phải thể hiện trong vai trò người phục vụ: tận tụy, lắng nghe và đưa ra giải pháp tốt nhất.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Lời kết -->
+            <section class="gioithieu-section conclusion">
+                <div class="content-wrapper">
+                    <p class="conclusion-text">
+                        <strong>Lời kết:</strong> VietTechStore xin gửi lời cám ơn chân thành nhất đến quý khách, mọi ý kiến góp ý dù là nhỏ nhất xin mời liên hệ theo số phone: <strong>079.949.6002</strong>
+                    </p>
+                    <p class="thank-you">Xin chân thành cám ơn anh em!</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h4>VỀ VIETTECH</h4>
+                <ul>
+                    <li><a href="Gioithieu.html">Giới thiệu</a></li>
+                    <li><a href="#">Tuyển dụng</a></li>
+                    <li><a href="#">Liên hệ</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>CHÍNH SÁCH</h4>
+                <ul>
+                    <li><a href="#">Chính sách bảo hành</a></li>
+                    <li><a href="#">Chính sách giao hàng</a></li>
+                    <li><a href="#">Chính sách bảo mật</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>THÔNG TIN</h4>
+                <ul>
+                    <li><a href="#">Hệ thống cửa hàng</a></li>
+                    <li><a href="#">Hướng dẫn mua hàng</a></li>
+                    <li><a href="#">Hướng dẫn thanh toán</a></li>
+                    <li><a href="#">Hướng dẫn trả góp</a></li>
+                    <li><a href="#">Tra cứu địa chỉ bảo hành</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>TỔNG ĐÀI HỖ TRỢ (8:00 - 21:00)</h4>
+                <ul>
+                    <li>Mua hàng: <a href="tel:19005301">1900.5301</a></li>
+                    <li>Bảo hành: <a href="tel:19005325">1900.5325</a></li>
+                    <li>Kiếu nại: <a href="tel:18006173">1800.6173</a></li>
+                    <li>Email: <a href="mailto:cskh@viettech.com">cskh@VietTechStore.com</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>BẢN ĐỒ</h4>
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14931.339738709165!2d106.05463020248972!3d20.676293444177908!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135c0cd38f568f3%3A0x50681a4fcf414c4b!2zQW4gVOG6o28sIFRwLiBIxrBuZyBZw6puLCBIxrBuZyBZw6puLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1743648692178!5m2!1svi!2s" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="Dongbogiohang.js"></script>
+    <script>
+        // Hiển thị tên người dùng khi đã đăng nhập
+        function displayUserName() {
+            const userDisplay = document.getElementById('userDisplay');
+            const userLink = document.getElementById('userLink');
+            const userDropdown = document.getElementById('userDropdown');
+            
+            if (!userLink) return;
+            
+            try {
+                const currentUserStr = localStorage.getItem('currentUser');
+                if (currentUserStr) {
+                    const currentUser = JSON.parse(currentUserStr);
+                    if (currentUser.name && currentUser.role === 'user') {
+                        // Hiển thị banner với "Xin chào" + tên
+                        userLink.innerHTML = `
+                            <i class="fa fa-user"></i>
+                            <div class="user-greeting">
+                                <div class="greeting-text">Xin chào</div>
+                                <div class="user-name">${currentUser.name}</div>
+                            </div>
+                        `;
+                        userLink.classList.add('user-logged-in');
+                        userLink.style.textDecoration = 'none';
+                        // Dropdown sẽ hiện khi hover (CSS đã xử lý)
+                    }
+                }
+            } catch (e) {
+                console.error("Lỗi đọc thông tin người dùng:", e);
+            }
+        }
+        
+        // Xử lý đăng xuất
+        function initLogout() {
+            const logoutLink = document.getElementById('logoutLink');
+            if (logoutLink) {
+                logoutLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (confirm('Bạn có chắc muốn đăng xuất?')) {
+                        localStorage.removeItem('currentUser');
+                        localStorage.removeItem('isAdmin');
+                        window.location.href = 'index.html';
+                    }
+                });
+            }
+        }
+        
+        // Toggle mobile menu
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            if (menu) {
+                menu.classList.toggle('active');
+            }
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            displayUserName();
+            initLogout();
+        });
+    </script>
+    
+    <style>
+        .icons {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .user-dropdown-container {
+            position: relative;
+        }
+        
+        .icons a.user-logged-in {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 6px;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            height: fit-content;
+            cursor: pointer;
+            pointer-events: auto;
+        }
+        
+        .icons a.user-logged-in:hover {
+            background-color: #0056b3;
+        }
+        
+        .icons a.user-logged-in i {
+            font-size: 16px;
+            color: white;
+        }
+        
+        .icons a.user-logged-in .user-greeting {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+        
+        .icons a.user-logged-in .greeting-text {
+            font-size: 10px;
+            opacity: 0.9;
+        }
+        
+        .icons a.user-logged-in .user-name {
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        
+        .user-dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 5px;
+            background-color: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            min-width: 200px;
+            z-index: 1000;
+            overflow: hidden;
+        }
+        
+        .user-dropdown-container:hover .user-dropdown-menu,
+        .user-dropdown-menu:hover {
+            display: block;
+        }
+        
+        /* Tạo vùng vô hình để kết nối banner và dropdown - giúp di chuột không bị mất */
+        .user-dropdown-container::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            right: 0;
+            width: 100%;
+            height: 5px;
+            background: transparent;
+            pointer-events: none;
+        }
+        
+        .user-dropdown-menu .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            color: #333;
+            text-decoration: none;
+            transition: background-color 0.2s;
+            font-size: 14px;
+        }
+        
+        .user-dropdown-menu .dropdown-item:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .user-dropdown-menu .dropdown-item i {
+            width: 18px;
+            color: #666;
+        }
+        
+        .user-dropdown-menu .dropdown-divider {
+            height: 1px;
+            background-color: #e0e0e0;
+            margin: 4px 0;
+        }
+        
+        .user-dropdown-menu .logout-item {
+            color: #dc3545;
+        }
+        
+        .user-dropdown-menu .logout-item:hover {
+            background-color: #fee;
+        }
+        
+        .user-dropdown-menu .logout-item i {
+            color: #dc3545;
+        }
+    </style>
+</body>
+</html>
+
