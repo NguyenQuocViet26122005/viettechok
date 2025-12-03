@@ -87,21 +87,9 @@ function loadState() {
 
 function saveState() {
   localStorage.setItem(LS_KEY, JSON.stringify(state));
-  // Lưu timestamp để các trang khác có thể phát hiện thay đổi
   const updateTimestamp = Date.now();
   localStorage.setItem('laptop_admin_products_update_time', updateTimestamp.toString());
-  // Thông báo các trang khác về thay đổi sản phẩm
   broadcastChannel.postMessage({ type: 'products-updated', timestamp: updateTimestamp });
-  // Trigger storage event để các tab khác có thể lắng nghe
-  window.dispatchEvent(new StorageEvent('storage', {
-    key: LS_KEY,
-    newValue: JSON.stringify(state)
-  }));
-  // Trigger storage event cho timestamp
-  window.dispatchEvent(new StorageEvent('storage', {
-    key: 'laptop_admin_products_update_time',
-    newValue: updateTimestamp.toString()
-  }));
 }
 
 function seedSample() {
@@ -255,8 +243,19 @@ function seedSample() {
 
 // ======= Sidebar routing =======
 function activateSection(id) {
-  $$(".section").forEach((s) => s.classList.add("is-hidden"));
-  $("#" + id).classList.remove("is-hidden");
+  // Ẩn tất cả sections
+  $$(".section").forEach((s) => {
+    s.classList.add("is-hidden");
+    s.style.display = ""; // Reset display style
+  });
+  
+  // Hiển thị section được chọn
+  const targetSection = $("#" + id);
+  if (targetSection) {
+    targetSection.classList.remove("is-hidden");
+  }
+  
+  // Cập nhật menu active
   $$(".menu__item").forEach((b) => b.classList.remove("active"));
   const btn = $(`.menu__item[data-target="${id}"]`);
   if (btn) btn.classList.add("active");
@@ -381,32 +380,37 @@ function renderTopProductsChart() {
 function renderProducts() {
   const tbody = $("#productsTableBody");
   if (!tbody) {
-    console.warn("Không tìm thấy bảng sản phẩm");
+    // Chỉ log lỗi nếu section products đang được hiển thị
+    const productsSection = $("#products");
+    if (productsSection && !productsSection.classList.contains("is-hidden")) {
+      console.error("❌ Không tìm thấy bảng sản phẩm (productsTableBody)");
+    }
     return;
   }
   
-  const q = ($("#productSearch") ? ($("#productSearch").value || "").toLowerCase() : "");
-  const rows = state.products
-    .filter((p) => JSON.stringify(p).toLowerCase().includes(q))
+  const searchInput = $("#productSearch");
+  const q = searchInput ? (searchInput.value || "").toLowerCase() : "";
+  
+  const filteredProducts = state.products.filter((p) => 
+    JSON.stringify(p).toLowerCase().includes(q)
+  );
+  
+  const rows = filteredProducts
     .map((p) => {
-      const badge =
-        p.stock < 10
-          ? `<span class="badge badge--warn">${p.stock} cái</span>`
-          : `<span class="badge badge--ok">${p.stock} cái</span>`;
-      const status =
-        p.status === "active"
-          ? '<span class="badge badge--ok">Đang bán</span>'
-          : '<span class="badge badge--warn">Ngừng bán</span>';
+      const badge = p.stock < 10
+        ? `<span class="badge badge--warn">${p.stock} cái</span>`
+        : `<span class="badge badge--ok">${p.stock} cái</span>`;
+      const status = p.status === "active"
+        ? '<span class="badge badge--ok">Đang bán</span>'
+        : '<span class="badge badge--warn">Ngừng bán</span>';
       const productCode = p.code || p.id;
       return `<tr>
         <td><strong style="color:#000">#${productCode}</strong></td>
-        <td><strong>${p.name}</strong><div style="color:#64748b;font-size:12px">${p.cpu} • ${
-        p.ram
-      }</div></td>
-        <td>${p.brand}</td>
+        <td><strong>${p.name}</strong><div style="color:#64748b;font-size:12px">${p.cpu || ''} • ${p.ram || ''}</div></td>
+        <td>${p.brand || ''}</td>
         <td><strong>${money(p.price)}</strong></td>
         <td>${badge}</td>
-        <td>${p.category}</td>
+        <td>${p.category || ''}</td>
         <td>${status}</td>
         <td>
           <button class="btn btn--ghost" data-edit="${p.id}">✏️ Sửa</button>
@@ -420,14 +424,13 @@ function renderProducts() {
     `<tr><td colspan="8" style="text-align:center;color:#64748b;padding:28px">Chưa có sản phẩm</td></tr>`;
 
   // Bind event listeners
-  document.querySelectorAll("[data-edit]").forEach((b) => {
+  tbody.querySelectorAll("[data-edit]").forEach((b) => {
     b.onclick = () => openEditProduct(b.dataset.edit);
   });
-  document.querySelectorAll("[data-del]").forEach((b) => {
+  
+  tbody.querySelectorAll("[data-del]").forEach((b) => {
     b.onclick = () => deleteProduct(b.dataset.del);
   });
-  
-  console.log("✅ Đã render bảng sản phẩm:", state.products.length, "sản phẩm");
 }
 
 let currentEditingProduct = null;
@@ -469,15 +472,15 @@ function deleteProduct(id) {
     return;
   }
   
+  // Xóa sản phẩm
   state.products = state.products.filter((x) => x.id !== id);
   saveState();
   
+  // Chỉ hiển thị section products nếu đang ở section đó
   activateSection('products');
-  // Force reflow để đảm bảo section đã hiển thị
-  $("#products").offsetHeight;
   renderProducts();
-  
   toast("✅ Đã xóa sản phẩm thành công!", 3000);
+  
   broadcastChannel.postMessage({ type: 'product-deleted', productId: id });
 }
 
@@ -539,9 +542,8 @@ function bindProductForm() {
     hideModal("productModal");
     currentEditingProduct = null;
     
+    // Chỉ hiển thị section products
     activateSection('products');
-    // Force reflow để đảm bảo section đã hiển thị
-    $("#products").offsetHeight;
     renderProducts();
     
     const message = isEditing 
@@ -549,6 +551,7 @@ function bindProductForm() {
       : "✅ Đã thêm sản phẩm mới thành công!";
     
     toast(message, 3000);
+    
     broadcastChannel.postMessage({ 
       type: isEditing ? 'product-updated' : 'product-added', 
       productId: productId 
@@ -621,10 +624,15 @@ function openEditOrder(id) {
 }
 
 function deleteOrder(id) {
+  if (!confirm("Bạn có chắc chắn muốn xóa đơn hàng này không?")) {
+    return;
+  }
+  
   state.orders = state.orders.filter((x) => x.id !== id);
   saveState();
-  renderAll();
-  toast("Đã xóa đơn hàng");
+  activateSection('orders');
+  renderOrders();
+  toast("✅ Đã xóa đơn hàng thành công!", 3000);
 }
 
 function bindOrderForm() {
@@ -656,11 +664,18 @@ function bindOrderForm() {
       state.orders.push(data);
     }
 
+    const isEditing = !!currentEditingOrder;
     currentEditingOrder = null;
     saveState();
     hideModal("orderModal");
-    renderAll();
-    toast("Đã lưu đơn hàng");
+    activateSection('orders');
+    renderOrders();
+    
+    const message = isEditing 
+      ? "✅ Đã cập nhật đơn hàng thành công!" 
+      : "✅ Đã thêm đơn hàng mới thành công!";
+    
+    toast(message, 3000);
   });
 
   $("#orderSearch").addEventListener("input", renderOrders);
@@ -770,8 +785,9 @@ function deleteCustomer(id) {
   if (confirm(`Bạn có chắc chắn muốn xóa khách hàng "${c.name}"?`)) {
     state.customers = state.customers.filter((x) => x.id !== id);
     saveState();
-    renderAll();
-    toast("Đã xóa khách hàng");
+    activateSection('customers');
+    renderCustomers();
+    toast("✅ Đã xóa khách hàng thành công!", 3000);
   }
 }
 
@@ -840,8 +856,14 @@ function bindCustomerForm() {
     currentEditingCustomer = null;
     saveState();
     hideModal("customerModal");
-    renderAll();
-    toast(isEdit ? "Đã cập nhật khách hàng" : "Đã thêm khách hàng");
+    activateSection('customers');
+    renderCustomers();
+    
+    const message = isEdit 
+      ? "✅ Đã cập nhật khách hàng thành công!" 
+      : "✅ Đã thêm khách hàng mới thành công!";
+    
+    toast(message, 3000);
   });
 }
 
@@ -1068,10 +1090,15 @@ function openEditPromotion(id) {
 }
 
 function deletePromotion(id) {
+  if (!confirm("Bạn có chắc chắn muốn xóa khuyến mãi này không?")) {
+    return;
+  }
+  
   state.promotions = state.promotions.filter((x) => x.id !== id);
   saveState();
-  renderAll();
-  toast("Đã xóa khuyến mãi");
+  activateSection('promotions');
+  renderPromotions();
+  toast("✅ Đã xóa khuyến mãi thành công!", 3000);
 }
 
 function bindPromotionForm() {
@@ -1099,11 +1126,18 @@ function bindPromotionForm() {
       state.promotions.push(data);
     }
 
+    const isEditing = !!currentEditingPromotion;
     currentEditingPromotion = null;
     saveState();
     hideModal("promotionModal");
-    renderAll();
-    toast("Đã lưu khuyến mãi");
+    activateSection('promotions');
+    renderPromotions();
+    
+    const message = isEditing 
+      ? "✅ Đã cập nhật khuyến mãi thành công!" 
+      : "✅ Đã thêm khuyến mãi mới thành công!";
+    
+    toast(message, 3000);
   });
 
   $("#promotionSearch").addEventListener("input", renderPromotions);
@@ -1176,10 +1210,15 @@ function deleteCategory(id) {
       return;
     }
   }
+  if (!confirm("Bạn có chắc chắn muốn xóa danh mục này không?")) {
+    return;
+  }
+  
   state.categories = state.categories.filter((x) => x.id !== id);
   saveState();
-  renderAll();
-  toast("Đã xóa danh mục");
+  activateSection('categories');
+  renderCategories();
+  toast("✅ Đã xóa danh mục thành công!", 3000);
 }
 
 function bindCategoryForm() {
@@ -1206,11 +1245,18 @@ function bindCategoryForm() {
       state.categories.push(data);
     }
 
+    const isEditing = !!currentEditingCategory;
     currentEditingCategory = null;
     saveState();
     hideModal("categoryModal");
-    renderAll();
-    toast("Đã lưu danh mục");
+    activateSection('categories');
+    renderCategories();
+    
+    const message = isEditing 
+      ? "✅ Đã cập nhật danh mục thành công!" 
+      : "✅ Đã thêm danh mục mới thành công!";
+    
+    toast(message, 3000);
   });
 
   $("#categorySearch").addEventListener("input", renderCategories);
@@ -1229,6 +1275,7 @@ function updateProductCategorySelect() {
 
 // ======= Master render =======
 function renderAll() {
+  console.log("🔄 renderAll() được gọi");
   renderDashboard();
   renderProducts();
   renderOrders();
@@ -1271,9 +1318,37 @@ function initLogout() {
   }
 }
 
+// ======= Đồng bộ dữ liệu từ các trang khác =======
+function syncDataFromOtherPages() {
+  try {
+    // Kiểm tra xem có dữ liệu từ các trang khác không
+    const raw = localStorage.getItem(LS_KEY);
+    if (raw) {
+      const loaded = JSON.parse(raw);
+      // Merge products từ localStorage vào state hiện tại
+      if (loaded.products && Array.isArray(loaded.products)) {
+        // Merge: giữ lại sản phẩm mới, cập nhật sản phẩm đã có
+        loaded.products.forEach((newProduct) => {
+          const existingIndex = state.products.findIndex((p) => p.id === newProduct.id);
+          if (existingIndex >= 0) {
+            state.products[existingIndex] = newProduct; // Cập nhật
+          } else {
+            state.products.push(newProduct); // Thêm mới
+          }
+        });
+        saveState();
+        console.log("✅ Đã đồng bộ dữ liệu từ các trang khác");
+      }
+    }
+  } catch (e) {
+    console.error("Lỗi khi đồng bộ dữ liệu:", e);
+  }
+}
+
 // ======= Init =======
 function initAdminApp() {
   loadState();
+  syncDataFromOtherPages(); // Đồng bộ dữ liệu từ các trang khác
   initSidebar();
   initModals();
   initLogout();
@@ -1282,7 +1357,11 @@ function initAdminApp() {
   bindPromotionForm();
   bindCategoryForm();
   bindCustomerForm();
-  renderAll();
+  
+  // Đảm bảo render sau khi DOM sẵn sàng
+  setTimeout(() => {
+    renderAll();
+  }, 100);
 }
 
 window.addEventListener("DOMContentLoaded", () => {
