@@ -2,11 +2,12 @@
 const $ = (sel, ctx = document) => ctx.querySelector(sel);
 const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
 
-const toast = (msg) => {
+const toast = (msg, duration = 3000) => {
   const t = $("#toast");
+  if (!t) return;
   $("#toastMessage").textContent = msg;
   t.classList.add("show");
-  setTimeout(() => t.classList.remove("show"), 2500);
+  setTimeout(() => t.classList.remove("show"), duration);
 };
 
 const money = (n) =>
@@ -18,6 +19,9 @@ const money = (n) =>
 // ======= State (in-memory + localStorage) =======
 const LS_KEY = "laptop_admin_data_v1";
 // Các trang khác (index, trang sản phẩm) có thể đọc dữ liệu này từ localStorage.
+
+// BroadcastChannel để thông báo các trang khác khi có thay đổi
+const broadcastChannel = new BroadcastChannel('product-updates');
 
 let state = {
   products: [],
@@ -83,6 +87,21 @@ function loadState() {
 
 function saveState() {
   localStorage.setItem(LS_KEY, JSON.stringify(state));
+  // Lưu timestamp để các trang khác có thể phát hiện thay đổi
+  const updateTimestamp = Date.now();
+  localStorage.setItem('laptop_admin_products_update_time', updateTimestamp.toString());
+  // Thông báo các trang khác về thay đổi sản phẩm
+  broadcastChannel.postMessage({ type: 'products-updated', timestamp: updateTimestamp });
+  // Trigger storage event để các tab khác có thể lắng nghe
+  window.dispatchEvent(new StorageEvent('storage', {
+    key: LS_KEY,
+    newValue: JSON.stringify(state)
+  }));
+  // Trigger storage event cho timestamp
+  window.dispatchEvent(new StorageEvent('storage', {
+    key: 'laptop_admin_products_update_time',
+    newValue: updateTimestamp.toString()
+  }));
 }
 
 function seedSample() {
@@ -361,7 +380,12 @@ function renderTopProductsChart() {
 // ======= Products =======
 function renderProducts() {
   const tbody = $("#productsTableBody");
-  const q = ($("#productSearch").value || "").toLowerCase();
+  if (!tbody) {
+    console.warn("Không tìm thấy bảng sản phẩm");
+    return;
+  }
+  
+  const q = ($("#productSearch") ? ($("#productSearch").value || "").toLowerCase() : "");
   const rows = state.products
     .filter((p) => JSON.stringify(p).toLowerCase().includes(q))
     .map((p) => {
@@ -392,16 +416,18 @@ function renderProducts() {
     })
     .join("");
 
-  tbody.innerHTML =
-    rows ||
-    `<tr><td colspan="7" style="text-align:center;color:#64748b;padding:28px">Chưa có sản phẩm</td></tr>`;
+  tbody.innerHTML = rows || 
+    `<tr><td colspan="8" style="text-align:center;color:#64748b;padding:28px">Chưa có sản phẩm</td></tr>`;
 
-  $$("[data-edit]").forEach((b) =>
-    b.addEventListener("click", () => openEditProduct(b.dataset.edit))
-  );
-  $$("[data-del]").forEach((b) =>
-    b.addEventListener("click", () => deleteProduct(b.dataset.del))
-  );
+  // Bind event listeners
+  document.querySelectorAll("[data-edit]").forEach((b) => {
+    b.onclick = () => openEditProduct(b.dataset.edit);
+  });
+  document.querySelectorAll("[data-del]").forEach((b) => {
+    b.onclick = () => deleteProduct(b.dataset.del);
+  });
+  
+  console.log("✅ Đã render bảng sản phẩm:", state.products.length, "sản phẩm");
 }
 
 let currentEditingProduct = null;
@@ -439,10 +465,20 @@ function openEditProduct(id) {
 }
 
 function deleteProduct(id) {
+  if (!confirm("Bạn có chắc chắn muốn xóa sản phẩm này không?")) {
+    return;
+  }
+  
   state.products = state.products.filter((x) => x.id !== id);
   saveState();
-  renderAll();
-  toast("Đã xóa sản phẩm");
+  
+  activateSection('products');
+  // Force reflow để đảm bảo section đã hiển thị
+  $("#products").offsetHeight;
+  renderProducts();
+  
+  toast("✅ Đã xóa sản phẩm thành công!", 3000);
+  broadcastChannel.postMessage({ type: 'product-deleted', productId: id });
 }
 
 function bindProductForm() {
@@ -487,20 +523,36 @@ function bindProductForm() {
         : [],
     };
 
+    const isEditing = !!currentEditingProduct;
+    
+    // Cập nhật hoặc thêm sản phẩm vào state
     if (currentEditingProduct) {
-      const idx = state.products.findIndex(
-        (p) => p.id === currentEditingProduct.id
-      );
-      state.products[idx] = data;
+      const idx = state.products.findIndex((p) => p.id === currentEditingProduct.id);
+      if (idx !== -1) {
+        state.products[idx] = data;
+      }
     } else {
       state.products.push(data);
     }
 
-    currentEditingProduct = null;
     saveState();
     hideModal("productModal");
-    renderAll();
-    toast("Đã lưu sản phẩm");
+    currentEditingProduct = null;
+    
+    activateSection('products');
+    // Force reflow để đảm bảo section đã hiển thị
+    $("#products").offsetHeight;
+    renderProducts();
+    
+    const message = isEditing 
+      ? "✅ Đã cập nhật sản phẩm thành công!" 
+      : "✅ Đã thêm sản phẩm mới thành công!";
+    
+    toast(message, 3000);
+    broadcastChannel.postMessage({ 
+      type: isEditing ? 'product-updated' : 'product-added', 
+      productId: productId 
+    });
   });
 
   $("#productSearch").addEventListener("input", renderProducts);
