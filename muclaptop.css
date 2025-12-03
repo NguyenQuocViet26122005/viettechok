@@ -6,7 +6,7 @@
     margin: 20px auto;
     width: 100%;
     max-width: 1200px;
-    min-height: 3050px;
+    min-height: auto; /* Tự động điều chỉnh theo nội dung */
 }
 
 /* Responsive Design */

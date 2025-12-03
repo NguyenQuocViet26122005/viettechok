@@ -190,8 +190,6 @@
       { label: 'VGA', value: product.gpu || 'Chưa cập nhật' },
       { label: 'Màn hình', value: product.screen || 'Chưa cập nhật' },
       { label: 'Hãng', value: product.brand || 'Chưa cập nhật' },
-      { label: 'Danh mục', value: product.category || 'Chưa cập nhật' },
-      { label: 'Tồn kho', value: product.stock ? `${product.stock} sản phẩm` : 'Chưa cập nhật' },
     ];
     
     // Thêm các trường khác nếu có

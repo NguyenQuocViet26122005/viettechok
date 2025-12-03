@@ -92,9 +92,26 @@
         return;
       }
       
-      // Thay thế bằng sản phẩm từ admin
-      container.innerHTML = laptopProducts.map(createProductHTML).join('');
-      console.log(`✅ Đã render ${laptopProducts.length} sản phẩm "MÁY TÍNH XÁCH TAY" từ admin`);
+      // Lấy danh sách ID sản phẩm đã có trong container (sản phẩm tĩnh và sản phẩm từ admin đã render)
+      const existingProductIds = new Set();
+      container.querySelectorAll('.product[data-product-id]').forEach(productEl => {
+        const productId = productEl.getAttribute('data-product-id');
+        if (productId) {
+          existingProductIds.add(productId);
+        }
+      });
+      
+      // Chỉ thêm các sản phẩm mới chưa có trong container
+      const newProducts = laptopProducts.filter(p => !existingProductIds.has(p.id));
+      
+      if (newProducts.length > 0) {
+        // Thêm sản phẩm mới vào cuối container
+        const newProductsHTML = newProducts.map(createProductHTML).join('');
+        container.insertAdjacentHTML('beforeend', newProductsHTML);
+        console.log(`✅ Đã thêm ${newProducts.length} sản phẩm mới "MÁY TÍNH XÁCH TAY" từ admin`);
+      } else {
+        console.log("Không có sản phẩm mới để thêm");
+      }
     } catch (error) {
       console.error("❌ Lỗi khi load sản phẩm:", error);
     }

@@ -50,8 +50,31 @@ function loadState() {
           { id: "CAT002", name: "Văn phòng", description: "Laptop văn phòng", status: "active" },
           { id: "CAT003", name: "Đồ họa", description: "Laptop đồ họa, kỹ thuật", status: "active" },
           { id: "CAT004", name: "Học tập", description: "Laptop học tập, sinh viên", status: "active" },
+          { id: "CAT005", name: "Lenovo Gaming", description: "Sản phẩm Lenovo Gaming", status: "active", code: "LNVG" },
+          { id: "CAT006", name: "Máy tính xách tay", description: "Máy tính xách tay các hãng", status: "active", code: "MTXT" },
+          { id: "CAT007", name: "Apple", description: "Sản phẩm Apple (Macbook, iPad, iPhone)", status: "active", code: "APPLE" },
         ];
         saveState();
+      } else {
+        // Kiểm tra và thêm 3 danh mục mới nếu chưa có
+        const requiredCategories = [
+          { id: "CAT005", name: "Lenovo Gaming", description: "Sản phẩm Lenovo Gaming", status: "active", code: "LNVG" },
+          { id: "CAT006", name: "Máy tính xách tay", description: "Máy tính xách tay các hãng", status: "active", code: "MTXT" },
+          { id: "CAT007", name: "Apple", description: "Sản phẩm Apple (Macbook, iPad, iPhone)", status: "active", code: "APPLE" },
+        ];
+        
+        let hasChanges = false;
+        requiredCategories.forEach(reqCat => {
+          const exists = state.categories.find(c => c.id === reqCat.id || c.name === reqCat.name);
+          if (!exists) {
+            state.categories.push(reqCat);
+            hasChanges = true;
+          }
+        });
+        
+        if (hasChanges) {
+          saveState();
+        }
       }
       if (!state.promotions || state.promotions.length === 0) {
         state.promotions = [];
@@ -98,6 +121,9 @@ function seedSample() {
     { id: "CAT002", name: "Văn phòng", description: "Laptop văn phòng", status: "active" },
     { id: "CAT003", name: "Đồ họa", description: "Laptop đồ họa, kỹ thuật", status: "active" },
     { id: "CAT004", name: "Học tập", description: "Laptop học tập, sinh viên", status: "active" },
+    { id: "CAT005", name: "Lenovo Gaming", description: "Sản phẩm Lenovo Gaming", status: "active", code: "LNVG" },
+    { id: "CAT006", name: "Máy tính xách tay", description: "Máy tính xách tay các hãng", status: "active", code: "MTXT" },
+    { id: "CAT007", name: "Apple", description: "Sản phẩm Apple (Macbook, iPad, iPhone)", status: "active", code: "APPLE" },
   ];
 
   state.promotions = [

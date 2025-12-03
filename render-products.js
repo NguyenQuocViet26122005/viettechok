@@ -95,11 +95,25 @@
           const headerText = header.textContent.trim();
           
           if (headerText.includes('MÁY TÍNH XÁCH TAY')) {
-            // Render tất cả sản phẩm vào section này
-            productsContainer.innerHTML = products
-              .filter(p => p.status === "active")
-              .map(createProductHTML)
-              .join('');
+            // Lấy danh sách ID sản phẩm đã có trong container
+            const existingProductIds = new Set();
+            productsContainer.querySelectorAll('.product[data-product-id]').forEach(productEl => {
+              const productId = productEl.getAttribute('data-product-id');
+              if (productId) {
+                existingProductIds.add(productId);
+              }
+            });
+            
+            // Chỉ thêm các sản phẩm mới chưa có trong container
+            const activeProducts = products.filter(p => p.status === "active");
+            const newProducts = activeProducts.filter(p => !existingProductIds.has(p.id));
+            
+            if (newProducts.length > 0) {
+              // Thêm sản phẩm mới vào cuối container
+              const newProductsHTML = newProducts.map(createProductHTML).join('');
+              productsContainer.insertAdjacentHTML('beforeend', newProductsHTML);
+              console.log(`✅ Đã thêm ${newProducts.length} sản phẩm mới vào "MÁY TÍNH XÁCH TAY"`);
+            }
           } else if (headerText.includes('LENOVO')) {
             // Render chỉ sản phẩm Lenovo
             const lenovoProducts = products.filter(p => {
@@ -112,7 +126,24 @@
             });
             
             if (lenovoProducts.length > 0) {
-              productsContainer.innerHTML = lenovoProducts.map(createProductHTML).join('');
+              // Lấy danh sách ID sản phẩm đã có trong container
+              const existingProductIds = new Set();
+              productsContainer.querySelectorAll('.product[data-product-id]').forEach(productEl => {
+                const productId = productEl.getAttribute('data-product-id');
+                if (productId) {
+                  existingProductIds.add(productId);
+                }
+              });
+              
+              // Chỉ thêm các sản phẩm mới chưa có trong container
+              const newLenovoProducts = lenovoProducts.filter(p => !existingProductIds.has(p.id));
+              
+              if (newLenovoProducts.length > 0) {
+                // Thêm sản phẩm mới vào cuối container
+                const newProductsHTML = newLenovoProducts.map(createProductHTML).join('');
+                productsContainer.insertAdjacentHTML('beforeend', newProductsHTML);
+                console.log(`✅ Đã thêm ${newLenovoProducts.length} sản phẩm Lenovo mới`);
+              }
             }
           }
         }
