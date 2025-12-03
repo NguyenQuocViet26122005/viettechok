@@ -814,19 +814,43 @@
     .footer-container {
       grid-template-columns: 1fr;
     }
-  
+
     .product h3 {
       font-size: 13px;
     }
-  
+
     .product .price {
       font-size: 15px;
     }
-  
+
     .hot-sale-header h2,
     .laptops-header h2 {
       font-size: 18px;
       text-align: center;
+    }
+    
+    .banner {
+      width: 100%;
+    }
+    
+    .banner-container {
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .search-bar input {
+      width: 150px;
+      font-size: 14px;
+    }
+    
+    .contact-icons {
+      bottom: 10px;
+      right: 10px;
+    }
+    
+    .contact-icons img {
+      width: 40px;
+      height: 40px;
     }
   }
   

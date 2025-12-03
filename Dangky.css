@@ -51,7 +51,7 @@
     max-width: 380px;
     padding: 12px;
     margin: 0 auto 15px auto;
-    display: block;
+    display: block; 
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 14px;
@@ -130,4 +130,61 @@
 
 .register-button:hover {
     background-color: #0056b3;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .register-section {
+        margin: 20px 10px;
+    }
+    
+    .register-container {
+        padding: 20px;
+        max-width: 100%;
+    }
+    
+    .register-container h2 {
+        font-size: 20px;
+    }
+    
+    .register-form input,
+    .password-input-wrapper {
+        max-width: 100%;
+    }
+    
+    .register-button {
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .register-section {
+        margin: 15px 5px;
+    }
+    
+    .register-container {
+        padding: 15px;
+    }
+    
+    .register-container h2 {
+        font-size: 18px;
+    }
+    
+    .register-container p {
+        font-size: 12px;
+    }
+    
+    .register-form label {
+        font-size: 13px;
+    }
+    
+    .register-form input {
+        padding: 10px;
+        font-size: 14px;
+    }
+    
+    .register-button {
+        padding: 10px;
+        font-size: 14px;
+    }
 }

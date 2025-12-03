@@ -148,3 +148,60 @@
     background-color: #0056b3;
 }
 
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .login-section {
+        margin: 20px 10px;
+    }
+    
+    .login-container {
+        padding: 20px;
+        max-width: 100%;
+    }
+    
+    .login-container h2 {
+        font-size: 20px;
+    }
+    
+    .login-form input,
+    .password-input-wrapper {
+        max-width: 100%;
+    }
+    
+    .login-button {
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .login-section {
+        margin: 15px 5px;
+    }
+    
+    .login-container {
+        padding: 15px;
+    }
+    
+    .login-container h2 {
+        font-size: 18px;
+    }
+    
+    .login-container p {
+        font-size: 12px;
+    }
+    
+    .login-form label {
+        font-size: 13px;
+    }
+    
+    .login-form input {
+        padding: 10px;
+        font-size: 14px;
+    }
+    
+    .login-button {
+        padding: 10px;
+        font-size: 14px;
+    }
+}
+

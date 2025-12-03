@@ -159,22 +159,70 @@ document.addEventListener("DOMContentLoaded", () => {
     track.scrollBy({ left: step(), behavior: "smooth" });
     resumeAutoSoon();
   });
+  
+  // Dừng auto-scroll khi click vào nút
+  prev?.addEventListener("mousedown", stopAuto);
+  next?.addEventListener("mousedown", stopAuto);
 
   // === Auto-scroll vô hạn ===
   let rafId = null;
-  const speed = 0.8; // px/frame
+  let isPaused = false;
+  const speed = 1.2; // px/frame - tăng tốc độ để mượt hơn
+  
   function autoLoop() {
+    if (isPaused) {
+      rafId = requestAnimationFrame(autoLoop);
+      return;
+    }
+    
     track.scrollLeft += speed;
-    if (track.scrollLeft >= track.scrollWidth / 2) track.scrollLeft = 0;
+    
+    // Reset về đầu khi scroll đến nửa chiều rộng (vì đã nhân đôi nội dung)
+    const halfWidth = track.scrollWidth / 2;
+    if (track.scrollLeft >= halfWidth) {
+      track.scrollLeft = 0;
+    }
+    
     rafId = requestAnimationFrame(autoLoop);
   }
-  function startAuto() { if (!rafId) rafId = requestAnimationFrame(autoLoop); }
-  function stopAuto()  { if (rafId) cancelAnimationFrame(rafId), rafId = null; }
-  function resumeAutoSoon() { setTimeout(startAuto, 300); }
+  
+  function startAuto() { 
+    isPaused = false;
+    if (!rafId) {
+      rafId = requestAnimationFrame(autoLoop);
+    }
+  }
+  
+  function stopAuto() { 
+    isPaused = true;
+  }
+  
+  function resumeAutoSoon() { 
+    setTimeout(() => {
+      isPaused = false;
+    }, 2000); // Tăng thời gian chờ lên 2 giây
+  }
 
-  track.addEventListener("mouseenter", stopAuto);
-  track.addEventListener("mouseleave", startAuto);
-  document.addEventListener("visibilitychange", () => document.hidden ? stopAuto() : startAuto());
+  // Dừng khi hover vào track hoặc container
+  const container = track.closest('.lv-container') || track.closest('.lv-suggest');
+  if (container) {
+    container.addEventListener("mouseenter", stopAuto);
+    container.addEventListener("mouseleave", startAuto);
+  } else {
+    track.addEventListener("mouseenter", stopAuto);
+    track.addEventListener("mouseleave", startAuto);
+  }
+  
+  // Dừng khi tab không active
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      stopAuto();
+    } else {
+      startAuto();
+    }
+  });
 
+  // Bắt đầu auto-scroll
   startAuto();
 });
+

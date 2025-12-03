@@ -39,30 +39,77 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.image-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.5);
-    color: #fff;
-    border: none;
+/* Class chung cho tất cả nút điều hướng */
+.image-btn,
+.lv-navbtn {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    color: #333;
+    border: 2px solid rgba(0, 123, 255, 0.2);
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    font-size: 18px;
+    width: 50px;
+    height: 50px;
+    font-size: 22px;
+    font-weight: bold;
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+    opacity: 0;
+    visibility: hidden;
+    backdrop-filter: blur(10px);
+}
+
+.image-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.product-images .main-image:hover .image-btn {
+    opacity: 1;
+    visibility: visible;
+}
+
+.lv-suggest:hover .lv-navbtn {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Hiệu ứng hover và active chung */
+.image-btn:hover,
+.lv-navbtn:hover {
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    color: #fff;
+    border-color: #007bff;
+    box-shadow: 0 6px 20px rgba(0, 123, 255, 0.5);
 }
 
 .image-btn:hover {
-    background-color: rgba(0, 0, 0, 0.8);
+    transform: translateY(-50%) scale(1.15);
 }
 
-.prev-btn { left: 10px; }
-.next-btn { right: 10px; }
+.lv-navbtn:hover {
+    transform: scale(1.15);
+}
+
+.image-btn:active {
+    transform: translateY(-50%) scale(0.9);
+}
+
+.lv-navbtn:active {
+    transform: scale(0.9);
+}
+
+.prev-btn { 
+    left: 15px; 
+}
+
+.next-btn { 
+    right: 15px; 
+}
 
 .thumbnail-images {
     display: flex;
@@ -469,10 +516,7 @@ body {
 
 /* Header */
 .lv-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: 15px;
 }
 
 .lv-title {
@@ -482,27 +526,31 @@ body {
   margin: 0;
 }
 
-/* Nút trái phải */
-.lv-nav {
+/* Container cho track và nút */
+.lv-container {
+  position: relative;
   display: flex;
-  gap: 8px;
+  align-items: center;
+  gap: 10px;
 }
 
+/* Nút trái phải - style đã được định nghĩa ở trên với .image-btn */
 .lv-navbtn {
-  width: 32px;
-  height: 32px;
-  border: 1px solid #ccc;
-  background: #fff;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: 0.3s;
+  flex-shrink: 0;
 }
-.lv-navbtn:hover {
-  background: #f3f3f3;
+
+.lv-navbtn-left {
+  order: 1;
+}
+
+.lv-navbtn-right {
+  order: 3;
 }
 
 /* Dải sản phẩm */
 .lv-track {
+  order: 2;
+  flex: 1;
   display: flex;
   gap: 16px;
   overflow-x: auto;
@@ -613,20 +661,269 @@ body {
 
 /* Responsive cho mobile và tablet */
 @media (max-width: 1024px) {
+    .product-detail {
+        padding: 15px;
+        margin: 15px auto;
+    }
+    
+    .product-container {
+        flex-direction: column;
+    }
+    
     /* Hình ảnh chính */
     .product-images .main-image img {
-        width: 100%; /* Chiều rộng đầy đủ của container */
-        height: auto; /* Tự động điều chỉnh chiều cao để giữ tỷ lệ */
+        width: 100%;
+        height: auto;
+        max-height: 400px;
     }
 
     /* Hình ảnh thumbnail */
-    .thumbnail-images img {
-        width: 60px; /* Giảm kích thước thumbnail */
-        height: 60px;
-    }
-
-    /* Đảm bảo khoảng cách giữa các thumbnail */
     .thumbnail-images {
         gap: 5px;
+        padding-left: 0;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .thumbnail-images img {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .product-info {
+        flex: 1;
+    }
+    
+    .product-info h1 {
+        font-size: 24px;
+    }
+    
+    .current-price {
+        font-size: 22px;
+    }
+    
+    .product-details {
+        flex-direction: column;
+        margin: 30px auto;
+    }
+    
+    .suggest-section {
+        padding: 10px 0 15px;
+    }
+    
+    .suggest-head {
+        margin: 0 20px 12px;
+    }
+    
+    .suggest-head h2 {
+        font-size: 17px;
+    }
+    
+    .sp-card {
+        width: 180px;
+    }
+}
+
+@media (max-width: 768px) {
+    .product-detail {
+        padding: 10px;
+        margin: 10px auto;
+    }
+    
+    .product-images .main-image img {
+        max-height: 300px;
+    }
+    
+    .image-btn {
+        width: 42px;
+        height: 42px;
+        font-size: 18px;
+    }
+    
+    .product-images .main-image:hover .image-btn {
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .prev-btn {
+        left: 10px;
+    }
+    
+    .next-btn {
+        right: 10px;
+    }
+    
+    .thumbnail-images img {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .product-info h1 {
+        font-size: 20px;
+    }
+    
+    .rating span {
+        font-size: 16px;
+    }
+    
+    .current-price {
+        font-size: 20px;
+    }
+    
+    .original-price {
+        font-size: 14px;
+    }
+    
+    .buy-now {
+        padding: 10px 20px;
+        font-size: 14px;
+        width: 100%;
+    }
+    
+    .product-specifications,
+    .product-reviews {
+        padding: 15px;
+    }
+    
+    .product-specifications h2,
+    .product-reviews h2 {
+        font-size: 20px;
+    }
+    
+    .specifications-table {
+        font-size: 14px;
+    }
+    
+    .specifications-table th,
+    .specifications-table td {
+        padding: 8px 10px;
+    }
+    
+    .suggest-head {
+        margin: 0 15px 10px;
+    }
+    
+    .suggest-head h2 {
+        font-size: 16px;
+    }
+    
+    .sp-card {
+        width: 160px;
+    }
+    
+    .sp-card img {
+        height: 110px;
+    }
+    
+    .sp-card .name {
+        font-size: 12px;
+        height: 32px;
+    }
+    
+    .lv-suggest {
+        margin: 30px auto;
+        padding: 0 15px;
+    }
+    
+    .lv-title {
+        font-size: 18px;
+    }
+    
+    .lv-navbtn {
+        width: 42px;
+        height: 42px;
+        font-size: 18px;
+    }
+    
+    .lv-container {
+        gap: 8px;
+    }
+    
+    .lv-card {
+        width: 160px;
+        height: 260px;
+    }
+    
+    .lv-img {
+        height: 100px;
+    }
+}
+
+@media (max-width: 480px) {
+    .image-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 16px;
+    }
+    
+    .product-images .main-image:hover .image-btn {
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .prev-btn {
+        left: 8px;
+    }
+    
+    .next-btn {
+        right: 8px;
+    }
+    
+    .product-info h1 {
+        font-size: 18px;
+    }
+    
+    .current-price {
+        font-size: 18px;
+    }
+    
+    .specifications-table {
+        font-size: 12px;
+    }
+    
+    .specifications-table th,
+    .specifications-table td {
+        padding: 6px 8px;
+    }
+    
+    .specifications-table th {
+        width: 40%;
+    }
+    
+    .suggest-row {
+        padding: 0 10px;
+    }
+    
+    .sp-card {
+        width: 140px;
+    }
+    
+    .sp-card img {
+        height: 100px;
+        margin-top: 15px;
+    }
+    
+    .lv-navbtn {
+        width: 38px;
+        height: 38px;
+        font-size: 16px;
+    }
+    
+    .lv-container {
+        gap: 5px;
+    }
+    
+    .lv-card {
+        width: 140px;
+        height: 240px;
+    }
+    
+    .lv-img {
+        height: 90px;
+    }
+    
+    .lv-title-text {
+        font-size: 12px;
+        height: 32px;
     }
 }
