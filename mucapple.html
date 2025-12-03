@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apple - VietTechStore</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="mucapple.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="top-header">
+        <div class="container"> 
+            <div class="logo">
+                <a href="index.html">
+                    <img src="anh/logo.jpg" alt="logo">
+                </a>
+                <div class="contact-info">
+                    <p><b>VietTechStore</b></p>
+                    <p><b>079.949.6002</b></p>
+                </div>
+                <div class="contact-icons">
+                    <a href="tel:0123456789" target="_blank">
+                        <img src="anh/contact_icon_1.png" alt="Gọi điện">
+                    </a>
+                    <a href="https://zalo.me/0123456789" target="_blank">
+                        <img src="anh/contact_icon_2.png" alt="Zalo">
+                    </a>
+                    <a href="https://m.me/yourpageid" target="_blank">
+                        <img src="anh/contact_icon_3.png" alt="Messenger">
+                    </a>
+                </div>
+            </div>
+            <nav class="menu">
+                <a href="Gioithieu.html">Giới thiệu</a>
+                <div class="dropdown">
+                    <a href="#">Laptop</a>
+                    <div class="dropdown-content">
+                        <div class="cot">
+                            <p>HP</p>
+                            <ul>
+                                <li><a href="#">HP Probook</a></li>
+                                <li><a href="#">HP Folio</a></li>
+                                <li><a href="#">HP Elitebook</a></li>
+                                <li><a href="#">HP Spectre</a></li>
+                                <li><a href="#">HP Pavilion</a></li>
+                                <li><a href="#">HP Envy</a></li>
+                            </ul>
+                        </div>
+                        <div class="cot">
+                            <p>ASUS</p>
+                            <ul>
+                                <li><a href="#">Asus S Series</a></li>
+                                <li><a href="#">Asus Vivobook Series</a></li>
+                                <li><a href="#">Asus Zenbook Series</a></li>
+                                <li><a href="#">Asus TUF</a></li>
+                            </ul>
+                        </div>
+                        <div class="cot">
+                            <p>DELL</p>
+                            <ul>
+                                <li><a href="#">Dell XPS</a></li>
+                                <li><a href="#">Dell Precision</a></li>
+                                <li><a href="#">Dell Latitude</a></li>
+                                <li><a href="#">Dell Inspiron</a></li>
+                                <li><a href="#">Dell Alienware</a></li>
+                            </ul>
+                        </div>
+                        <div class="cot">
+                            <p>LENOVO</p>
+                            <ul>
+                                <li><a href="#">Lenovo Yoga Series</a></li>
+                                <li><a href="muclenovo.html">Lenovo Gaming</a></li>
+                                <li><a href="#">Lenovo Legion</a></li>
+                                <li><a href="#">IdeaPad</a></li>
+                                <li><a href="#">IdeaPad Gaming</a></li>
+                                <li><a href="#">Thinkbook</a></li>
+                            </ul>
+                        </div>
+                        <div class="cot">
+                            <p>THINKPAD</p>
+                            <ul>
+                                <li><a href="#">ThinkPad X1 Carbon</a></li>
+                                <li><a href="#">ThinkPad X Series</a></li>
+                                <li><a href="#">ThinkPad E Series</a></li>
+                                <li><a href="#">ThinkPad T Series</a></li>
+                                <li><a href="#">ThinkPad Workstations</a></li>
+                            </ul>
+                        </div>
+                        <div class="cot">
+                            <p>APPLE</p>
+                            <ul>
+                                <li><a href="mucapple.html">Macbook</a></li>
+                                <li><a href="mucapple.html">iPad</a></li>
+                                <li><a href="mucapple.html">iPhone</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <a href="#">Phụ kiện</a>
+                    <div class="dropdown-content">
+                        <div class="cot">
+                            <p>Phụ kiện</p>
+                            <ul>
+                                <li><a href="#">Tai nghe</a></li>
+                                <li><a href="#">Chuột</a></li>
+                                <li><a href="#">Bàn phím</a></li>
+                                <li><a href="#">Cáp sạc</a></li>
+                            </ul>
+                        </div>
+                        <div class="cot">
+                            <p>Khác</p>
+                            <ul>
+                                <li><a href="#">Ổ cứng</a></li>
+                                <li><a href="#">RAM</a></li>
+                                <li><a href="#">Pin</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <a href="#">Khuyến mãi</a>
+            </nav>
+            <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <i class="fa fa-bars"></i>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Tìm kiếm laptop và phụ kiện">
+                <button><i class="fa fa-search"></i></button>
+            </div>
+            <div class="icons">
+                <a href="Giohang.html">
+                    <i class="fa fa-shopping-cart"></i>
+                    <span id="cartCount">0</span>
+                </a>
+                <div id="userDisplay" class="user-dropdown-container">
+                    <a href="Dangnhap.html" id="userLink"><i class="fa fa-user"></i></a>
+                    <div id="userDropdown" class="user-dropdown-menu">
+                        <a href="Taikhoan.html" class="dropdown-item">
+                            <i class="fa fa-user-circle"></i> Tài khoản
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" id="logoutLink" class="dropdown-item logout-item">
+                            <i class="fa fa-sign-out-alt"></i> Đăng xuất
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav class="mobile-menu" id="mobileMenu">
+            <a href="Gioithieu.html">Giới thiệu</a>
+            <a href="#">Laptop</a>
+            <a href="#">Phụ kiện</a>
+            <a href="#">Khuyến mãi</a>
+        </nav>
+    </div>
+    <section class="laptops">
+        <div class="laptops-header">
+            <h2>APPLE</h2>
+        </div>
+        <div class="laptop-products" id="appleProducts">
+            <div class="product">
+                <a href="product-detail.html?id=apple1" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-8%</div>
+                    <img src="anh/apple1.png" alt="Macbook Pro 14 M2 Pro">
+                    <h3>Macbook Pro 14 M2 Pro 10 Core RAM 16GB SSD 512GB 16 GPU Liquid Retina</h3>
+                    <p class="price">34.700.000 <span class="old-price">37.800.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=apple2" class="product-link">
+                    <div class="badge">Hot!!!</div>
+                    <div class="discount">-18%</div>
+                    <img src="anh/apple2.png" alt="Macbook Pro 13 2019">
+                    <h3>Macbook Pro 13 2019 i7-8569U 16GB SSD 256GB Super Retina Touchbar(Limited)</h3>
+                    <p class="price">13.900.000 <span class="old-price">17.000.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=apple3" class="product-link">
+                    <div class="badge">Đang Có Flash Sale!!!</div>
+                    <div class="discount">-28%</div>
+                    <img src="anh/apple3.png" alt="Macbook Pro 16 2019">
+                    <h3>Macbook Pro 16 2019 i9 9980HK RAM 32GB SSD 512GB AMD Radeon Pro 5500M 4GB VRAM Retina</h3>
+                    <p class="price">19.200.000 <span class="old-price">26.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=apple4" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-23%</div>
+                    <img src="anh/apple4.png" alt="Macbook Pro 14 M1 Pro">
+                    <h3>Macbook Pro 14 M1 Pro 8-Core CPU 14-Core GPU RAM 16GB SSD 512GB Retina 2021</h3>
+                    <p class="price">27.500.000 <span class="old-price">35.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=apple5" class="product-link">
+                    <div class="badge">Hàng Mới Về Thêm</div>
+                    <div class="discount">-15%</div>
+                    <img src="anh/apple5.png" alt="Macbook Pro 14 M1 Pro">
+                    <h3>Macbook Pro 14 M1 Pro 10-core CPU 16-core GPU RAM 16GB SSD 512GB Retina 2021 </h3>
+                    <p class="price">30.200.000 <span class="old-price">35.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=apple6" class="product-link">
+                    <div class="badge">Đang Có Flash Sale!!!</div>
+                    <div class="discount">-16%</div>
+                    <img src="anh/apple6.png" alt="Macbook Pro 16 M1 Pro">
+                    <h3>Macbook Pro 16 M1 Pro RAM 16GB SSD 512GB Liquid Super Retina 2021(Limited) </h3>
+                    <p class="price">31.500.000 <span class="old-price">37.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=apple7" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-5%</div>
+                    <img src="anh/apple7.png" alt="Macbook Air 15 M2">
+                    <h3>Macbook Air 15 M2 RAM 8GB SSD 256GB 15.3" Liquid Retina 2023 Silver/Midnight</h3>
+                    <p class="price">29.900.000 <span class="old-price">31.900.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=apple8" class="product-link">
+                    <div class="badge">Hàng Mới Về</div>
+                    <div class="discount">-17%</div>
+                    <img src="anh/apple8.png" alt="Macbook Pro 16 M1 Max">
+                    <h3>Macbook Pro 14 M1 Max 10-Core CPU 24-Core GPU RAM 32GB SSD 1TB Liquid Retina 2021</h3>
+                    <p class="price">42.900.000 <span class="old-price">51.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=apple9" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-5%</div>
+                    <img src="anh/apple9.png" alt="Macbook Pro 14 M3">
+                    <h3>Macbook Pro 16 M1 Max 10-Core CPU 32-Core GPU RAM 32GB SSD 512GB Liquid Retina 2021</h3>
+                    <p class="price">29.900.000 <span class="old-price">31.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=apple10" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-18%</div>
+                    <img src="anh/apple10.png" alt="Macbook Pro 14 M1 Max">
+                    <h3>Macbook Pro 14 M3 2023 8 Core 8GB SSD 512GB 10 GPU Liquid Super Limited Retina</h3>
+                    <p class="price">29.990.000 <span class="old-price">31.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=apple1" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-8%</div>
+                    <img src="anh/apple1.png" alt="Macbook Pro 14 M2 Pro">
+                    <h3>Macbook Pro 14 M2 Pro 10 Core RAM 16GB SSD 512GB 16 GPU Liquid Retina</h3>
+                    <p class="price">34.700.000 <span class="old-price">37.800.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=apple2" class="product-link">
+                    <div class="badge">Hot!!!</div>
+                    <div class="discount">-18%</div>
+                    <img src="anh/apple2.png" alt="Macbook Pro 13 2019">
+                    <h3>Macbook Pro 13 2019 i7-8569U 16GB SSD 256GB Super Retina Touchbar(Limited)</h3>
+                    <p class="price">13.900.000 <span class="old-price">17.000.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=apple3" class="product-link">
+                    <div class="badge">Đang Có Flash Sale!!!</div>
+                    <div class="discount">-28%</div>
+                    <img src="anh/apple3.png" alt="Macbook Pro 16 2019">
+                    <h3>Macbook Pro 16 2019 i9 9980HK RAM 32GB SSD 512GB AMD Radeon Pro 5500M 4GB VRAM Retina</h3>
+                    <p class="price">19.200.000 <span class="old-price">26.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=apple4" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-23%</div>
+                    <img src="anh/apple4.png" alt="Macbook Pro 14 M1 Pro">
+                    <h3>Macbook Pro 14 M1 Pro 8-Core CPU 14-Core GPU RAM 16GB SSD 512GB Retina 2021</h3>
+                    <p class="price">27.500.000 <span class="old-price">35.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=apple5" class="product-link">
+                    <div class="badge">Hàng Mới Về Thêm</div>
+                    <div class="discount">-15%</div>
+                    <img src="anh/apple5.png" alt="Macbook Pro 14 M1 Pro">
+                    <h3>Macbook Pro 14 M1 Pro 10-core CPU 16-core GPU RAM 16GB SSD 512GB Retina 2021 </h3>
+                    <p class="price">30.200.000 <span class="old-price">35.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=apple6" class="product-link">
+                    <div class="badge">Đang Có Flash Sale!!!</div>
+                    <div class="discount">-16%</div>
+                    <img src="anh/apple6.png" alt="Macbook Pro 16 M1 Pro">
+                    <h3>Macbook Pro 16 M1 Pro RAM 16GB SSD 512GB Liquid Super Retina 2021(Limited) </h3>
+                    <p class="price">31.500.000 <span class="old-price">37.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=apple7" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-5%</div>
+                    <img src="anh/apple7.png" alt="Macbook Air 15 M2">
+                    <h3>Macbook Air 15 M2 RAM 8GB SSD 256GB 15.3" Liquid Retina 2023 Silver/Midnight</h3>
+                    <p class="price">29.900.000 <span class="old-price">31.900.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=apple8" class="product-link">
+                    <div class="badge">Hàng Mới Về</div>
+                    <div class="discount">-17%</div>
+                    <img src="anh/apple8.png" alt="Macbook Pro 16 M1 Max">
+                    <h3>Macbook Pro 14 M1 Max 10-Core CPU 24-Core GPU RAM 32GB SSD 1TB Liquid Retina 2021</h3>
+                    <p class="price">42.900.000 <span class="old-price">51.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=apple9" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-5%</div>
+                    <img src="anh/apple9.png" alt="Macbook Pro 14 M3">
+                    <h3>Macbook Pro 16 M1 Max 10-Core CPU 32-Core GPU RAM 32GB SSD 512GB Liquid Retina 2021</h3>
+                    <p class="price">29.900.000 <span class="old-price">31.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=apple10" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-18%</div>
+                    <img src="anh/apple10.png" alt="Macbook Pro 14 M1 Max">
+                    <h3>Macbook Pro 14 M3 2023 8 Core 8GB SSD 512GB 10 GPU Liquid Super Limited Retina</h3>
+                    <p class="price">29.990.000 <span class="old-price">31.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=apple1" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-8%</div>
+                    <img src="anh/apple1.png" alt="Macbook Pro 14 M2 Pro">
+                    <h3>Macbook Pro 14 M2 Pro 10 Core RAM 16GB SSD 512GB 16 GPU Liquid Retina</h3>
+                    <p class="price">34.700.000 <span class="old-price">37.800.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=apple2" class="product-link">
+                    <div class="badge">Hot!!!</div>
+                    <div class="discount">-18%</div>
+                    <img src="anh/apple2.png" alt="Macbook Pro 13 2019">
+                    <h3>Macbook Pro 13 2019 i7-8569U 16GB SSD 256GB Super Retina Touchbar(Limited)</h3>
+                    <p class="price">13.900.000 <span class="old-price">17.000.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=apple3" class="product-link">
+                    <div class="badge">Đang Có Flash Sale!!!</div>
+                    <div class="discount">-28%</div>
+                    <img src="anh/apple3.png" alt="Macbook Pro 16 2019">
+                    <h3>Macbook Pro 16 2019 i9 9980HK RAM 32GB SSD 512GB AMD Radeon Pro 5500M 4GB VRAM Retina</h3>
+                    <p class="price">19.200.000 <span class="old-price">26.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=apple4" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-23%</div>
+                    <img src="anh/apple4.png" alt="Macbook Pro 14 M1 Pro">
+                    <h3>Macbook Pro 14 M1 Pro 8-Core CPU 14-Core GPU RAM 16GB SSD 512GB Retina 2021</h3>
+                    <p class="price">27.500.000 <span class="old-price">35.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=apple5" class="product-link">
+                    <div class="badge">Hàng Mới Về Thêm</div>
+                    <div class="discount">-15%</div>
+                    <img src="anh/apple5.png" alt="Macbook Pro 14 M1 Pro">
+                    <h3>Macbook Pro 14 M1 Pro 10-core CPU 16-core GPU RAM 16GB SSD 512GB Retina 2021 </h3>
+                    <p class="price">30.200.000 <span class="old-price">35.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=apple6" class="product-link">
+                    <div class="badge">Đang Có Flash Sale!!!</div>
+                    <div class="discount">-16%</div>
+                    <img src="anh/apple6.png" alt="Macbook Pro 16 M1 Pro">
+                    <h3>Macbook Pro 16 M1 Pro RAM 16GB SSD 512GB Liquid Super Retina 2021(Limited) </h3>
+                    <p class="price">31.500.000 <span class="old-price">37.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=apple7" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-5%</div>
+                    <img src="anh/apple7.png" alt="Macbook Air 15 M2">
+                    <h3>Macbook Air 15 M2 RAM 8GB SSD 256GB 15.3" Liquid Retina 2023 Silver/Midnight</h3>
+                    <p class="price">29.900.000 <span class="old-price">31.900.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=apple8" class="product-link">
+                    <div class="badge">Hàng Mới Về</div>
+                    <div class="discount">-17%</div>
+                    <img src="anh/apple8.png" alt="Macbook Pro 16 M1 Max">
+                    <h3>Macbook Pro 14 M1 Max 10-Core CPU 24-Core GPU RAM 32GB SSD 1TB Liquid Retina 2021</h3>
+                    <p class="price">42.900.000 <span class="old-price">51.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=apple9" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-5%</div>
+                    <img src="anh/apple9.png" alt="Macbook Pro 14 M3">
+                    <h3>Macbook Pro 16 M1 Max 10-Core CPU 32-Core GPU RAM 32GB SSD 512GB Liquid Retina 2021</h3>
+                    <p class="price">29.900.000 <span class="old-price">31.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=apple10" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-18%</div>
+                    <img src="anh/apple10.png" alt="Macbook Pro 14 M1 Max">
+                    <h3>Macbook Pro 14 M3 2023 8 Core 8GB SSD 512GB 10 GPU Liquid Super Limited Retina</h3>
+                    <p class="price">29.990.000 <span class="old-price">31.500.000</span></p>
+                </a>
+            </div>
+        </div>
+    </section>
+    <script src="script.js"></script>
+    <script src="Dongbogiohang.js"></script>
+    <script src="product-reload.js"></script>
+    <script src="mucapple.js"></script>
+    <script>
+        // Hiển thị tên người dùng khi đã đăng nhập
+        function displayUserName() {
+            const userLink = document.getElementById('userLink');
+            if (!userLink) return;
+            
+            try {
+                const currentUserStr = localStorage.getItem('currentUser');
+                if (currentUserStr) {
+                    const currentUser = JSON.parse(currentUserStr);
+                    if (currentUser.name && currentUser.role === 'user') {
+                        userLink.innerHTML = `
+                            <i class="fa fa-user"></i>
+                            <div class="user-greeting">
+                                <div class="greeting-text">Xin chào</div>
+                                <div class="user-name">${currentUser.name}</div>
+                            </div>
+                        `;
+                        userLink.classList.add('user-logged-in');
+                        userLink.style.textDecoration = 'none';
+                    }
+                }
+            } catch (e) {
+                console.error("Lỗi:", e);
+            }
+        }
+        
+        // Xử lý đăng xuất
+        function initLogout() {
+            const logoutLink = document.getElementById('logoutLink');
+            if (logoutLink) {
+                logoutLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (confirm('Bạn có chắc muốn đăng xuất?')) {
+                        localStorage.removeItem('currentUser');
+                        localStorage.removeItem('isAdmin');
+                        window.location.href = 'index.html';
+                    }
+                });
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            displayUserName();
+            initLogout();
+        });
+    </script>
+    <style>
+        .icons {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .user-dropdown-container {
+            position: relative;
+        }
+        
+        .icons a.user-logged-in {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 6px;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            height: fit-content;
+            cursor: pointer;
+            pointer-events: auto;
+        }
+        
+        .icons a.user-logged-in:hover {
+            background-color: #0056b3;
+        }
+        
+        .icons a.user-logged-in i {
+            font-size: 16px;
+            color: white;
+        }
+        
+        .icons a.user-logged-in .user-greeting {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+        
+        .icons a.user-logged-in .greeting-text {
+            font-size: 10px;
+            opacity: 0.9;
+        }
+        
+        .icons a.user-logged-in .user-name {
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        
+        .user-dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 5px;
+            background-color: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            min-width: 200px;
+            z-index: 1000;
+            overflow: hidden;
+        }
+        
+        .user-dropdown-container:hover .user-dropdown-menu,
+        .user-dropdown-menu:hover {
+            display: block;
+        }
+        
+        .user-dropdown-container::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            right: 0;
+            width: 100%;
+            height: 5px;
+            background: transparent;
+            pointer-events: none;
+        }
+        
+        .user-dropdown-menu .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            color: #333;
+            text-decoration: none;
+            transition: background-color 0.2s;
+            font-size: 14px;
+        }
+        
+        .user-dropdown-menu .dropdown-item:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .user-dropdown-menu .dropdown-item i {
+            width: 18px;
+            color: #666;
+        }
+        
+        .user-dropdown-menu .dropdown-divider {
+            height: 1px;
+            background-color: #e0e0e0;
+            margin: 4px 0;
+        }
+        
+        .user-dropdown-menu .logout-item {
+            color: #dc3545;
+        }
+        
+        .user-dropdown-menu .logout-item:hover {
+            background-color: #fee;
+        }
+        
+        .user-dropdown-menu .logout-item i {
+            color: #dc3545;
+        }
+    </style>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h4>VỀ VIETTECH</h4>
+                <ul>
+                    <li><a href="Gioithieu.html">Giới thiệu</a></li>
+                    <li><a href="#">Tuyển dụng</a></li>
+                    <li><a href="#">Liên hệ</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>CHÍNH SÁCH</h4>
+                <ul>
+                    <li><a href="#">Chính sách bảo hành</a></li>
+                    <li><a href="#">Chính sách giao hàng</a></li>
+                    <li><a href="#">Chính sách bảo mật</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>THÔNG TIN</h4>
+                <ul>
+                    <li><a href="#">Hệ thống cửa hàng</a></li>
+                    <li><a href="#">Hướng dẫn mua hàng</a></li>
+                    <li><a href="#">Hướng dẫn thanh toán</a></li>
+                    <li><a href="#">Hướng dẫn trả góp</a></li>
+                    <li><a href="#">Tra cứu địa chỉ bảo hành</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>TỔNG ĐÀI HỖ TRỢ (8:00 - 21:00)</h4>
+                <ul>
+                    <li>Mua hàng: <a href="tel:19005301">1900.5301</a></li>
+                    <li>Bảo hành: <a href="tel:19005325">1900.5325</a></li>
+                    <li>Kiếu nại: <a href="tel:18006173">1800.6173</a></li>
+                    <li>Email: <a href="mailto:cskh@viettech.com">cskh@VietTechStore .com</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>BẢN ĐỒ</h4>
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14931.339738709165!2d106.05463020248972!3d20.676293444177908!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135c0cd38f568f3%3A0x50681a4fcf414c4b!2zQW4gVOG6o28sIFRwLiBIxrBuZyBZw6puLCBIxrBuZyBZw6puLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1743648692178!5m2!1svi!2s" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+

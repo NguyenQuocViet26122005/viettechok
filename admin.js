@@ -274,7 +274,7 @@ function initSidebar() {
   $("#btnToggleSidebar").addEventListener("click", () => {
     if (window.innerWidth <= 960) {
       // Trên mobile: toggle open/close
-      $("#sidebar").classList.toggle("open");
+    $("#sidebar").classList.toggle("open");
     } else {
       // Trên desktop: toggle collapsed/expanded
       const sidebar = $("#sidebar");
@@ -398,11 +398,11 @@ function renderProducts() {
   const rows = filteredProducts
     .map((p) => {
       const badge = p.stock < 10
-        ? `<span class="badge badge--warn">${p.stock} cái</span>`
-        : `<span class="badge badge--ok">${p.stock} cái</span>`;
+          ? `<span class="badge badge--warn">${p.stock} cái</span>`
+          : `<span class="badge badge--ok">${p.stock} cái</span>`;
       const status = p.status === "active"
-        ? '<span class="badge badge--ok">Đang bán</span>'
-        : '<span class="badge badge--warn">Ngừng bán</span>';
+          ? '<span class="badge badge--ok">Đang bán</span>'
+          : '<span class="badge badge--warn">Ngừng bán</span>';
       const productCode = p.code || p.id;
       return `<tr>
         <td><strong style="color:#000">#${productCode}</strong></td>
@@ -499,7 +499,7 @@ function bindProductForm() {
 
     const productId = currentEditingProduct ? currentEditingProduct.id : "P" + Date.now();
     const productCode = $("#productCode").value.trim() || productId;
-    
+
     const data = {
       id: productId,
       code: productCode,
@@ -532,7 +532,7 @@ function bindProductForm() {
     if (currentEditingProduct) {
       const idx = state.products.findIndex((p) => p.id === currentEditingProduct.id);
       if (idx !== -1) {
-        state.products[idx] = data;
+      state.products[idx] = data;
       }
     } else {
       state.products.push(data);
@@ -1360,7 +1360,7 @@ function initAdminApp() {
   
   // Đảm bảo render sau khi DOM sẵn sàng
   setTimeout(() => {
-    renderAll();
+  renderAll();
   }, 100);
 }
 

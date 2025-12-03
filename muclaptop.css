@@ -1,0 +1,36 @@
+.laptops {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    width: 100%;
+    max-width: 1200px;
+    min-height: 3050px;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 1024px) {
+    .laptops {
+        width: 95%;
+        padding: 15px;
+        min-height: auto;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .laptops {
+        width: 100%;
+        padding: 10px;
+        margin: 10px auto;
+        border-radius: 8px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .laptops {
+        padding: 8px;
+        margin: 5px auto;
+    }
+}
+

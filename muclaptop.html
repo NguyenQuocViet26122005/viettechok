@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Máy tính xách tay - VietTechStore</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="muclaptop.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="top-header">
+        <div class="container"> 
+            <div class="logo">
+                <a href="index.html">
+                    <img src="anh/logo.jpg" alt="logo">
+                </a>
+                <div class="contact-info">
+                    <p><b>VietTechStore</b></p>
+                    <p><b>079.949.6002</b></p>
+                </div>
+                <div class="contact-icons">
+                    <a href="tel:0123456789" target="_blank">
+                        <img src="anh/contact_icon_1.png" alt="Gọi điện">
+                    </a>
+                    <a href="https://zalo.me/0123456789" target="_blank">
+                        <img src="anh/contact_icon_2.png" alt="Zalo">
+                    </a>
+                    <a href="https://m.me/yourpageid" target="_blank">
+                        <img src="anh/contact_icon_3.png" alt="Messenger">
+                    </a>
+                </div>
+            </div>
+            <nav class="menu">
+                <a href="Gioithieu.html">Giới thiệu</a>
+                <div class="dropdown">
+                    <a href="#">Laptop</a>
+                    <div class="dropdown-content">
+                        <div class="cot">
+                            <p>HP</p>
+                            <ul>
+                                <li><a href="#">HP Probook</a></li>
+                                <li><a href="#">HP Folio</a></li>
+                                <li><a href="#">HP Elitebook</a></li>
+                                <li><a href="#">HP Spectre</a></li>
+                                <li><a href="#">HP Pavilion</a></li>
+                                <li><a href="#">HP Envy</a></li>
+                            </ul>
+                        </div>
+                        <div class="cot">
+                            <p>ASUS</p>
+                            <ul>
+                                <li><a href="#">Asus S Series</a></li>
+                                <li><a href="#">Asus Vivobook Series</a></li>
+                                <li><a href="#">Asus Zenbook Series</a></li>
+                                <li><a href="#">Asus TUF</a></li>
+                            </ul>
+                        </div>
+                        <div class="cot">
+                            <p>DELL</p>
+                            <ul>
+                                <li><a href="#">Dell XPS</a></li>
+                                <li><a href="#">Dell Precision</a></li>
+                                <li><a href="#">Dell Latitude</a></li>
+                                <li><a href="#">Dell Inspiron</a></li>
+                                <li><a href="#">Dell Alienware</a></li>
+                            </ul>
+                        </div>
+                        <div class="cot">
+                            <p>LENOVO</p>
+                            <ul>
+                                <li><a href="#">Lenovo Yoga Series</a></li>
+                                <li><a href="muclenovo.html">Lenovo Gaming</a></li>
+                                <li><a href="#">Lenovo Legion</a></li>
+                                <li><a href="#">IdeaPad</a></li>
+                                <li><a href="#">IdeaPad Gaming</a></li>
+                                <li><a href="#">Thinkbook</a></li>
+                            </ul>
+                        </div>
+                        <div class="cot">
+                            <p>THINKPAD</p>
+                            <ul>
+                                <li><a href="#">ThinkPad X1 Carbon</a></li>
+                                <li><a href="#">ThinkPad X Series</a></li>
+                                <li><a href="#">ThinkPad E Series</a></li>
+                                <li><a href="#">ThinkPad T Series</a></li>
+                                <li><a href="#">ThinkPad Workstations</a></li>
+                            </ul>
+                        </div>
+                        <div class="cot">
+                            <p>Theo nhu cầu</p>
+                            <ul>
+                                <li><a href="muclaptop.html">Máy tính xách tay</a></li>
+                                <li><a href="#">Workstations</a></li>
+                                <li><a href="#">Siêu phẩm</a></li>
+                                <li><a href="#">Đồ Họa, Kỹ thuật</a></li>
+                                <li><a href="#">Học tập, Văn phòng</a></li>
+                                <li><a href="#">Lập trình</a></li>
+                                <li><a href="#">Game</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <a href="#">Phụ kiện</a>
+                    <div class="dropdown-content">
+                        <div class="cot">
+                            <p>Phụ kiện</p>
+                            <ul>
+                                <li><a href="#">Tai nghe</a></li>
+                                <li><a href="#">Chuột</a></li>
+                                <li><a href="#">Bàn phím</a></li>
+                                <li><a href="#">Cáp sạc</a></li>
+                            </ul>
+                        </div>
+                        <div class="cot">
+                            <p>Khác</p>
+                            <ul>
+                                <li><a href="#">Ổ cứng</a></li>
+                                <li><a href="#">RAM</a></li>
+                                <li><a href="#">Pin</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <a href="#">Khuyến mãi</a>
+            </nav>
+            <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <i class="fa fa-bars"></i>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Tìm kiếm laptop và phụ kiện">
+                <button><i class="fa fa-search"></i></button>
+            </div>
+            <div class="icons">
+                <a href="Giohang.html">
+                    <i class="fa fa-shopping-cart"></i>
+                    <span id="cartCount">0</span>
+                </a>
+                <div id="userDisplay" class="user-dropdown-container">
+                    <a href="Dangnhap.html" id="userLink"><i class="fa fa-user"></i></a>
+                    <div id="userDropdown" class="user-dropdown-menu">
+                        <a href="Taikhoan.html" class="dropdown-item">
+                            <i class="fa fa-user-circle"></i> Tài khoản
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" id="logoutLink" class="dropdown-item logout-item">
+                            <i class="fa fa-sign-out-alt"></i> Đăng xuất
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav class="mobile-menu" id="mobileMenu">
+            <a href="Gioithieu.html">Giới thiệu</a>
+            <a href="#">Laptop</a>
+            <a href="#">Phụ kiện</a>
+            <a href="#">Khuyến mãi</a>
+        </nav>
+    </div>
+    <section class="laptops">
+        <div class="laptops-header">
+            <h2>MÁY TÍNH XÁCH TAY</h2>
+        </div>
+        <div class="laptop-products" id="laptopProducts">
+            <div class="product">
+                <a href="product-detail.html?id=static1" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-4%</div>
+                    <img src="anh/laptop1.png" alt="Laptop 1">
+                    <h3>Asus ProArt P16 H7606WV Ryzen AI 9 HX 370 RAM 32GB SSD 1TB RTX 4060 16" 4K OLED</h3>
+                    <p class="price">45.000.000 <span class="old-price">46.990.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=static2" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-8%</div>
+                    <img src="anh/laptop2.png" alt="Laptop 2">
+                    <h3>ThinkPad X9-14 2025 Ultra7-258V RAM 32GB SSD 1TB 2.8K OLED Touch 120Hz</h3>
+                    <p class="price">43.000.000 <span class="old-price">44.990.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=static3" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-12%</div>
+                    <img src="anh/laptop3.png" alt="Laptop 3">
+                    <h3>Lenovo IdeaPad Slim 5 2025 Intel Core5 220H RAM 24GB SSD 1TB 2.8K OLED 120Hz</h3>
+                    <p class="price">21.490.000 <span class="old-price">24.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=static4" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-18%</div>
+                    <img src="anh/laptop4.png" alt="Laptop 4">
+                    <h3>HP Elitebook 845 G11 AMD Ryzen 7 8840HS RAM 32GB SSD 1TB 14" 2.5K 120Hz</h3>
+                    <p class="price">28.990.000 <span class="old-price">37.000.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=static5" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-22%</div>
+                    <img src="anh/laptop5.png" alt="Laptop 5">
+                    <h3>Dell G15 5530 2023 i5-13450HX RAM 16GB SSD 512GB RTX 3050 6 GB 15.6" FHD</h3>
+                    <p class="price">26.390.000 <span class="old-price">28.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=static6" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-7%</div>
+                    <img src="anh/laptop6.png" alt="Laptop 6">
+                    <h3>HP Elitebook 845 G11 AMD Ryzen 7 8840HS RAM 32GB SSD 1TB 14" 2.5K 120Hz</h3>
+                    <p class="price">19.990.000 <span class="old-price">20.490.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=static7" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-3%</div>
+                    <img src="anh/laptop7.png" alt="Laptop 7">
+                    <h3>Thinkbook X AI 2025 Ultra 9 285H RAM 32GB SSD 1TB 13.5" 2.8K 120Hz (Limited Edition)</h3>
+                    <p class="price">36.990.000 <span class="old-price">38.000.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=static8" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-19%</div>
+                    <img src="anh/laptop8.png" alt="Laptop 8">
+                    <h3>ThinkBook 14 G6+ 2024 Ryzen 7 8845H RTX 5050 RAM 32GB SSD 1TB 14inch 3K 120Hz</h3>
+                    <p class="price">12.500.000 <span class="old-price">15.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=static9" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-28%</div>
+                    <img src="anh/laptop9.png" alt="Laptop 9">
+                    <h3>Lenovo Legion 5 Y7000P 2024 i7 14650HX RAM 16GB SSD 1TB RTX 4060 16" 2.5K 165Hz</h3>
+                    <p class="price">17.990.000 <span class="old-price">19.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=static10" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-18%</div>
+                    <img src="anh/laptop10.png" alt="Laptop 10">
+                    <h3>Thinkbook 14 G7+ 2025 AMD Ryzen AI 9-365 RAM 32GB SSD 1TB 14.5" 3K 120Hz</h3>
+                    <p class="price">21.490.000 <span class="old-price">24.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=static1" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-4%</div>
+                    <img src="anh/laptop1.png" alt="Laptop 1">
+                    <h3>Asus ProArt P16 H7606WV Ryzen AI 9 HX 370 RAM 32GB SSD 1TB RTX 4060 16" 4K OLED</h3>
+                    <p class="price">45.000.000 <span class="old-price">46.990.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=static2" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-8%</div>
+                    <img src="anh/laptop2.png" alt="Laptop 2">
+                    <h3>ThinkPad X9-14 2025 Ultra7-258V RAM 32GB SSD 1TB 2.8K OLED Touch 120Hz</h3>
+                    <p class="price">43.000.000 <span class="old-price">44.990.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=static3" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-12%</div>
+                    <img src="anh/laptop3.png" alt="Laptop 3">
+                    <h3>Lenovo IdeaPad Slim 5 2025 Intel Core5 220H RAM 24GB SSD 1TB 2.8K OLED 120Hz</h3>
+                    <p class="price">21.490.000 <span class="old-price">24.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=static4" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-18%</div>
+                    <img src="anh/laptop4.png" alt="Laptop 4">
+                    <h3>HP Elitebook 845 G11 AMD Ryzen 7 8840HS RAM 32GB SSD 1TB 14" 2.5K 120Hz</h3>
+                    <p class="price">28.990.000 <span class="old-price">37.000.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=static5" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-22%</div>
+                    <img src="anh/laptop5.png" alt="Laptop 5">
+                    <h3>Dell G15 5530 2023 i5-13450HX RAM 16GB SSD 512GB RTX 3050 6 GB 15.6" FHD</h3>
+                    <p class="price">26.390.000 <span class="old-price">28.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=static6" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-7%</div>
+                    <img src="anh/laptop6.png" alt="Laptop 6">
+                    <h3>HP Elitebook 845 G11 AMD Ryzen 7 8840HS RAM 32GB SSD 1TB 14" 2.5K 120Hz</h3>
+                    <p class="price">19.990.000 <span class="old-price">20.490.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=static7" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-3%</div>
+                    <img src="anh/laptop7.png" alt="Laptop 7">
+                    <h3>Thinkbook X AI 2025 Ultra 9 285H RAM 32GB SSD 1TB 13.5" 2.8K 120Hz (Limited Edition)</h3>
+                    <p class="price">36.990.000 <span class="old-price">38.000.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=static8" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-19%</div>
+                    <img src="anh/laptop8.png" alt="Laptop 8">
+                    <h3>ThinkBook 14 G6+ 2024 Ryzen 7 8845H RTX 5050 RAM 32GB SSD 1TB 14inch 3K 120Hz</h3>
+                    <p class="price">12.500.000 <span class="old-price">15.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=static9" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-28%</div>
+                    <img src="anh/laptop9.png" alt="Laptop 9">
+                    <h3>Lenovo Legion 5 Y7000P 2024 i7 14650HX RAM 16GB SSD 1TB RTX 4060 16" 2.5K 165Hz</h3>
+                    <p class="price">17.990.000 <span class="old-price">19.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=static10" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-18%</div>
+                    <img src="anh/laptop10.png" alt="Laptop 10">
+                    <h3>Thinkbook 14 G7+ 2025 AMD Ryzen AI 9-365 RAM 32GB SSD 1TB 14.5" 3K 120Hz</h3>
+                    <p class="price">21.490.000 <span class="old-price">24.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=static1" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-4%</div>
+                    <img src="anh/laptop1.png" alt="Laptop 1">
+                    <h3>Asus ProArt P16 H7606WV Ryzen AI 9 HX 370 RAM 32GB SSD 1TB RTX 4060 16" 4K OLED</h3>
+                    <p class="price">45.000.000 <span class="old-price">46.990.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=static2" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-8%</div>
+                    <img src="anh/laptop2.png" alt="Laptop 2">
+                    <h3>ThinkPad X9-14 2025 Ultra7-258V RAM 32GB SSD 1TB 2.8K OLED Touch 120Hz</h3>
+                    <p class="price">43.000.000 <span class="old-price">44.990.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=static3" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-12%</div>
+                    <img src="anh/laptop3.png" alt="Laptop 3">
+                    <h3>Lenovo IdeaPad Slim 5 2025 Intel Core5 220H RAM 24GB SSD 1TB 2.8K OLED 120Hz</h3>
+                    <p class="price">21.490.000 <span class="old-price">24.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=static4" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-18%</div>
+                    <img src="anh/laptop4.png" alt="Laptop 4">
+                    <h3>HP Elitebook 845 G11 AMD Ryzen 7 8840HS RAM 32GB SSD 1TB 14" 2.5K 120Hz</h3>
+                    <p class="price">28.990.000 <span class="old-price">37.000.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=static5" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-22%</div>
+                    <img src="anh/laptop5.png" alt="Laptop 5">
+                    <h3>Dell G15 5530 2023 i5-13450HX RAM 16GB SSD 512GB RTX 3050 6 GB 15.6" FHD</h3>
+                    <p class="price">26.390.000 <span class="old-price">28.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=static6" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-7%</div>
+                    <img src="anh/laptop6.png" alt="Laptop 6">
+                    <h3>HP Elitebook 845 G11 AMD Ryzen 7 8840HS RAM 32GB SSD 1TB 14" 2.5K 120Hz</h3>
+                    <p class="price">19.990.000 <span class="old-price">20.490.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=static7" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-3%</div>
+                    <img src="anh/laptop7.png" alt="Laptop 7">
+                    <h3>Thinkbook X AI 2025 Ultra 9 285H RAM 32GB SSD 1TB 13.5" 2.8K 120Hz (Limited Edition)</h3>
+                    <p class="price">36.990.000 <span class="old-price">38.000.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=static8" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-19%</div>
+                    <img src="anh/laptop8.png" alt="Laptop 8">
+                    <h3>ThinkBook 14 G6+ 2024 Ryzen 7 8845H RTX 5050 RAM 32GB SSD 1TB 14inch 3K 120Hz</h3>
+                    <p class="price">12.500.000 <span class="old-price">15.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=static9" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-28%</div>
+                    <img src="anh/laptop9.png" alt="Laptop 9">
+                    <h3>Lenovo Legion 5 Y7000P 2024 i7 14650HX RAM 16GB SSD 1TB RTX 4060 16" 2.5K 165Hz</h3>
+                    <p class="price">17.990.000 <span class="old-price">19.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=static10" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-18%</div>
+                    <img src="anh/laptop10.png" alt="Laptop 10">
+                    <h3>Thinkbook 14 G7+ 2025 AMD Ryzen AI 9-365 RAM 32GB SSD 1TB 14.5" 3K 120Hz</h3>
+                    <p class="price">21.490.000 <span class="old-price">24.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=static1" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-4%</div>
+                    <img src="anh/laptop1.png" alt="Laptop 1">
+                    <h3>Asus ProArt P16 H7606WV Ryzen AI 9 HX 370 RAM 32GB SSD 1TB RTX 4060 16" 4K OLED</h3>
+                    <p class="price">45.000.000 <span class="old-price">46.990.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=static2" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-8%</div>
+                    <img src="anh/laptop2.png" alt="Laptop 2">
+                    <h3>ThinkPad X9-14 2025 Ultra7-258V RAM 32GB SSD 1TB 2.8K OLED Touch 120Hz</h3>
+                    <p class="price">43.000.000 <span class="old-price">44.990.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=static3" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-12%</div>
+                    <img src="anh/laptop3.png" alt="Laptop 3">
+                    <h3>Lenovo IdeaPad Slim 5 2025 Intel Core5 220H RAM 24GB SSD 1TB 2.8K OLED 120Hz</h3>
+                    <p class="price">21.490.000 <span class="old-price">24.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=static4" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-18%</div>
+                    <img src="anh/laptop4.png" alt="Laptop 4">
+                    <h3>HP Elitebook 845 G11 AMD Ryzen 7 8840HS RAM 32GB SSD 1TB 14" 2.5K 120Hz</h3>
+                    <p class="price">28.990.000 <span class="old-price">37.000.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=static5" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-22%</div>
+                    <img src="anh/laptop5.png" alt="Laptop 5">
+                    <h3>Dell G15 5530 2023 i5-13450HX RAM 16GB SSD 512GB RTX 3050 6 GB 15.6" FHD</h3>
+                    <p class="price">26.390.000 <span class="old-price">28.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=static6" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-7%</div>
+                    <img src="anh/laptop6.png" alt="Laptop 6">
+                    <h3>HP Elitebook 845 G11 AMD Ryzen 7 8840HS RAM 32GB SSD 1TB 14" 2.5K 120Hz</h3>
+                    <p class="price">19.990.000 <span class="old-price">20.490.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=static7" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-3%</div>
+                    <img src="anh/laptop7.png" alt="Laptop 7">
+                    <h3>Thinkbook X AI 2025 Ultra 9 285H RAM 32GB SSD 1TB 13.5" 2.8K 120Hz (Limited Edition)</h3>
+                    <p class="price">36.990.000 <span class="old-price">38.000.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=static8" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-19%</div>
+                    <img src="anh/laptop8.png" alt="Laptop 8">
+                    <h3>ThinkBook 14 G6+ 2024 Ryzen 7 8845H RTX 5050 RAM 32GB SSD 1TB 14inch 3K 120Hz</h3>
+                    <p class="price">12.500.000 <span class="old-price">15.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=static9" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-28%</div>
+                    <img src="anh/laptop9.png" alt="Laptop 9">
+                    <h3>Lenovo Legion 5 Y7000P 2024 i7 14650HX RAM 16GB SSD 1TB RTX 4060 16" 2.5K 165Hz</h3>
+                    <p class="price">17.990.000 <span class="old-price">19.500.000</span></p>
+                </a>
+            </div>
+            <div class="product">
+                <a href="product-detail.html?id=static10" class="product-link">
+                    <div class="badge">Sản phẩm HOT !!!</div>
+                    <div class="discount">-18%</div>
+                    <img src="anh/laptop10.png" alt="Laptop 10">
+                    <h3>Thinkbook 14 G7+ 2025 AMD Ryzen AI 9-365 RAM 32GB SSD 1TB 14.5" 3K 120Hz</h3>
+                    <p class="price">21.490.000 <span class="old-price">24.500.000</span></p>
+                </a>
+            </div>
+        </div>
+    </section>
+    <script src="script.js"></script>
+    <script src="Dongbogiohang.js"></script>
+    <script src="product-reload.js"></script>
+    <script src="muclaptop.js"></script>
+    <script>
+        // Hiển thị tên người dùng khi đã đăng nhập
+        function displayUserName() {
+            const userLink = document.getElementById('userLink');
+            if (!userLink) return;
+            
+            try {
+                const currentUserStr = localStorage.getItem('currentUser');
+                if (currentUserStr) {
+                    const currentUser = JSON.parse(currentUserStr);
+                    if (currentUser.name && currentUser.role === 'user') {
+                        userLink.innerHTML = `
+                            <i class="fa fa-user"></i>
+                            <div class="user-greeting">
+                                <div class="greeting-text">Xin chào</div>
+                                <div class="user-name">${currentUser.name}</div>
+                            </div>
+                        `;
+                        userLink.classList.add('user-logged-in');
+                        userLink.style.textDecoration = 'none';
+                    }
+                }
+            } catch (e) {
+                console.error("Lỗi:", e);
+            }
+        }
+        
+        // Xử lý đăng xuất
+        function initLogout() {
+            const logoutLink = document.getElementById('logoutLink');
+            if (logoutLink) {
+                logoutLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (confirm('Bạn có chắc muốn đăng xuất?')) {
+                        localStorage.removeItem('currentUser');
+                        localStorage.removeItem('isAdmin');
+                        window.location.href = 'index.html';
+                    }
+                });
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            displayUserName();
+            initLogout();
+        });
+    </script>
+    <style>
+        .icons {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .user-dropdown-container {
+            position: relative;
+        }
+        
+        .icons a.user-logged-in {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 6px;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            height: fit-content;
+            cursor: pointer;
+            pointer-events: auto;
+        }
+        
+        .icons a.user-logged-in:hover {
+            background-color: #0056b3;
+        }
+        
+        .icons a.user-logged-in i {
+            font-size: 16px;
+            color: white;
+        }
+        
+        .icons a.user-logged-in .user-greeting {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+        
+        .icons a.user-logged-in .greeting-text {
+            font-size: 10px;
+            opacity: 0.9;
+        }
+        
+        .icons a.user-logged-in .user-name {
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        
+        .user-dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 5px;
+            background-color: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            min-width: 200px;
+            z-index: 1000;
+            overflow: hidden;
+        }
+        
+        .user-dropdown-container:hover .user-dropdown-menu,
+        .user-dropdown-menu:hover {
+            display: block;
+        }
+        
+        .user-dropdown-container::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            right: 0;
+            width: 100%;
+            height: 5px;
+            background: transparent;
+            pointer-events: none;
+        }
+        
+        .user-dropdown-menu .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            color: #333;
+            text-decoration: none;
+            transition: background-color 0.2s;
+            font-size: 14px;
+        }
+        
+        .user-dropdown-menu .dropdown-item:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .user-dropdown-menu .dropdown-item i {
+            width: 18px;
+            color: #666;
+        }
+        
+        .user-dropdown-menu .dropdown-divider {
+            height: 1px;
+            background-color: #e0e0e0;
+            margin: 4px 0;
+        }
+        
+        .user-dropdown-menu .logout-item {
+            color: #dc3545;
+        }
+        
+        .user-dropdown-menu .logout-item:hover {
+            background-color: #fee;
+        }
+        
+        .user-dropdown-menu .logout-item i {
+            color: #dc3545;
+        }
+    </style>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h4>VỀ VIETTECH</h4>
+                <ul>
+                    <li><a href="Gioithieu.html">Giới thiệu</a></li>
+                    <li><a href="#">Tuyển dụng</a></li>
+                    <li><a href="#">Liên hệ</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>CHÍNH SÁCH</h4>
+                <ul>
+                    <li><a href="#">Chính sách bảo hành</a></li>
+                    <li><a href="#">Chính sách giao hàng</a></li>
+                    <li><a href="#">Chính sách bảo mật</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>THÔNG TIN</h4>
+                <ul>
+                    <li><a href="#">Hệ thống cửa hàng</a></li>
+                    <li><a href="#">Hướng dẫn mua hàng</a></li>
+                    <li><a href="#">Hướng dẫn thanh toán</a></li>
+                    <li><a href="#">Hướng dẫn trả góp</a></li>
+                    <li><a href="#">Tra cứu địa chỉ bảo hành</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>TỔNG ĐÀI HỖ TRỢ (8:00 - 21:00)</h4>
+                <ul>
+                    <li>Mua hàng: <a href="tel:19005301">1900.5301</a></li>
+                    <li>Bảo hành: <a href="tel:19005325">1900.5325</a></li>
+                    <li>Kiếu nại: <a href="tel:18006173">1800.6173</a></li>
+                    <li>Email: <a href="mailto:cskh@viettech.com">cskh@VietTechStore .com</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>BẢN ĐỒ</h4>
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14931.339738709165!2d106.05463020248972!3d20.676293444177908!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135c0cd38f568f3%3A0x50681a4fcf414c4b!2zQW4gVOG6o28sIFRwLiBIxrBuZyBZw6puLCBIxrBuZyBZw6puLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1743648692178!5m2!1svi!2s" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+
