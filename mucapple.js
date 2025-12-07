@@ -82,9 +82,26 @@
         return;
       }
       
-      // Thay thế bằng sản phẩm từ admin
-      container.innerHTML = appleProducts.map(createProductHTML).join('');
-      console.log(`✅ Đã render ${appleProducts.length} sản phẩm "APPLE" từ admin`);
+      // Lấy danh sách ID sản phẩm đã có trong container (sản phẩm tĩnh và sản phẩm từ admin đã render)
+      const existingProductIds = new Set();
+      container.querySelectorAll('.product[data-product-id]').forEach(productEl => {
+        const productId = productEl.getAttribute('data-product-id');
+        if (productId) {
+          existingProductIds.add(productId);
+        }
+      });
+      
+      // Chỉ thêm các sản phẩm mới chưa có trong container
+      const newProducts = appleProducts.filter(p => !existingProductIds.has(p.id));
+      
+      if (newProducts.length > 0) {
+        // Thêm sản phẩm mới vào đầu container
+        const newProductsHTML = newProducts.map(createProductHTML).join('');
+        container.insertAdjacentHTML('afterbegin', newProductsHTML);
+        console.log(`✅ Đã thêm ${newProducts.length} sản phẩm mới "APPLE" từ admin`);
+      } else {
+        console.log("Không có sản phẩm mới để thêm");
+      }
     } catch (error) {
       console.error("❌ Lỗi khi load sản phẩm:", error);
     }

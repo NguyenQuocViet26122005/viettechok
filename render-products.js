@@ -109,9 +109,9 @@
             const newProducts = activeProducts.filter(p => !existingProductIds.has(p.id));
             
             if (newProducts.length > 0) {
-              // Thêm sản phẩm mới vào cuối container
+              // Thêm sản phẩm mới vào đầu container
               const newProductsHTML = newProducts.map(createProductHTML).join('');
-              productsContainer.insertAdjacentHTML('beforeend', newProductsHTML);
+              productsContainer.insertAdjacentHTML('afterbegin', newProductsHTML);
               console.log(`✅ Đã thêm ${newProducts.length} sản phẩm mới vào "MÁY TÍNH XÁCH TAY"`);
             }
           } else if (headerText.includes('LENOVO')) {
@@ -139,10 +139,42 @@
               const newLenovoProducts = lenovoProducts.filter(p => !existingProductIds.has(p.id));
               
               if (newLenovoProducts.length > 0) {
-                // Thêm sản phẩm mới vào cuối container
+                // Thêm sản phẩm mới vào đầu container
                 const newProductsHTML = newLenovoProducts.map(createProductHTML).join('');
-                productsContainer.insertAdjacentHTML('beforeend', newProductsHTML);
+                productsContainer.insertAdjacentHTML('afterbegin', newProductsHTML);
                 console.log(`✅ Đã thêm ${newLenovoProducts.length} sản phẩm Lenovo mới`);
+              }
+            }
+          } else if (headerText.includes('APPLE')) {
+            // Render chỉ sản phẩm Apple
+            const appleProducts = products.filter(p => {
+              if (p.status !== "active") return false;
+              const name = (p.name || '').toLowerCase();
+              const brand = (p.brand || '').toLowerCase();
+              const category = (p.category || '').toLowerCase();
+              return name.includes('apple') || name.includes('macbook') || name.includes('mac') ||
+                     name.includes('ipad') || name.includes('iphone') ||
+                     brand.includes('apple') || category.includes('apple');
+            });
+            
+            if (appleProducts.length > 0) {
+              // Lấy danh sách ID sản phẩm đã có trong container
+              const existingProductIds = new Set();
+              productsContainer.querySelectorAll('.product[data-product-id]').forEach(productEl => {
+                const productId = productEl.getAttribute('data-product-id');
+                if (productId) {
+                  existingProductIds.add(productId);
+                }
+              });
+              
+              // Chỉ thêm các sản phẩm mới chưa có trong container
+              const newAppleProducts = appleProducts.filter(p => !existingProductIds.has(p.id));
+              
+              if (newAppleProducts.length > 0) {
+                // Thêm sản phẩm mới vào đầu container
+                const newProductsHTML = newAppleProducts.map(createProductHTML).join('');
+                productsContainer.insertAdjacentHTML('afterbegin', newProductsHTML);
+                console.log(`✅ Đã thêm ${newAppleProducts.length} sản phẩm Apple mới`);
               }
             }
           }

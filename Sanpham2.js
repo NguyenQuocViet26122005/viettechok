@@ -63,19 +63,24 @@ document.addEventListener("DOMContentLoaded", () => {
     const buyNowBtn = document.getElementById("buyNowBtn");
 
     buyNowBtn.addEventListener("click", () => {
-        let cart = JSON.parse(localStorage.getItem("cart")) || [];
-        const existingProduct = cart.find(item => item.id === product.id);
-        if (existingProduct) {
-            existingProduct.quantity += 1;
-        } else {
-            cart.push(product);
+        // Kiểm tra đăng nhập trước khi thêm vào giỏ hàng
+        if (!window.authCheck || !window.authCheck.checkLoginBeforeAddToCart(() => {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            const existingProduct = cart.find(item => item.id === product.id);
+            if (existingProduct) {
+                existingProduct.quantity += 1;
+            } else {
+                cart.push(product);
+            }
+
+            localStorage.setItem("cart", JSON.stringify(cart));
+            capNhatSoLuongGioHang();
+
+            alert("🛒 Đã thêm sản phẩm vào giỏ hàng!");
+            window.location.href = "Giohang.html";
+        })) {
+            return; // Người dùng chưa đăng nhập, đã hiển thị thông báo
         }
-
-        localStorage.setItem("cart", JSON.stringify(cart));
-        capNhatSoLuongGioHang();
-
-        alert("🛒 Đã thêm sản phẩm vào giỏ hàng!");
-        window.location.href = "Giohang.html";
     });
 
     capNhatSoLuongGioHang();

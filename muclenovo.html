@@ -524,6 +524,7 @@
                 </a>
             </div> 
     </section>
+    <script src="auth-check.js"></script>
     <script src="script.js"></script>
     <script src="Dongbogiohang.js"></script>
     <script src="product-reload.js"></script>
@@ -627,7 +628,8 @@
         }
         
         .user-dropdown-menu {
-            display: none;
+            opacity: 0;
+            visibility: hidden;
             position: absolute;
             top: 100%;
             right: 0;
@@ -639,11 +641,15 @@
             min-width: 200px;
             z-index: 1000;
             overflow: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            transition-delay: 0.1s;
         }
         
         .user-dropdown-container:hover .user-dropdown-menu,
         .user-dropdown-menu:hover {
-            display: block;
+            opacity: 1;
+            visibility: visible;
+            transition-delay: 0s;
         }
         
         /* Tạo vùng vô hình để kết nối banner và dropdown - giúp di chuột không bị mất */
@@ -653,7 +659,7 @@
             top: 100%;
             right: 0;
             width: 100%;
-            height: 5px;
+            height: 15px;
             background: transparent;
             pointer-events: none;
         }

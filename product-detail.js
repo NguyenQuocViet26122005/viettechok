@@ -217,33 +217,38 @@
     if (!buyBtn || !product) return;
     
     buyBtn.addEventListener('click', () => {
-      let cart = JSON.parse(localStorage.getItem('cart')) || [];
-      
-      const existingProduct = cart.find(item => item.id === product.id);
-      if (existingProduct) {
-        existingProduct.quantity += 1;
-      } else {
-        cart.push({
-          id: product.id,
-          name: product.name,
-          price: product.price,
-          oldPrice: product.oldPrice,
-          quantity: 1,
-          image: product.mainImage || (product.images && product.images[0]) || 'anh/no-image.png'
-        });
+      // Kiểm tra đăng nhập trước khi thêm vào giỏ hàng
+      if (!window.authCheck || !window.authCheck.checkLoginBeforeAddToCart(() => {
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        const existingProduct = cart.find(item => item.id === product.id);
+        if (existingProduct) {
+          existingProduct.quantity += 1;
+        } else {
+          cart.push({
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            oldPrice: product.oldPrice,
+            quantity: 1,
+            image: product.mainImage || (product.images && product.images[0]) || 'anh/no-image.png'
+          });
+        }
+        
+        localStorage.setItem('cart', JSON.stringify(cart));
+        
+        // Cập nhật số lượng giỏ hàng
+        const cartCount = document.getElementById('cartCount');
+        if (cartCount) {
+          const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
+          cartCount.textContent = totalQuantity;
+        }
+        
+        alert('🛒 Đã thêm sản phẩm vào giỏ hàng!');
+        window.location.href = 'Giohang.html';
+      })) {
+        return; // Người dùng chưa đăng nhập, đã hiển thị thông báo
       }
-      
-      localStorage.setItem('cart', JSON.stringify(cart));
-      
-      // Cập nhật số lượng giỏ hàng
-      const cartCount = document.getElementById('cartCount');
-      if (cartCount) {
-        const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
-        cartCount.textContent = totalQuantity;
-      }
-      
-      alert('🛒 Đã thêm sản phẩm vào giỏ hàng!');
-      window.location.href = 'Giohang.html';
     });
   }
   

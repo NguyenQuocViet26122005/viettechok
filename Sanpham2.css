@@ -636,14 +636,14 @@ body {
         gap: 8px;
     }
     
-    .lv-card {
-        width: 180px;
-        height: 270px;
-    }
+  .lv-card {
+    width: 180px;
+    height: 270px;
+  }
     
-    .lv-img {
-        height: 110px;
-    }
+  .lv-img {
+    height: 110px;
+  }
 }
 
 @media (max-width: 480px) {

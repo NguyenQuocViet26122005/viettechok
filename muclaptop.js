@@ -105,9 +105,9 @@
       const newProducts = laptopProducts.filter(p => !existingProductIds.has(p.id));
       
       if (newProducts.length > 0) {
-        // Thêm sản phẩm mới vào cuối container
+        // Thêm sản phẩm mới vào đầu container
         const newProductsHTML = newProducts.map(createProductHTML).join('');
-        container.insertAdjacentHTML('beforeend', newProductsHTML);
+        container.insertAdjacentHTML('afterbegin', newProductsHTML);
         console.log(`✅ Đã thêm ${newProducts.length} sản phẩm mới "MÁY TÍNH XÁCH TAY" từ admin`);
       } else {
         console.log("Không có sản phẩm mới để thêm");

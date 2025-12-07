@@ -3,10 +3,23 @@
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    margin: 20px auto;
+    margin: 20px auto 40px auto;
     width: 100%;
     max-width: 1200px;
     min-height: auto; /* Tự động điều chỉnh theo nội dung */
+    box-sizing: border-box; /* Padding không làm tăng width */
+}
+
+/* Đảm bảo footer align với container sản phẩm */
+.footer {
+    padding: 40px 0; /* Bỏ padding ngang để align với container */
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px; /* Padding giống với container .laptops */
+    box-sizing: border-box;
 }
 
 /* Responsive Design */
@@ -15,6 +28,7 @@
         width: 95%;
         padding: 15px;
         min-height: auto;
+        margin-bottom: 40px;
     }
 }
 
