@@ -6,7 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const phoneNumberInput = document.getElementById("phoneNumber");
     const emailInput = document.getElementById("email");
     const checkoutBtn = document.getElementById("checkoutBtn");
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    // Sử dụng cartHelper để lấy giỏ hàng theo user
+    let cart = window.cartHelper ? window.cartHelper.getCart() : (JSON.parse(localStorage.getItem("cart")) || []);
     let appliedPromo = null; // Lưu mã giảm giá đã áp dụng
 
     function updateCartDisplay() {
@@ -103,7 +104,12 @@ document.addEventListener("DOMContentLoaded", () => {
         } else if (event.target.classList.contains("delete")) {
             cart.splice(index, 1); // Xóa sản phẩm khi nhấn nút "Xóa"
         }
-        localStorage.setItem("cart", JSON.stringify(cart));
+        // Lưu giỏ hàng bằng cartHelper
+        if (window.cartHelper) {
+            window.cartHelper.saveCart(cart);
+        } else {
+            localStorage.setItem("cart", JSON.stringify(cart));
+        }
         updateCartDisplay();
         
         // Nếu có mã giảm giá đã áp dụng, tính lại tổng tiền
@@ -400,7 +406,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Xóa giỏ hàng sau khi thanh toán
     cart = [];
-    localStorage.setItem("cart", JSON.stringify(cart));
+    if (window.cartHelper) {
+        window.cartHelper.saveCart(cart);
+    } else {
+        localStorage.setItem("cart", JSON.stringify(cart));
+    }
     updateCartDisplay();
 
     alert("Thanh toán thành công! Cảm ơn bạn đã mua hàng.");

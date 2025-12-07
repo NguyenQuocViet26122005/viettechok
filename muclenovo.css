@@ -1,25 +1,27 @@
 .laptops {
     background-color: #f9f9f9;
-    padding: 20px;
+    padding: 20px; /* Padding giống hot-sale để sản phẩm không bị lấn ra ngoài */
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     margin: 20px auto 40px auto;
     width: 100%;
     max-width: 1200px;
-    min-height: auto; /* Tự động điều chỉnh theo nội dung */
+    min-height: auto; /* Tự động điều chỉnh theo nội dung - khác với hot-sale có height cố định */
+    box-sizing: border-box; /* Padding không làm tăng width */
+    overflow: visible; /* Đảm bảo sản phẩm không bị cắt */
+}
+
+/* Đảm bảo .laptop-products có style giống index.html */
+.laptop-products {
+    width: 100%; /* Đảm bảo chiếm toàn bộ width của container */
     box-sizing: border-box; /* Padding không làm tăng width */
 }
 
-/* Đảm bảo footer align với container sản phẩm */
-.footer {
-    padding: 40px 0; /* Bỏ padding ngang để align với container */
-}
-
-.footer-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px; /* Padding giống với container .laptops */
-    box-sizing: border-box;
+/* Đảm bảo .product có style giống index.html */
+.product {
+    width: 100%; /* Đảm bảo chiếm toàn bộ width của grid cell */
+    box-sizing: border-box; /* Padding không làm tăng width */
+    overflow: hidden; /* Ẩn phần nội dung vượt quá */
 }
 
 /* Responsive Design */

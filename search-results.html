@@ -3,17 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trang web bán laptop</title>
-    <link rel="stylesheet" href="Dangky.css">
+    <title>Kết quả tìm kiếm - Trang web bán laptop</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
-    <header class="top-header">
-        <div class="container">
+    <div class="top-header">
+        <div class="container"> 
             <div class="logo">
                 <a href="index.html">
-                    <img src="anh/logo.jpg" alt="logo">
+                <img src="anh/logo.jpg" alt="logo">
                 </a>
                 <div class="contact-info">
                     <p><b>VietTechStore</b></p>
@@ -32,7 +31,7 @@
                 </div>
             </div>
             <nav class="menu">
-                <a href="#">Giới thiệu</a>
+                <a href="Gioithieu.html">Giới thiệu</a>
                 <div class="dropdown">
                     <a href="#">Laptop</a>
                     <div class="dropdown-content">
@@ -70,7 +69,7 @@
                             <p>LENOVO</p>
                             <ul>
                                 <li><a href="#">Lenovo Yoga Series</a></li>
-                                <li><a href="#">Lenovo Gaming</a></li>
+                                <li><a href="muclenovo.html">Lenovo Gaming</a></li>
                                 <li><a href="#">Lenovo Legion</a></li>
                                 <li><a href="#">IdeaPad</a></li>
                                 <li><a href="#">IdeaPad Gaming</a></li>
@@ -161,63 +160,121 @@
                 </div>
             </div>
         </div>
-    </header>
-    
-    <section class="register-section">
-        <div class="register-container">
-            <h2>Đăng ký tài khoản</h2>
-            <p>Nếu bạn đã có tài khoản tại viettech.vn</p>
-            <p>Bạn có thể đăng nhập <a href="Dangnhap.html">TẠI ĐÂY!</a></p>
-            <form action="index.html" method="POST" class="register-form">
-                <label for="fullname">Họ và Tên</label>
-                <input type="text" id="fullname" name="fullname" placeholder="Họ và tên*" required>
-                
-                <label for="phone">Số điện thoại</label>
-                <input type="tel" id="phone" name="phone" placeholder="Số điện thoại*" required>
-                
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="Nhập địa chỉ email*" required>
-                
-                <label for="password">Mật khẩu</label>
-                <div class="password-input-wrapper">
-                <input type="password" id="password" name="password" placeholder="Mật khẩu*" required>
-                    <button type="button" class="toggle-password" id="togglePassword" title="Hiện/Ẩn mật khẩu">
-                        <i class="fa fa-lock"></i>
-                    </button>
-                </div>
-                
-                <button type="submit" class="register-button">Tạo tài khoản</button>
-            </form>
+        <nav class="mobile-menu" id="mobileMenu">
+            <a href="Gioithieu.html">Giới thiệu</a>
+            <a href="#">Laptop</a>
+            <a href="#">Phụ kiện</a>
+            <a href="#">Khuyến mãi</a>
+        </nav>
+    </div>
+
+    <!-- Search Results Section -->
+    <section class="laptops">
+        <div class="laptops-header">
+            <h2 id="searchResultsTitle">Kết quả tìm kiếm</h2>
+            <p id="searchResultsCount" class="search-results-count" style="text-align: center; color: #666; margin-top: 10px; font-size: 14px;"></p>
+        </div>
+        <div class="laptop-products" id="searchResultsContainer">
+            <!-- Kết quả tìm kiếm sẽ được hiển thị ở đây -->
         </div>
     </section>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h4>VỀ VIETTECH</h4>
+                <ul>
+                    <li><a href="Gioithieu.html">Giới thiệu</a></li>
+                    <li><a href="#">Tuyển dụng</a></li>
+                    <li><a href="#">Liên hệ</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>CHÍNH SÁCH</h4>
+                <ul>
+                    <li><a href="#">Chính sách bảo hành</a></li>
+                    <li><a href="#">Chính sách giao hàng</a></li>
+                    <li><a href="#">Chính sách bảo mật</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>THÔNG TIN</h4>
+                <ul>
+                    <li><a href="#">Hệ thống cửa hàng</a></li>
+                    <li><a href="#">Hướng dẫn mua hàng</a></li>
+                    <li><a href="#">Hướng dẫn thanh toán</a></li>
+                    <li><a href="#">Hướng dẫn trả góp</a></li>
+                    <li><a href="#">Tra cứu địa chỉ bảo hành</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>TỔNG ĐÀI HỖ TRỢ (8:00 - 21:00)</h4>
+                <ul>
+                    <li>Mua hàng: <a href="tel:19005301">1900.5301</a></li>
+                    <li>Bảo hành: <a href="tel:19005325">1900.5325</a></li>
+                    <li>Kiếu nại: <a href="tel:18006173">1800.6173</a></li>
+                    <li>Email: <a href="mailto:cskh@viettech.com">cskh@VietTechStore .com</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>BẢN ĐỒ</h4>
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14931.339738709165!2d106.05463020248972!3d20.676293444177908!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135c0cd38f568f3%3A0x50681a4fcf414c4b!2zQW4gVOG6o28sIFRwLiBIxrBuZyBZw6puLCBIxrBuZyBZw6puLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1743648692178!5m2!1svi!2s" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="cart-helper.js"></script>
     <script src="auth-check.js"></script>
-    <script src="Dangky.js"></script>
+    <script src="script.js"></script>
     <script src="Dongbogiohang.js"></script>
+    <script src="product-reload.js"></script>
     <script src="search-products.js"></script>
+    <script src="search-results.js"></script>
     <script>
-        // Hiển thị tên người dùng khi đã đăng nhập
+        function toggleMobileMenu() {
+            const menu = document.getElementById("mobileMenu");
+            menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
+        }
+        
+        // Hiển thị tên người dùng khi đã đăng nhập (cả user và admin)
         function displayUserName() {
-            const userLink = document.getElementById('userLink');
-            if (!userLink) return;
-            
-            try {
-                const currentUserStr = localStorage.getItem('currentUser');
-                if (currentUserStr) {
-                    const currentUser = JSON.parse(currentUserStr);
-                    if (currentUser.name && currentUser.role === 'user') {
-                        userLink.innerHTML = `
-                            <i class="fa fa-user"></i>
-                            <div class="user-greeting">
-                                <div class="greeting-text">Xin chào</div>
-                                <div class="user-name">${currentUser.name}</div>
-                            </div>
-                        `;
-                        userLink.classList.add('user-logged-in');
-                        userLink.style.textDecoration = 'none';
+            // Sử dụng hàm từ auth-check.js nếu có
+            if (window.authCheck && window.authCheck.displayUserName) {
+                window.authCheck.displayUserName();
+            } else {
+                // Fallback nếu auth-check.js chưa load
+                const userLink = document.getElementById('userLink');
+                if (!userLink) return;
+                
+                try {
+                    const currentUserStr = localStorage.getItem('currentUser');
+                    const isAdmin = localStorage.getItem('isAdmin') === 'true';
+                    
+                    if (currentUserStr) {
+                        const currentUser = JSON.parse(currentUserStr);
+                        if (currentUser.name && (currentUser.role === 'user' || currentUser.role === 'admin' || isAdmin)) {
+                            userLink.innerHTML = `
+                                <i class="fa fa-user"></i>
+                                <div class="user-greeting">
+                                    <div class="greeting-text">Xin chào</div>
+                                    <div class="user-name">${currentUser.name}</div>
+                                </div>
+                            `;
+                            userLink.classList.add('user-logged-in');
+                            userLink.style.textDecoration = 'none';
+                            
+                            if (isAdmin || currentUser.role === 'admin') {
+                                userLink.href = 'admin.html';
+                            } else {
+                                userLink.href = 'Taikhoan.html';
+                            }
+                        }
                     }
+                } catch (e) {
+                    console.error("Lỗi đọc thông tin người dùng:", e);
                 }
-            } catch (e) {
-                console.error("Lỗi:", e);
             }
         }
         
@@ -228,6 +285,10 @@
                 logoutLink.addEventListener('click', function(e) {
                     e.preventDefault();
                     if (confirm('Bạn có chắc muốn đăng xuất?')) {
+                        // Xóa giỏ hàng khi đăng xuất
+                        if (window.cartHelper && window.cartHelper.clearCart) {
+                            window.cartHelper.clearCart();
+                        }
                         localStorage.removeItem('currentUser');
                         localStorage.removeItem('isAdmin');
                         window.location.href = 'index.html';
@@ -236,40 +297,9 @@
             }
         }
         
-        // Toggle hiển thị mật khẩu
-        function initTogglePassword() {
-            const toggleBtn = document.getElementById('togglePassword');
-            const passwordInput = document.getElementById('password');
-            
-            if (toggleBtn && passwordInput) {
-                toggleBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    
-                    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-                    passwordInput.setAttribute('type', type);
-                    
-                    // Đổi icon
-                    const icon = toggleBtn.querySelector('i');
-                    if (icon) {
-                        if (type === 'text') {
-                            icon.classList.remove('fa-lock');
-                            icon.classList.add('fa-unlock');
-                            toggleBtn.setAttribute('title', 'Ẩn mật khẩu');
-                        } else {
-                            icon.classList.remove('fa-unlock');
-                            icon.classList.add('fa-lock');
-                            toggleBtn.setAttribute('title', 'Hiện mật khẩu');
-                        }
-                    }
-                });
-            }
-        }
-        
         document.addEventListener('DOMContentLoaded', function() {
             displayUserName();
             initLogout();
-            initTogglePassword();
         });
     </script>
     <style>
@@ -349,7 +379,6 @@
             transition-delay: 0s;
         }
         
-        /* Tạo vùng vô hình để kết nối banner và dropdown - giúp di chuột không bị mất */
         .user-dropdown-container::after {
             content: '';
             position: absolute;
@@ -400,49 +429,5 @@
         }
     </style>
 </body>
-<footer class="footer">
-    <div class="footer-container">
-        <div class="footer-column">
-            <h4>VỀ VIETTECH</h4>
-            <ul>
-                <li><a href="#">Giới thiệu</a></li>
-                <li><a href="#">Tuyển dụng</a></li>
-                <li><a href="#">Liên hệ</a></li>
-            </ul>
-        </div>
-        <div class="footer-column">
-            <h4>CHÍNH SÁCH</h4>
-            <ul>
-                <li><a href="#">Chính sách bảo hành</a></li>
-                <li><a href="#">Chính sách giao hàng</a></li>
-                <li><a href="#">Chính sách bảo mật</a></li>
-            </ul>
-        </div>
-        <div class="footer-column">
-            <h4>THÔNG TIN</h4>
-            <ul>
-                <li><a href="#">Hệ thống cửa hàng</a></li>
-                <li><a href="#">Hướng dẫn mua hàng</a></li>
-                <li><a href="#">Hướng dẫn thanh toán</a></li>
-                <li><a href="#">Hướng dẫn trả góp</a></li>
-                <li><a href="#">Tra cứu địa chỉ bảo hành</a></li>
-            </ul>
-        </div>
-        <div class="footer-column">
-            <h4>TỔNG ĐÀI HỖ TRỢ (8:00 - 21:00)</h4>
-            <ul>
-                <li>Mua hàng: <a href="tel:19005301">1900.5301</a></li>
-                <li>Bảo hành: <a href="tel:19005325">1900.5325</a></li>
-                <li>Kiếu nại: <a href="tel:18006173">1800.6173</a></li>
-                <li>Email: <a href="mailto:cskh@viettech.com">cskh@VietTechStore .com</a></li>
-            </ul>
-        </div>
-        <div class="footer-column">
-            <h4>BẢN ĐỒ</h4>
-            <div class="map-container">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14931.339738709165!2d106.05463020248972!3d20.676293444177908!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135c0cd38f568f3%3A0x50681a4fcf414c4b!2zQW4gVOG6o28sIFRwLiBIxrBuZyBZw6puLCBIxrBuZyBZw6puLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1743648692178!5m2!1svi!2s" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </div>
-        </div>
-    </div>
-</footer>
 </html>
+

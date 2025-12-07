@@ -39,64 +39,121 @@
     }
   }
   
-  // Render ảnh sản phẩm
+  // Render ảnh sản phẩm - đảm bảo ảnh chuyển động đúng sản phẩm
   function renderProductImages(product) {
     const mainImage = document.getElementById('mainImage');
     const thumbnailContainer = document.querySelector('.thumbnail-images');
     
     if (!product) return;
     
-    const images = product.images && product.images.length > 0 
-      ? product.images 
-      : (product.mainImage ? [product.mainImage] : ['anh/no-image.png']);
+    // Lấy danh sách ảnh từ product - đảm bảo có 5 ảnh (1 chính + 4 phụ)
+    let images = [];
+    if (product.images && Array.isArray(product.images) && product.images.length > 0) {
+      images = product.images; // Dùng images array từ product
+    } else if (product.mainImage) {
+      images = [product.mainImage]; // Fallback về mainImage nếu không có images
+    } else {
+      images = ['anh/no-image.png'];
+    }
     
-    // Set main image
+    // Đảm bảo có ít nhất 1 ảnh
+    if (images.length === 0) {
+      images = ['anh/no-image.png'];
+    }
+    
+    // Reset và lưu images vào window để dùng cho navigation - đảm bảo đúng sản phẩm
+    window.currentProductImages = images;
+    window.currentImageIndex = 0; // Reset index về 0 mỗi khi load sản phẩm mới
+    
+    // Set main image với animation
     if (mainImage) {
       mainImage.src = images[0];
       mainImage.alt = product.name || 'Sản phẩm';
+      mainImage.classList.remove('fade-out');
     }
     
-    // Render thumbnails
+    // Hàm chuyển ảnh với animation mượt mà
+    function changeImageWithAnimation(newIndex) {
+      if (!mainImage) return;
+      const currentImages = window.currentProductImages || images;
+      if (newIndex < 0 || newIndex >= currentImages.length) return;
+      
+      // Thêm class fade-out để ẩn ảnh hiện tại
+      mainImage.classList.add('fade-out');
+      
+      // Sau khi fade-out, đổi ảnh và fade-in
+      setTimeout(() => {
+        mainImage.src = currentImages[newIndex];
+        window.currentImageIndex = newIndex;
+        mainImage.classList.remove('fade-out');
+        
+        // Update active thumbnail
+        if (thumbnailContainer) {
+          thumbnailContainer.querySelectorAll('img').forEach((t, idx) => {
+            t.style.borderColor = idx === newIndex ? '#ff4d4f' : '#ddd';
+          });
+        }
+      }, 300); // 300ms cho fade-out
+    }
+    
+    // Render thumbnails - chỉ hiển thị 5 ảnh đầu tiên
     if (thumbnailContainer) {
-      thumbnailContainer.innerHTML = images.map((img, index) => 
-        `<img src="${img}" alt="Hình ảnh ${index + 1}" onerror="this.src='anh/no-image.png'">`
+      const displayImages = images.slice(0, 5); // Tối đa 5 ảnh
+      thumbnailContainer.innerHTML = displayImages.map((img, index) => 
+        `<img src="${img}" alt="Hình ảnh ${index + 1}" onerror="this.src='anh/no-image.png'" 
+             style="border: 2px solid ${index === 0 ? '#ff4d4f' : '#ddd'}; cursor: pointer;">`
       ).join('');
       
-      // Thêm event listener cho thumbnails
+      // Thêm event listener cho thumbnails - dùng images từ product hiện tại
       thumbnailContainer.querySelectorAll('img').forEach((thumb, index) => {
         thumb.addEventListener('click', () => {
-          if (mainImage) {
-            mainImage.src = images[index];
-          }
-          // Update active thumbnail
-          thumbnailContainer.querySelectorAll('img').forEach(t => {
-            t.style.borderColor = '#ddd';
-          });
-          thumb.style.borderColor = '#ff4d4f';
+          changeImageWithAnimation(index);
         });
       });
     }
     
-    // Update image navigation
-    if (window.currentImageIndex === undefined) {
-      window.currentImageIndex = 0;
-    }
-    
+    // Update image navigation - dùng images từ product hiện tại
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
     
+    // Xóa event listeners cũ nếu có
+    if (prevBtn) {
+      prevBtn.onclick = null;
+    }
+    if (nextBtn) {
+      nextBtn.onclick = null;
+    }
+    
+    // Thêm event listeners mới với images của sản phẩm hiện tại
     if (prevBtn) {
       prevBtn.onclick = () => {
-        window.currentImageIndex = (window.currentImageIndex - 1 + images.length) % images.length;
-        if (mainImage) mainImage.src = images[window.currentImageIndex];
+        const currentImages = window.currentProductImages || images;
+        const newIndex = (window.currentImageIndex - 1 + currentImages.length) % currentImages.length;
+        changeImageWithAnimation(newIndex);
       };
     }
     
     if (nextBtn) {
       nextBtn.onclick = () => {
-        window.currentImageIndex = (window.currentImageIndex + 1) % images.length;
-        if (mainImage) mainImage.src = images[window.currentImageIndex];
+        const currentImages = window.currentProductImages || images;
+        const newIndex = (window.currentImageIndex + 1) % currentImages.length;
+        changeImageWithAnimation(newIndex);
       };
+    }
+    
+    // Auto-slide ảnh mỗi 3 giây với animation mượt mà
+    // Xóa interval cũ nếu có
+    if (window.productImageInterval) {
+      clearInterval(window.productImageInterval);
+    }
+    
+    // Chỉ auto-slide nếu có nhiều hơn 1 ảnh
+    if (images.length > 1) {
+      window.productImageInterval = setInterval(() => {
+        const currentImages = window.currentProductImages || images;
+        const newIndex = (window.currentImageIndex + 1) % currentImages.length;
+        changeImageWithAnimation(newIndex);
+      }, 3000); // Chuyển ảnh mỗi 3 giây
     }
   }
   
@@ -165,16 +222,11 @@
       }
     }
     
-    // Render ảnh đánh giá nếu có
+    // Xóa phần ảnh đánh giá - không hiển thị nữa
     const reviewImagesEl = document.getElementById('productReviewImages');
-    if (reviewImagesEl && product.images && product.images.length > 1) {
-      // Hiển thị các ảnh từ vị trí 1 trở đi (ảnh đầu tiên đã dùng làm main image)
-      const reviewImages = product.images.slice(1, 4); // Lấy tối đa 3 ảnh
-      if (reviewImages.length > 0) {
-        reviewImagesEl.innerHTML = reviewImages.map((img, index) => 
-          `<img src="${img}" alt="Ảnh đánh giá ${index + 1}" onerror="this.style.display='none'">`
-        ).join('');
-      }
+    if (reviewImagesEl) {
+      reviewImagesEl.innerHTML = '';
+      reviewImagesEl.style.display = 'none';
     }
   }
   
@@ -219,7 +271,8 @@
     buyBtn.addEventListener('click', () => {
       // Kiểm tra đăng nhập trước khi thêm vào giỏ hàng
       if (!window.authCheck || !window.authCheck.checkLoginBeforeAddToCart(() => {
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        // Sử dụng cartHelper để lấy và lưu giỏ hàng
+        let cart = window.cartHelper ? window.cartHelper.getCart() : (JSON.parse(localStorage.getItem('cart')) || []);
         
         const existingProduct = cart.find(item => item.id === product.id);
         if (existingProduct) {
@@ -235,7 +288,12 @@
           });
         }
         
-        localStorage.setItem('cart', JSON.stringify(cart));
+        // Lưu giỏ hàng bằng cartHelper
+        if (window.cartHelper) {
+            window.cartHelper.saveCart(cart);
+        } else {
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
         
         // Cập nhật số lượng giỏ hàng
         const cartCount = document.getElementById('cartCount');

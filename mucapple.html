@@ -137,9 +137,10 @@
             <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
                 <i class="fa fa-bars"></i>
             </div>
-            <div class="search-bar">
-                <input type="text" placeholder="Tìm kiếm laptop và phụ kiện">
-                <button><i class="fa fa-search"></i></button>
+            <div class="search-bar" id="searchBarContainer">
+                <input type="text" id="searchInput" placeholder="Tìm kiếm laptop và phụ kiện">
+                <button id="searchButton"><i class="fa fa-search"></i></button>
+                <div id="searchResults" class="search-results"></div>
             </div>
             <div class="icons">
                 <a href="Giohang.html">
@@ -449,17 +450,21 @@
     <script src="Dongbogiohang.js"></script>
     <script src="product-reload.js"></script>
     <script src="mucapple.js"></script>
+    <script src="search-products.js"></script>
     <script>
-        // Hiển thị tên người dùng khi đã đăng nhập
+        // Hiển thị tên người dùng khi đã đăng nhập (cả user và admin)
         function displayUserName() {
             const userLink = document.getElementById('userLink');
             if (!userLink) return;
             
             try {
                 const currentUserStr = localStorage.getItem('currentUser');
+                const isAdmin = localStorage.getItem('isAdmin') === 'true';
+                
                 if (currentUserStr) {
                     const currentUser = JSON.parse(currentUserStr);
-                    if (currentUser.name && currentUser.role === 'user') {
+                    // Hiển thị cho cả user và admin
+                    if (currentUser.name && (currentUser.role === 'user' || currentUser.role === 'admin' || isAdmin)) {
                         userLink.innerHTML = `
                             <i class="fa fa-user"></i>
                             <div class="user-greeting">
@@ -469,6 +474,13 @@
                         `;
                         userLink.classList.add('user-logged-in');
                         userLink.style.textDecoration = 'none';
+                        
+                        // Nếu là admin, link đến trang admin
+                        if (isAdmin || currentUser.role === 'admin') {
+                            userLink.href = 'admin.html';
+                        } else {
+                            userLink.href = 'Taikhoan.html';
+                        }
                     }
                 }
             } catch (e) {

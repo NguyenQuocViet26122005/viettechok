@@ -51,14 +51,21 @@ document.querySelector('.login-form').addEventListener('submit', function (e) {
     if (customer && customer.password === password) {
         // Đăng nhập thành công
         localStorage.setItem('isAdmin', 'false');
-        localStorage.setItem('currentUser', JSON.stringify({ 
+        const userData = {
             email: customer.email,
             name: customer.name,
             phone: customer.phone,
             username: customer.username,
             role: 'user',
             id: customer.id
-        }));
+        };
+        localStorage.setItem('currentUser', JSON.stringify(userData));
+        
+        // Migrate giỏ hàng guest sang user nếu có
+        if (window.cartHelper && window.cartHelper.migrateGuestCartToUser) {
+            window.cartHelper.migrateGuestCartToUser(customer.email || customer.id);
+        }
+        
         alert('Đăng nhập thành công! Chào mừng ' + customer.name);
         window.location.href = "index.html";
     } else {

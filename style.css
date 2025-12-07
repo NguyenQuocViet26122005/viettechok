@@ -124,6 +124,7 @@
     border-radius: 20px;
     padding: 5px 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
 }
 
 .search-bar input {
@@ -142,6 +143,121 @@
     cursor: pointer;
     font-size: 18px;
 }
+
+/* Search Results Dropdown */
+.search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    max-height: 500px;
+    overflow-y: auto;
+    z-index: 1000;
+    margin-top: 5px;
+    display: none;
+}
+
+.search-result-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px 15px;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.search-result-item:hover {
+    background-color: #f8f9fa;
+}
+
+.search-result-item:last-child {
+    border-bottom: none;
+}
+
+.search-result-item img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 5px;
+    border: 1px solid #e0e0e0;
+}
+
+.search-result-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.search-result-info h4 {
+    margin: 0 0 5px 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.search-result-brand {
+    margin: 0 0 5px 0;
+    font-size: 12px;
+    color: #666;
+}
+
+.search-result-price {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.search-result-price .price {
+    font-size: 16px;
+    font-weight: 700;
+    color: #e74c3c;
+}
+
+.search-result-price .old-price {
+    font-size: 13px;
+    color: #999;
+    text-decoration: line-through;
+}
+
+.search-result-price .discount-badge {
+    background: #e74c3c;
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.search-result-empty {
+    padding: 20px;
+    text-align: center;
+    color: #999;
+    font-size: 14px;
+}
+
+.search-result-view-all {
+    padding: 12px 15px;
+    text-align: center;
+    background-color: #f8f9fa;
+    color: #007bff;
+    font-weight: 600;
+    cursor: pointer;
+    border-top: 1px solid #e0e0e0;
+    transition: background-color 0.2s;
+}
+
+.search-result-view-all:hover {
+    background-color: #e9ecef;
+}
+
+/* Search Results Page - Sử dụng style của .laptops */
 
 .icons {
     display: flex;
@@ -311,7 +427,9 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     margin: auto;
     max-width: 1200px;
+    width: 100%; /* Đảm bảo chiếm toàn bộ width của parent, giống .laptops */
     height: 450px;
+    box-sizing: border-box; /* Padding không làm tăng width */
 }
 
 .hot-sale-header {
@@ -443,9 +561,9 @@
     padding: 20px; /* Padding giống hot-sale để sản phẩm không bị lấn ra ngoài */
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    margin: 20px auto;
-    width: 100%;
-    max-width: 1200px;
+    margin: 20px auto; /* Margin top/bottom 20px để tạo khoảng cách, auto để căn giữa */
+    max-width: 1200px; /* Giống hot-sale: cùng max-width */
+    width: 100%; /* Đảm bảo chiếm toàn bộ width của parent, giống hot-sale */
     min-height: auto; /* Tự động điều chỉnh theo nội dung - khác với hot-sale có height cố định */
     box-sizing: border-box; /* Padding không làm tăng width */
     overflow: visible; /* Đảm bảo sản phẩm không bị cắt */
@@ -654,9 +772,23 @@
 @media screen and (max-width: 1024px) {
     /* HEADER */
     .menu,
-    .contact-info,
-    .logo {
+    .contact-info {
       display: none;
+    }
+    
+    /* Logo vẫn hiển thị nhưng chỉ hiển thị ảnh logo, ẩn contact-icons */
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .logo .contact-icons {
+      display: none; /* Ẩn contact-icons trong logo khi responsive */
+    }
+    
+    .logo img {
+      height: 40px; /* Giảm kích thước logo một chút */
     }
   
     .top-header .container {

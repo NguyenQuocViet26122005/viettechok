@@ -138,9 +138,10 @@
             <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
                 <i class="fa fa-bars"></i>
               </div>
-            <div class="search-bar">
-                <input type="text" placeholder="Tìm kiếm laptop và phụ kiện">
-                <button><i class="fa fa-search"></i></button>
+            <div class="search-bar" id="searchBarContainer">
+                <input type="text" id="searchInput" placeholder="Tìm kiếm laptop và phụ kiện">
+                <button id="searchButton"><i class="fa fa-search"></i></button>
+                <div id="searchResults" class="search-results"></div>
             </div>
             <div class="icons">
                 <a href="Giohang.html">
@@ -232,10 +233,12 @@
         
          
     </div>
+    <script src="cart-helper.js"></script>
     <script src="auth-check.js"></script>
     <script src="Giohang.js"></script>
     <script src="Dongbogiohang.js"></script>
     <script src="product-reload.js"></script>
+    <script src="search-products.js"></script>
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-column">
@@ -320,6 +323,10 @@
                 logoutLink.addEventListener('click', function(e) {
                     e.preventDefault();
                     if (confirm('Bạn có chắc muốn đăng xuất?')) {
+                        // Xóa giỏ hàng khi đăng xuất
+                        if (window.cartHelper && window.cartHelper.clearCart) {
+                            window.cartHelper.clearCart();
+                        }
                         localStorage.removeItem('currentUser');
                         localStorage.removeItem('isAdmin');
                         window.location.href = 'index.html';

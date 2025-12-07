@@ -4,10 +4,33 @@ const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
 
 const toast = (msg, duration = 3000) => {
   const t = $("#toast");
-  if (!t) return;
-  $("#toastMessage").textContent = msg;
+  const msgEl = $("#toastMessage");
+  if (!t || !msgEl) {
+    console.error("Toast element not found", { toast: t, message: msgEl });
+    // Fallback: dùng alert nếu toast không tìm thấy
+    alert(msg);
+    return;
+  }
+  
+  // Set message
+  msgEl.textContent = msg;
+  
+  // Xóa class show cũ nếu có để reset animation
+  t.classList.remove("show");
+  
+  // Force reflow để đảm bảo animation reset
+  void t.offsetWidth;
+  
+  // Thêm class show để hiển thị
   t.classList.add("show");
-  setTimeout(() => t.classList.remove("show"), duration);
+  
+  // Debug log để kiểm tra
+  console.log("Toast shown:", msg);
+  
+  // Tự động ẩn sau duration
+  setTimeout(() => {
+    t.classList.remove("show");
+  }, duration);
 };
 
 const money = (n) =>
@@ -113,6 +136,16 @@ function saveState() {
   const updateTimestamp = Date.now();
   localStorage.setItem('laptop_admin_products_update_time', updateTimestamp.toString());
   broadcastChannel.postMessage({ type: 'products-updated', timestamp: updateTimestamp });
+}
+
+// Hàm helper để tạo ảnh phụ (dùng tạm ảnh chính cho 4 ảnh phụ)
+function getAdditionalImages(mainImage) {
+  return [
+    mainImage,
+    mainImage,
+    mainImage,
+    mainImage
+  ];
 }
 
 function seedSample() {
@@ -414,6 +447,12 @@ function renderProducts() {
     return;
   }
   
+  // Đảm bảo state.products là mảng hợp lệ
+  if (!Array.isArray(state.products)) {
+    console.error("❌ state.products không phải là mảng");
+    state.products = [];
+  }
+  
   const searchInput = $("#productSearch");
   const q = searchInput ? (searchInput.value || "").toLowerCase() : "";
   
@@ -484,13 +523,42 @@ function openEditProduct(id) {
   $("#productStatus").value = p.status || "active";
 
   const imgs = p.images || [];
+  // Set hidden input values
   $("#productImage1").value = p.mainImage || imgs[0] || "";
   $("#productImage2").value = imgs[1] || "";
   $("#productImage3").value = imgs[2] || "";
   $("#productImage4").value = imgs[3] || "";
   $("#productImage5").value = imgs[4] || "";
+  
+  // Show preview for existing images
+  showImagePreview(1, p.mainImage || imgs[0] || "");
+  showImagePreview(2, imgs[1] || "");
+  showImagePreview(3, imgs[2] || "");
+  showImagePreview(4, imgs[3] || "");
+  showImagePreview(5, imgs[4] || "");
 
   showModal("productModal");
+}
+
+// Hàm hiển thị preview ảnh
+function showImagePreview(imageNumber, imageSrc) {
+  const previewImg = $(`#productImage${imageNumber}PreviewImg`);
+  if (previewImg && imageSrc) {
+    previewImg.src = imageSrc;
+    previewImg.style.display = 'block';
+  } else if (previewImg) {
+    previewImg.style.display = 'none';
+  }
+}
+
+// Hàm chuyển file thành base64
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
 }
 
 function deleteProduct(id) {
@@ -502,26 +570,53 @@ function deleteProduct(id) {
   state.products = state.products.filter((x) => x.id !== id);
   saveState();
   
-  // Chỉ hiển thị section products nếu đang ở section đó
+  // Đảm bảo section products được hiển thị
   activateSection('products');
+  
+  // Render lại danh sách sản phẩm ngay lập tức
   renderProducts();
+  
+  // Hiển thị toast notification ngay lập tức
   toast("✅ Đã xóa sản phẩm thành công!", 3000);
   
   broadcastChannel.postMessage({ type: 'product-deleted', productId: id });
 }
 
 function bindProductForm() {
-  $("#productForm").addEventListener("submit", (e) => {
+  // Xử lý file input cho 5 ảnh
+  for (let i = 1; i <= 5; i++) {
+    const fileInput = $(`#productImage${i}File`);
+    if (fileInput) {
+      fileInput.addEventListener('change', async function(e) {
+        const file = e.target.files[0];
+        if (file) {
+          try {
+            // Chuyển file thành base64
+            const base64 = await fileToBase64(file);
+            // Lưu vào hidden input
+            $(`#productImage${i}`).value = base64;
+            // Hiển thị preview
+            showImagePreview(i, base64);
+          } catch (error) {
+            console.error('Lỗi khi đọc file:', error);
+            alert('Lỗi khi đọc file ảnh. Vui lòng thử lại.');
+          }
+        }
+      });
+    }
+  }
+
+  $("#productForm").addEventListener("submit", async (e) => {
     e.preventDefault();
 
+    // Lấy ảnh từ hidden inputs (có thể là URL hoặc base64)
     const img1 = $("#productImage1").value.trim();
-    const images = [
-      img1,
-      $("#productImage2").value.trim(),
-      $("#productImage3").value.trim(),
-      $("#productImage4").value.trim(),
-      $("#productImage5").value.trim(),
-    ].filter(Boolean);
+    const img2 = $("#productImage2").value.trim();
+    const img3 = $("#productImage3").value.trim();
+    const img4 = $("#productImage4").value.trim();
+    const img5 = $("#productImage5").value.trim();
+    
+    const images = [img1, img2, img3, img4, img5].filter(Boolean);
 
     const productId = currentEditingProduct ? currentEditingProduct.id : "P" + Date.now();
     const productCode = $("#productCode").value.trim() || productId;
@@ -561,22 +656,32 @@ function bindProductForm() {
       state.products[idx] = data;
       }
     } else {
-      state.products.push(data);
+      // Thêm sản phẩm mới vào đầu danh sách
+      state.products.unshift(data);
     }
 
     saveState();
-    hideModal("productModal");
-    currentEditingProduct = null;
     
-    // Chỉ hiển thị section products
+    // Đảm bảo section products được hiển thị trước
     activateSection('products');
+    
+    // Render lại danh sách sản phẩm ngay lập tức (trước khi đóng modal)
     renderProducts();
+    
+    // Đóng modal
+    hideModal("productModal");
+    
+    // Reset form sau khi lưu
+    resetProductForm();
     
     const message = isEditing 
       ? "✅ Đã cập nhật sản phẩm thành công!" 
       : "✅ Đã thêm sản phẩm mới thành công!";
     
-    toast(message, 3000);
+    // Đợi modal đóng hoàn toàn rồi mới hiển thị toast
+    setTimeout(() => {
+      toast(message, 3000);
+    }, 200);
     
     broadcastChannel.postMessage({ 
       type: isEditing ? 'product-updated' : 'product-added', 
@@ -1016,6 +1121,15 @@ function initModals() {
         $("#productModalTitle").textContent = "Thêm sản phẩm mới";
         updateProductCategorySelect();
         $("#productForm").reset();
+        
+        // Reset file inputs và preview ảnh
+        for (let i = 1; i <= 5; i++) {
+          const fileInput = $(`#productImage${i}File`);
+          const hiddenInput = $(`#productImage${i}`);
+          if (fileInput) fileInput.value = '';
+          if (hiddenInput) hiddenInput.value = '';
+          showImagePreview(i, '');
+        }
       } else if (modalId === "promotionModal") {
         currentEditingPromotion = null;
         $("#promotionModalTitle").textContent = "Thêm khuyến mãi mới";
@@ -1331,6 +1445,10 @@ function checkAdminAuth() {
 // ======= Logout =======
 function logout() {
   if (confirm("Bạn có chắc chắn muốn đăng xuất?")) {
+    // Xóa giỏ hàng khi đăng xuất (nếu là user, không phải admin)
+    if (window.cartHelper && window.cartHelper.clearCart) {
+      window.cartHelper.clearCart();
+    }
     localStorage.removeItem("isAdmin");
     localStorage.removeItem("currentUser");
     window.location.href = "Dangnhap.html";

@@ -13,7 +13,7 @@
         <div class="container"> 
             <div class="logo">
                 <a href="index.html">
-                    <img src="anh/logo.jpg" alt="logo">
+                <img src="anh/logo.jpg" alt="logo">
                 </a>
                 <div class="contact-info">
                     <p><b>VietTechStore</b></p>
@@ -137,9 +137,10 @@
             <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
                 <i class="fa fa-bars"></i>
               </div>
-            <div class="search-bar">
-                <input type="text" placeholder="Tìm kiếm laptop và phụ kiện">
-                <button><i class="fa fa-search"></i></button>
+            <div class="search-bar" id="searchBarContainer">
+                <input type="text" id="searchInput" placeholder="Tìm kiếm laptop và phụ kiện">
+                <button id="searchButton"><i class="fa fa-search"></i></button>
+                <div id="searchResults" class="search-results"></div>
             </div>
             <div class="icons">
                 <a href="Giohang.html">
@@ -267,7 +268,7 @@
         <div class="laptop-products">
             
             <div class="product">
-                <a href="product-detail1.html" class="product-link">
+                <a href="product-detail.html?id=P001" class="product-link">
                     <div class="badge">Sản phẩm HOT !!!</div>
                     <div class="discount">-4%</div>
                     <img src="anh/laptop1.png" alt="Laptop 1">
@@ -276,7 +277,7 @@
                 </a>
             </div>
             <div class="product">
-                <a href="product-detail2.html" class="product-link">
+                <a href="product-detail.html?id=P002" class="product-link">
                     <div class="badge">Sản phẩm HOT !!!</div>
                     <div class="discount">-8%</div>
                     <img src="anh/laptop2.png" alt="Laptop 2">
@@ -285,7 +286,7 @@
                 </a>
             </div>
             <div class="product">
-                <a href="product-detail3.html" class="product-link">
+                <a href="product-detail.html?id=P003" class="product-link">
                     <div class="badge">Sản phẩm HOT !!!</div>
                     <div class="discount">-12%</div>
                     <img src="anh/laptop3.png" alt="Laptop 3">
@@ -294,7 +295,7 @@
                 </a>
             </div>
             <div class="product">
-                <a href="product-detail4.html" class="product-link">
+                <a href="product-detail.html?id=P004" class="product-link">
                     <div class="badge">Sản phẩm HOT !!!</div>
                     <div class="discount">-18%</div>
                     <img src="anh/laptop4.png" alt="Laptop 4">
@@ -303,7 +304,7 @@
                 </a>
             </div>
             <div class="product">
-                <a href="product-detail5.html" class="product-link">
+                <a href="product-detail.html?id=P005" class="product-link">
                     <div class="badge">Sản phẩm HOT !!!</div>
                     <div class="discount">-22%</div>
                     <img src="anh/laptop5.png" alt="Laptop 5">
@@ -312,7 +313,7 @@
                 </a>
             </div>
             <div class="product">
-                <a href="product-detail6.html" class="product-link">
+                <a href="product-detail.html?id=P006" class="product-link">
                     <div class="badge">Sản phẩm HOT !!!</div>
                     <div class="discount">-7%</div>
                     <img src="anh/laptop6.png" alt="Laptop 6">
@@ -321,7 +322,7 @@
                 </a>
             </div>
             <div class="product">
-                <a href="product-detail7.html" class="product-link">
+                <a href="product-detail.html?id=P007" class="product-link">
                     <div class="badge">Sản phẩm HOT !!!</div>
                     <div class="discount">-3%</div>
                     <img src="anh/laptop7.png" alt="Laptop 7">
@@ -330,7 +331,7 @@
                 </a>
             </div>
             <div class="product">
-                <a href="product-detail8.html" class="product-link">
+                <a href="product-detail.html?id=P008" class="product-link">
                     <div class="badge">Sản phẩm HOT !!!</div>
                     <div class="discount">-19%</div>
                     <img src="anh/laptop8.png" alt="Laptop 8">
@@ -339,7 +340,7 @@
                 </a>
             </div>
             <div class="product">
-                <a href="product-detail9.html" class="product-link">
+                <a href="product-detail.html?id=P009" class="product-link">
                     <div class="badge">Sản phẩm HOT !!!</div>
                     <div class="discount">-28%</div>
                     <img src="anh/laptop9.png" alt="Laptop 9">
@@ -348,7 +349,7 @@
                 </a>
             </div>
             <div class="product">
-                <a href="product-detail10.html" class="product-link">
+                <a href="product-detail.html?id=P010" class="product-link">
                     <div class="badge">Sản phẩm HOT !!!</div>
                     <div class="discount">-18%</div>
                     <img src="anh/laptop10.png" alt="Laptop 10">
@@ -365,7 +366,7 @@
         <div class="laptop-products">
             <!-- Sản phẩm 1 -->
             <div class="product">
-                <a href="apple-detail1.html" class="product-link">
+                <a href="product-detail.html?id=A001" class="product-link">
                     <div class="badge">Sản phẩm HOT !!!</div>
                     <div class="discount">-8%</div>
                     <img src="anh/apple1.png" alt="Macbook Pro 14 M2 Pro">
@@ -375,7 +376,7 @@
             </div>
             <!-- Sản phẩm 2 -->
             <div class="product">
-                <a href="apple-detail2.html" class="product-link">
+                <a href="product-detail.html?id=A002" class="product-link">
                     <div class="badge">Hot!!!</div>
                     <div class="discount">-18%</div>
                     <img src="anh/apple2.png" alt="Macbook Pro 13 2019">
@@ -385,7 +386,7 @@
             </div>
             <!-- Sản phẩm 3 -->
             <div class="product">
-                <a href="apple-detail3.html" class="product-link">
+                <a href="product-detail.html?id=A003" class="product-link">
                     <div class="badge">Đang Có Flash Sale!!!</div>
                     <div class="discount">-28%</div>
                     <img src="anh/apple3.png" alt="Macbook Pro 16 2019">
@@ -395,7 +396,7 @@
             </div>
             <!-- Sản phẩm 4 -->
             <div class="product">
-                <a href="apple-detail4.html" class="product-link">
+                <a href="product-detail.html?id=A004" class="product-link">
                     <div class="badge">Sản phẩm HOT !!!</div>
                     <div class="discount">-23%</div>
                     <img src="anh/apple4.png" alt="Macbook Pro 14 M1 Pro">
@@ -405,7 +406,7 @@
             </div>
             <!-- Sản phẩm 5 -->
             <div class="product">
-                <a href="apple-detail5.html" class="product-link">
+                <a href="product-detail.html?id=A005" class="product-link">
                     <div class="badge">Hàng Mới Về Thêm</div>
                     <div class="discount">-15%</div>
                     <img src="anh/apple5.png" alt="Macbook Pro 14 M1 Pro">
@@ -415,7 +416,7 @@
             </div>
             <!-- Sản phẩm 6 -->
             <div class="product">
-                <a href="apple-detail6.html" class="product-link">
+                <a href="product-detail.html?id=A006" class="product-link">
                     <div class="badge">Đang Có Flash Sale!!!</div>
                     <div class="discount">-16%</div>
                     <img src="anh/apple6.png" alt="Macbook Pro 16 M1 Pro">
@@ -425,7 +426,7 @@
             </div>
             <!-- Sản phẩm 7 -->
             <div class="product">
-                <a href="apple-detail7.html" class="product-link">
+                <a href="product-detail.html?id=A007" class="product-link">
                     <div class="badge">Sản phẩm HOT !!!</div>
                     <div class="discount">-5%</div>
                     <img src="anh/apple7.png" alt="Macbook Air 15 M2">
@@ -435,7 +436,7 @@
             </div>
             <!-- Sản phẩm 8 -->
             <div class="product">
-                <a href="apple-detail8.html" class="product-link">
+                <a href="product-detail.html?id=A008" class="product-link">
                     <div class="badge">Hàng Mới Về</div>
                     <div class="discount">-17%</div>
                     <img src="anh/apple8.png" alt="Macbook Pro 16 M1 Max">
@@ -445,7 +446,7 @@
             </div>
             <!-- Sản phẩm 9 -->
             <div class="product">
-                <a href="apple-detail9.html" class="product-link">
+                <a href="product-detail.html?id=A009" class="product-link">
                     <div class="badge">Sản phẩm HOT !!!</div>
                     <div class="discount">-5%</div>
                     <img src="anh/apple9.png" alt="Macbook Pro 14 M3">
@@ -455,7 +456,7 @@
             </div>
             <!-- Sản phẩm 10 -->
             <div class="product">
-                <a href="apple-detail10.html" class="product-link">
+                <a href="product-detail.html?id=A010" class="product-link">
                     <div class="badge">Sản phẩm HOT !!!</div>
                     <div class="discount">-18%</div>
                     <img src="anh/apple10.png" alt="Macbook Pro 14 M1 Max">
@@ -572,13 +573,15 @@
             </div>
         </div>
     </section>
+    <script src="cart-helper.js"></script>
     <script src="auth-check.js"></script>
     <script src="script.js"></script>
     <script src="Dongbogiohang.js"></script>
     <script src="product-reload.js"></script>
     <script src="render-products.js"></script>
+    <script src="search-products.js"></script>
     <script>
-        // Hiển thị tên người dùng khi đã đăng nhập
+        // Hiển thị tên người dùng khi đã đăng nhập (cả user và admin)
         function displayUserName() {
             const userDisplay = document.getElementById('userDisplay');
             const userLink = document.getElementById('userLink');
@@ -588,9 +591,12 @@
             
             try {
                 const currentUserStr = localStorage.getItem('currentUser');
+                const isAdmin = localStorage.getItem('isAdmin') === 'true';
+                
                 if (currentUserStr) {
                     const currentUser = JSON.parse(currentUserStr);
-                    if (currentUser.name && currentUser.role === 'user') {
+                    // Hiển thị cho cả user và admin
+                    if (currentUser.name && (currentUser.role === 'user' || currentUser.role === 'admin' || isAdmin)) {
                         // Hiển thị banner với "Xin chào" + tên
                         userLink.innerHTML = `
                             <i class="fa fa-user"></i>
@@ -601,7 +607,19 @@
                         `;
                         userLink.classList.add('user-logged-in');
                         userLink.style.textDecoration = 'none';
+                        
+                        // Nếu là admin, link đến trang admin
+                        if (isAdmin || currentUser.role === 'admin') {
+                            userLink.href = 'admin.html';
+                        } else {
+                            userLink.href = 'Taikhoan.html';
+                        }
+                        
                         // Dropdown sẽ hiện khi hover (CSS đã xử lý)
+                        if (userDropdown) {
+                            userDropdown.style.display = '';
+                            userDropdown.style.visibility = '';
+                        }
                     }
                 }
             } catch (e) {
@@ -616,6 +634,10 @@
                 logoutLink.addEventListener('click', function(e) {
                     e.preventDefault();
                     if (confirm('Bạn có chắc muốn đăng xuất?')) {
+                        // Xóa giỏ hàng khi đăng xuất
+                        if (window.cartHelper && window.cartHelper.clearCart) {
+                            window.cartHelper.clearCart();
+                        }
                         localStorage.removeItem('currentUser');
                         localStorage.removeItem('isAdmin');
                         window.location.href = 'index.html';
@@ -819,12 +841,16 @@
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             margin: 20px auto;
-            width: 1200px;
+            max-width: 1200px; /* Giống hot-sale và laptops: cùng max-width */
+            width: 100%; /* Đảm bảo chiếm toàn bộ width của parent */
+            box-sizing: border-box; /* Padding không làm tăng width */
         }
         
         .why-choose-us-container {
             max-width: 1200px;
             margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
         }
         
         .why-choose-us-header {

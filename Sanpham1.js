@@ -55,7 +55,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const cartCountElement = document.getElementById("cartCount");
 
     function capNhatSoLuongGioHang() {
-        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        // Sử dụng cartHelper để lấy giỏ hàng
+        let cart = window.cartHelper ? window.cartHelper.getCart() : (JSON.parse(localStorage.getItem("cart")) || []);
         let totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
         cartCountElement.textContent = totalQuantity;
     }
@@ -65,7 +66,8 @@ document.addEventListener("DOMContentLoaded", () => {
     buyNowBtn.addEventListener("click", () => {
         // Kiểm tra đăng nhập trước khi thêm vào giỏ hàng
         if (!window.authCheck || !window.authCheck.checkLoginBeforeAddToCart(() => {
-            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            // Sử dụng cartHelper để lấy và lưu giỏ hàng
+            let cart = window.cartHelper ? window.cartHelper.getCart() : (JSON.parse(localStorage.getItem("cart")) || []);
             const existingProduct = cart.find(item => item.id === product.id);
             if (existingProduct) {
                 existingProduct.quantity += 1;
@@ -73,7 +75,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 cart.push(product);
             }
 
-            localStorage.setItem("cart", JSON.stringify(cart));
+            // Lưu giỏ hàng bằng cartHelper
+            if (window.cartHelper) {
+                window.cartHelper.saveCart(cart);
+            } else {
+                localStorage.setItem("cart", JSON.stringify(cart));
+            }
             capNhatSoLuongGioHang();
 
             alert("🛒 Đã thêm sản phẩm vào giỏ hàng!");

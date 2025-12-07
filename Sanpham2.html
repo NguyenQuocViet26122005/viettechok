@@ -88,19 +88,19 @@
                             <li><a href="#">ThinkPad Workstations</a></li>
                         </ul>
                     </div>
-                        <div class="cot">
-                            <p>Theo nhu cầu</p>
-                            <ul>
+                    <div class="cot">
+                        <p>Theo nhu cầu</p>
+                        <ul>
                                 <li><a href="muclaptop.html">Máy tính xách tay</a></li>
-                                <li><a href="#">Mỏng Nhẹ</a></li>
-                                <li><a href="#">Workstations</a></li>
-                                <li><a href="#">Siêu phẩm</a></li>
-                                <li><a href="#">Đồ Họa, Kỹ thuật</a></li>
-                                <li><a href="#">Học tập, Văn phòng</a></li>
-                                <li><a href="#">Lập trình</a></li>
-                                <li><a href="#">Game</a></li>
-                            </ul>
-                        </div>
+                            <li><a href="#">Mỏng Nhẹ</a></li>
+                            <li><a href="#">Workstations</a></li>
+                            <li><a href="#">Siêu phẩm</a></li>
+                            <li><a href="#">Đồ Họa, Kỹ thuật</a></li>
+                            <li><a href="#">Học tập, Văn phòng</a></li>
+                            <li><a href="#">Lập trình</a></li>
+                            <li><a href="#">Game</a></li>
+                        </ul>
+                    </div>
                         <div class="cot">
                             <p>APPLE</p>
                             <ul>
@@ -109,8 +109,8 @@
                                 <li><a href="mucapple.html">iPhone</a></li>
                             </ul>
                         </div>
-                    </div>
                 </div>
+            </div>
             <div class="dropdown">
                 <a href="#">Phụ kiện</a>
                 <div class="dropdown-content">
@@ -138,9 +138,10 @@
         <div class="mobile-menu-toggle" onclick="toggleMobileMenu()">
             <i class="fa fa-bars"></i>
           </div>
-        <div class="search-bar">
-            <input type="text" placeholder="Tìm kiếm laptop và phụ kiện">
-            <button><i class="fa fa-search"></i></button>
+        <div class="search-bar" id="searchBarContainer">
+            <input type="text" id="searchInput" placeholder="Tìm kiếm laptop và phụ kiện">
+            <button id="searchButton"><i class="fa fa-search"></i></button>
+            <div id="searchResults" class="search-results"></div>
         </div>
         <div class="icons">
             <a href="Giohang.html">
@@ -339,7 +340,7 @@
 
   <div class="lv-container">
     <button class="lv-navbtn lv-navbtn-left" id="lvPrev" aria-label="Trước">←</button>
-    <div class="lv-track" id="lenovoTrack"></div>
+  <div class="lv-track" id="lenovoTrack"></div>
     <button class="lv-navbtn lv-navbtn-right" id="lvNext" aria-label="Sau">→</button>
   </div>
 </section>
@@ -390,9 +391,10 @@
 </footer>
 
     <script src="auth-check.js"></script>
-    <script src="Sanpham2.js"></script>
+<script src="Sanpham2.js"></script>
     <script src="Dongbogiohang.js"></script>
     <script src="product-reload.js"></script>
+    <script src="search-products.js"></script>
     <script>
         // Hiển thị tên người dùng khi đã đăng nhập
         function displayUserName() {
