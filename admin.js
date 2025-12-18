@@ -271,6 +271,7 @@ function seedSample() {
       customerName: "Nguyễn Văn An",
       customerEmail: "an.nguyen@email.com",
       customerPhone: "0901234567",
+      customerAddress: "123 Nguyễn Huệ, Quận 1, TP. Hồ Chí Minh",
       productName: "Dell XPS 13 Plus",
       totalAmount: 28500000,
       status: "completed",
@@ -281,6 +282,7 @@ function seedSample() {
       customerName: "Trần Thị Bình",
       customerEmail: "binh.tran@email.com",
       customerPhone: "0912345678",
+      customerAddress: "456 Đường Lê Lợi, Quận 5, TP. Hồ Chí Minh",
       productName: 'MacBook Pro 14"',
       totalAmount: 52990000,
       status: "shipping",
@@ -291,6 +293,7 @@ function seedSample() {
       customerName: "Lê Minh Cường",
       customerEmail: "cuong.le@email.com",
       customerPhone: "0923456789",
+      customerAddress: "789 Trần Hưng Đạo, Quận 11, TP. Hồ Chí Minh",
       productName: "ASUS ROG Strix G15",
       totalAmount: 32990000,
       status: "processing",
@@ -781,9 +784,13 @@ function viewOrder(id) {
           <p style="color: #64748b; font-size: 12px; margin-bottom: 4px;">Email</p>
           <p style="font-weight: 600;">${o.customerEmail}</p>
         </div>
-        <div style="grid-column: 1 / -1;">
+        <div>
           <p style="color: #64748b; font-size: 12px; margin-bottom: 4px;">Số điện thoại</p>
           <p style="font-weight: 600;">${o.customerPhone}</p>
+        </div>
+        <div>
+          <p style="color: #64748b; font-size: 12px; margin-bottom: 4px;">Địa chỉ giao hàng</p>
+          <p style="font-weight: 600;">${o.customerAddress || "Không có"}</p>
         </div>
       </div>
     </div>
