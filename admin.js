@@ -262,6 +262,7 @@ function seedSample() {
         "images/rog-g15-5.jpg",
       ],
     },
+    
   ];
 
   state.orders = [
@@ -718,6 +719,7 @@ function renderOrders() {
         <td><span class="badge" style="background:${bg};color:${color}">${label}</span></td>
         <td>${new Date(o.createdAt).toLocaleDateString("vi-VN")}</td>
         <td>
+          <button class="btn btn--ghost" data-view-order="${o.id}">👁️ Xem</button>
           <button class="btn btn--ghost" data-edit-order="${o.id}">✏️ Sửa</button>
           <button class="btn btn--danger" data-del-order="${o.id}">🗑️ Xóa</button>
         </td>
@@ -729,6 +731,9 @@ function renderOrders() {
     rows ||
     `<tr><td colspan="7" style="text-align:center;color:#64748b;padding:28px">Chưa có đơn hàng</td></tr>`;
 
+  $$("[data-view-order]").forEach((b) =>
+    b.addEventListener("click", () => viewOrder(b.dataset.viewOrder))
+  );
   $$("[data-edit-order]").forEach((b) =>
     b.addEventListener("click", () => openEditOrder(b.dataset.editOrder))
   );
@@ -738,6 +743,75 @@ function renderOrders() {
 }
 
 let currentEditingOrder = null;
+
+function viewOrder(id) {
+  const o = state.orders.find((x) => x.id === id);
+  if (!o) return;
+
+  const map = {
+    pending: "Chờ xác nhận",
+    processing: "Đang xử lý",
+    shipping: "Đang giao",
+    completed: "Hoàn thành",
+    cancelled: "Đã hủy",
+  };
+
+  const detailHTML = `
+    <div style="margin-bottom: 20px;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div>
+          <p style="color: #64748b; font-size: 12px; margin-bottom: 4px;">Mã đơn hàng</p>
+          <p style="font-weight: 600; font-size: 16px;">#${o.id}</p>
+        </div>
+        <div>
+          <p style="color: #64748b; font-size: 12px; margin-bottom: 4px;">Trạng thái</p>
+          <p style="font-weight: 600; font-size: 16px;">${map[o.status] || o.status}</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="padding: 15px; background: #f0f9ff; border-left: 4px solid #0284c7; border-radius: 4px; margin-bottom: 20px;">
+      <p style="color: #0c4a6e; font-weight: 700; margin-bottom: 12px; font-size: 14px;">👤 THÔNG TIN KHÁCH HÀNG</p>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+        <div>
+          <p style="color: #64748b; font-size: 12px; margin-bottom: 4px;">Tên khách hàng</p>
+          <p style="font-weight: 600;">${o.customerName}</p>
+        </div>
+        <div>
+          <p style="color: #64748b; font-size: 12px; margin-bottom: 4px;">Email</p>
+          <p style="font-weight: 600;">${o.customerEmail}</p>
+        </div>
+        <div style="grid-column: 1 / -1;">
+          <p style="color: #64748b; font-size: 12px; margin-bottom: 4px;">Số điện thoại</p>
+          <p style="font-weight: 600;">${o.customerPhone}</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="padding: 15px; background: #f5f3ff; border-left: 4px solid #7c3aed; border-radius: 4px; margin-bottom: 20px;">
+      <p style="color: #5b21b6; font-weight: 700; margin-bottom: 12px; font-size: 14px;">📦 THÔNG TIN ĐƠN HÀNG</p>
+      <div style="display: grid; gap: 15px;">
+        <div>
+          <p style="color: #64748b; font-size: 12px; margin-bottom: 4px;">Sản phẩm</p>
+          <p style="font-weight: 600;">${o.productName}</p>
+        </div>
+        <div>
+          <p style="color: #64748b; font-size: 12px; margin-bottom: 4px;">Ngày đặt hàng</p>
+          <p style="font-weight: 600;">${new Date(o.createdAt).toLocaleDateString("vi-VN")}</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="padding: 15px; background: #ecfdf5; border-left: 4px solid #059669; border-radius: 4px;">
+      <p style="color: #065f46; font-size: 12px; margin-bottom: 8px; font-weight: 600;">💰 TỔNG TIỀN</p>
+      <p style="font-weight: 700; font-size: 28px; color: #059669;">${money(o.totalAmount)}</p>
+    </div>
+  `;
+
+  $("#orderDetailTitle").textContent = `Chi tiết đơn hàng #${o.id}`;
+  $("#orderDetailContent").innerHTML = detailHTML;
+  showModal("orderDetailModal");
+}
 
 function openEditOrder(id) {
   const o = state.orders.find((x) => x.id === id);
